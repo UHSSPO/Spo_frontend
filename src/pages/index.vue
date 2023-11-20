@@ -73,7 +73,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
+          <v-btn color="primary" nuxt @click="goToPage"> Continue </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -87,8 +87,16 @@ import {Component, Vue} from 'nuxt-property-decorator'
   layout: 'empty'
 })
 export default class extends Vue {
+  private test = 'asd';
+
   created(): void {
     console.log('init')
+  }
+
+  goToPage() {
+    this.$router.push({
+      path: '/inspire'
+    })
   }
 }
 </script>
