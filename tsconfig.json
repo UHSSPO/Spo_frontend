@@ -13,9 +13,8 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/"],
-      "@/*": ["./*"],
     },
-    "types": ["@nuxt/types", "@types/node", "@nuxt/vue-app"]
+    "types": ["@nuxt/types", "@types/node", "@nuxt/vue-app", "@nuxtjs/axios"]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

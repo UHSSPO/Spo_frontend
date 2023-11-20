@@ -51,7 +51,9 @@
       <v-list>
         <v-list-item @click.native="right = !right">
           <v-list-item-action>
-            <v-icon light> mdi-repeat </v-icon>
+            <v-icon light>
+              mdi-repeat
+            </v-icon>
           </v-list-item-action>
           <v-list-item-title>Switch drawer (click me)</v-list-item-title>
         </v-list-item>
@@ -60,13 +62,41 @@
     <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
+    <s-dialog v-for="(dialog, index) in dialogs" :key="index" :dialog="dialog" @close="onCloseDialog" />
   </v-app>
 </template>
 
-<script>
-export default {
-  name: 'DefaultLayout',
-  data() {
+<script lang="ts">
+import { Component, namespace, Vue } from 'nuxt-property-decorator'
+import _ from 'lodash'
+import { DIALOG_TYPE, IDialog, IDialogResult } from '../types/common'
+import { commonStore } from '../util/store-accessor'
+import { Namespace } from '../util/Namespace'
+import SDialog from '../components/common/SDialog.vue'
+
+const common = namespace(Namespace.COMMON)
+
+@Component({
+  scrollToTop: true,
+  components: {
+    SDialog
+  }
+})
+export default class extends Vue {
+  @common.State private dialogs!: Array<any>
+
+  created (): void {
+
+  }
+
+  private onCloseDialog (value: IDialogResult) {
+    const index = _.findIndex(this.dialogs, (dialog: IDialog) => {
+      return dialog.id === value.id
+    })
+    commonStore.REMOVE_DIALOG(index)
+  }
+
+  data () {
     return {
       clipped: false,
       drawer: false,
@@ -75,19 +105,19 @@ export default {
         {
           icon: 'mdi-apps',
           title: 'Welcome',
-          to: '/',
+          to: '/'
         },
         {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
-          to: '/inspire',
-        },
+          to: '/inspire'
+        }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js',
+      title: 'Vuetify.js'
     }
-  },
+  }
 }
 </script>

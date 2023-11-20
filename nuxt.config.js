@@ -10,14 +10,14 @@ export default {
     titleTemplate: 'SPO',
     title: 'SPO',
     htmlAttrs: {
-      lang: 'ko',
+      lang: 'ko'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
-    ],
+      { name: 'format-detection', content: 'telephone=no' }
+    ]
     // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
@@ -35,13 +35,13 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify',
+    '@nuxtjs/vuetify'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    // '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -57,22 +57,24 @@ export default {
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-        },
-      },
-    },
+          success: colors.green.accent3
+        }
+      }
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
-  extend(config, ctx) {
-    if (ctx.isDev && process.client) {
-      config.module.rules.push({
-        enforce: 'pre',
-        test: /\.(js|ts|vue)$/,
-        loader: 'eslint-loader',
-        exclude: /(node_modules)/
-      });
+  build: {
+    extend (config, ctx) {
+      if (ctx.isDev && process.client) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|ts|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        })
+      }
     }
   }
+
 }
