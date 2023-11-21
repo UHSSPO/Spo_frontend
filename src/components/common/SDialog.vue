@@ -21,11 +21,11 @@
       </v-card-actions>
 
       <v-card-actions v-if="dialog.type === localDialogType.CONFIRM_CANCEL" class="none">
-        <s-button class="kbtn-line round sm" @click="onClose(dialog.id, localResultType.CANCEL)">
-          취소
-        </s-button>
         <s-button class="kbtn-line-solid round sm" @click="onClose(dialog.id, localResultType.CONFIRM)">
           확인
+        </s-button>
+        <s-button class="kbtn-line round sm" @click="onClose(dialog.id, localResultType.CANCEL)">
+          취소
         </s-button>
       </v-card-actions>
 

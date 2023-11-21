@@ -25,11 +25,6 @@ export default class CommonModule extends VuexModule implements ICommonState {
   }
 
   @Mutation
-  public test () {
-    console.log('@@@')
-  }
-
-  @Mutation
   public REMOVE_DIALOG (index: number) {
     this.dialogs.splice(index, 1)
   }

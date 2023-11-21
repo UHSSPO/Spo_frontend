@@ -91,7 +91,7 @@ export default class extends Vue {
   private test = 'asd'
 
   created(): void {
-    console.log('init')
+    console.log('created')
   }
 
   private goToPage() {

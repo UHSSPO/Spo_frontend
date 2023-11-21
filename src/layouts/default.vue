@@ -85,10 +85,6 @@ const common = namespace(Namespace.COMMON)
 export default class extends Vue {
   @common.State private dialogs!: Array<any>
 
-  created (): void {
-
-  }
-
   private onCloseDialog (value: IDialogResult) {
     const index = _.findIndex(this.dialogs, (dialog: IDialog) => {
       return dialog.id === value.id
