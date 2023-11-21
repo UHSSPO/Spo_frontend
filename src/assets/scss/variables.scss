@@ -1,0 +1,102 @@
+// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+//
+@charset "utf-8";
+
+/*****************************************************************
+  scss default set
+ *****************************************************************/
+// style guide
+$font-family-base: 'Noto Sans KR','돋움','dotum',sans-serif !default;
+$font-family-eng: 'Roboto','Noto Sans KR','돋움','dotum',sans-serif !default;
+
+// primary color
+$primary:#7272CB !default;
+$primary-2:#A6A6F3 !default;
+$primary-3:#4444BB !default;
+$primary-bk:#2E2E39 !default;
+$primary-gry:#f8f8f9 !default;
+$primary-wht:#FFFFFF !default;
+
+// font-color
+$fc-gry1: #121212 !default;
+$fc-gry2: #343434 !default;
+$fc-gry3: #505050 !default;
+$fc-gry4: #606060 !default;
+$fc-gry5: #808080 !default;
+$fc-gry6: #AAAAAA !default;
+$fc-gry7: #D3D3D3 !default;
+$fc-gry8: #EBEBEB !default;
+
+$fc-bgry1: #858C97 !default;
+$fc-bgry2: #9A9FA8 !default;
+$fc-bgry3: #AAAFB9 !default;
+$fc-bgry4: #C2CAD4 !default;
+$fc-bgry5: #CED0DA !default;
+
+// borer line color
+$line-color:#D6DBDF !default;
+$line-color2:#EFF2F5 !default;
+
+// table line color
+$tb-line1:#D4D9E1 !default;
+$tb-line2:#DFE3E9 !default;
+$tb-line3:#EBECF0 !default;
+$tb-line4:#F5F5F5 !default;
+
+// table bg
+$tb-bg1:#858C97 !default;
+$tb-bg2:#FCFCFC !default;
+$tb-bg3:#EFF3FF !default;
+
+// states color
+$state-color1:#7272CB !default;
+$state-color2:#757BDE !default;
+$state-color3:#EE61A5 !default;
+$state-color4:#65B4D8 !default;
+$state-color5:#007AFF !default;
+$state-color6:#F87272 !default;
+$state-color7:#f8f8f9 !default;
+$state-color8:#999999 !default;
+$state-color99:#7272CB !default;
+
+// font default
+$font-size-base: 14px !default;
+$font-color-base: $fc-gry1 !default;
+$input-placeholder-color: $fc-gry6 !default;
+
+// line-height
+$font-line-lg: 1.4 !default; // font-size 18px-32px
+$font-line-base: 1.7 !default; // font-size 14px-16px
+$font-line-sm: 1.5 !default; // font-size: 13px
+
+// font-weight
+$fw-bold: 700 !default;
+$fw-medium: 500 !default;
+$fw-regular: 400 !default;
+$fw-light: 300 !default;
+
+/*****************************************************************
+  Vuetify default set
+ *****************************************************************/
+/*----------------------------------------------------------------
+  default
+-----------------------------------------------------------------*/
+html{
+  overflow:auto;
+  height:100%;
+}
+.v-application--wrap{
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  // min-width: 1460px;
+  padding-bottom: 40px;
+}
+.v-application ul, .v-application ol{
+  padding-left:inherit;
+  padding-left:0;
+}
+
+.v-chip.v-chip--outlined.v-chip.v-chip{
+  background:#fff !important;
+}
