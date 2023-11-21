@@ -81,6 +81,7 @@
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
+import axios from 'axios'
 import { commonStore } from '../util/store-accessor'
 import { DIALOG_RESULT, DIALOG_TYPE } from '../types/common'
 
@@ -91,7 +92,11 @@ export default class extends Vue {
   private test = 'asd'
 
   created(): void {
-    console.log('created')
+    axios.get('http://3.34.126.21:3001').then((response: any) => {
+      console.log(response)
+    }).catch((e) => {
+      console.error(e)
+    })
   }
 
   private goToPage() {
