@@ -84,6 +84,8 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import axios from 'axios'
 import { commonStore } from '../util/store-accessor'
 import { DIALOG_RESULT, DIALOG_TYPE } from '../types/common'
+import ApiUtil from '../util/ApiUtil'
+import { geTestApi, geTestApiError400, geTestApiError500 } from '../api/test-api'
 
 @Component({
   layout: 'empty'
@@ -91,12 +93,14 @@ import { DIALOG_RESULT, DIALOG_TYPE } from '../types/common'
 export default class extends Vue {
   private test = 'asd'
 
-  created(): void {
-    axios.get('http://3.34.126.21:3001').then((response: any) => {
-      console.log(response)
-    }).catch((e) => {
-      console.error(e)
-    })
+  async created() {
+    // axios.get('http://3.34.126.21:3001').then((response: any) => {
+    //   console.log(response)
+    // }).catch((e) => {
+    //   console.error(e)
+    // })
+    const res = await geTestApiError400()
+    console.log(res)
   }
 
   private goToPage() {
