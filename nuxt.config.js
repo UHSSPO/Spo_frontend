@@ -92,6 +92,7 @@ export default {
         })
       }
     }
-  }
+  },
+  loading: '~/components/common/CLoadingBar.vue'
 
 }

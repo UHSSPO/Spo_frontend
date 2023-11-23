@@ -94,12 +94,13 @@ export default class extends Vue {
   private test = 'asd'
 
   async created() {
-    // axios.get('http://3.34.126.21:3001').then((response: any) => {
-    //   console.log(response)
-    // }).catch((e) => {
-    //   console.error(e)
-    // })
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
     const res = await geTestApiError400()
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
     console.log(res)
   }
 
