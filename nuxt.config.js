@@ -18,8 +18,13 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' }
-    ]
+    ],
     // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      {
+        src: 'https://developers.kakao.com/sdk/js/kakao.js'
+      }
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -39,7 +44,8 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    ['@nuxtjs/dotenv', { path: './', filename: `.env.${process.env.NODE_ENV}`.trimEnd() }]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -92,6 +98,9 @@ export default {
         })
       }
     }
+  },
+  env: {
+    mode: process.env.NODE_ENV
   },
   loading: '~/components/common/CLoadingBar.vue'
 

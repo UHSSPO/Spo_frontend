@@ -81,27 +81,32 @@
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
-import axios from 'axios'
 import { commonStore } from '../util/store-accessor'
 import { DIALOG_RESULT, DIALOG_TYPE } from '../types/common'
-import ApiUtil from '../util/ApiUtil'
 import { geTestApi, geTestApiError400, geTestApiError500 } from '../api/test-api'
+declare let Kakao: any
 
 @Component({
   layout: 'empty'
 })
 export default class extends Vue {
-  private test = 'asd'
+  kakaoInit() {
+    Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
+    Kakao.isInitialized()
+  }
 
   async created() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    const res = await geTestApiError400()
+    const res = await geTestApi()
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
-    console.log(res)
+  }
+
+  mounted() {
+    this.kakaoInit()
   }
 
   private goToPage() {
@@ -109,11 +114,10 @@ export default class extends Vue {
       id: 'test',
       type: DIALOG_TYPE.CONFIRM_CANCEL,
       text: '이동한다잉',
-      callback: (response: DIALOG_RESULT) => {
+      callback: async (response: DIALOG_RESULT) => {
         if (response === DIALOG_RESULT.CONFIRM) {
-          console.log('확인@@@')
-          this.$router.push({
-            path: '/inspire'
+          await Kakao.Auth.authorize({
+            redirectUri: `${window.location.origin}/auth/kakao-callback`
           })
         } else {
           console.log('취소요')

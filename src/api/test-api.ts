@@ -1,4 +1,5 @@
 import ApiUtil from '../util/ApiUtil'
+import { IKakaoCertified } from '../types/auth/auth'
 
 export const geTestApi = () => ApiUtil.get('/', {})
 

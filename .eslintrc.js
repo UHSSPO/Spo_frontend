@@ -37,5 +37,8 @@ module.exports = {
   parserOptions: {
     // 다른 설정...
     types: ['@nuxt/types']
+  },
+  globals: {
+    Kakao: true
   }
 }
