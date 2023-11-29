@@ -9,7 +9,6 @@ import { commonStore } from '~/util/store-accessor'
 export default function ({ $axios, redirect, app }) {
   $axios.onRequest((config) => {
     config.baseURL = process.env.VUE_APP_API_URL
-    // config.baseURL = 'process.env.VUE_APP_API_URL'
     config.headers['Access-Control-Allow-Origin'] = 'application/json'
     config.withCredentials = true
     config.paramsSerializer = params => qs.stringify(params, { arrayFormat: 'repeat' })
