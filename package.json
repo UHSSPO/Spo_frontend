@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "export NODE_ENV=development && nuxt",
-    "dev_winodw": "set NODE_ENV=development && nuxt",
+    "dev_window": "set NODE_ENV=development && nuxt",
     "local": "export NODE_ENV=local && nuxt",
     "build": "export NODE_ENV=production && nuxt generate",
     "start": "export NODE_ENV=production && nuxt start",
