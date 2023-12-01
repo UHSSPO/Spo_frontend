@@ -1,28 +1,42 @@
 <template>
   <v-text-field
-    v-model="value"
     :label="label"
     :type="type"
     :rules="rules"
-    outlined
     :required="required"
-  ></v-text-field>
-
+    :maxlength="maxLength"
+    :disabled="disabled"
+    :placeholder="placeholder"
+    outlined
+    @change="onChange"
+    @input="onInput"
+  />
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
-
+import { Component, Emit, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component({
   name: 'STextField'
 })
 export default class STextField extends Vue {
-  @Prop({ type: String, default: '' }) label!: string;
-  @Prop({ type: String, default: 'text' }) type!: string;
-  @Prop({ type: Array, default: () => [] }) rules!: Array<Function>;
-  @Prop({ required: true }) value!: string;
-  @Prop({ required: true }) required!: string;
+  @Prop() label?: string
+  @Prop({ type: String, default: 'text' }) type?: string
+  @Prop({ type: Array, default: () => [] }) rules?: Array<Function>
+  @Prop() value?: string
+  @Prop({ default: false }) required?: string
+  @Prop() maxLength?: number
+  @Prop() disabled?: boolean
+  @Prop() placeholder?: string
 
+  @Emit('change')
+  private onChange(eventValue: any) {
+    return eventValue
+  }
+
+  @Emit('input')
+  private onInput(eventValue: any) {
+    return eventValue
+  }
 }
 </script>
