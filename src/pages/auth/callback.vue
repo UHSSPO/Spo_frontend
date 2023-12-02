@@ -1,22 +1,16 @@
 <template>
-  <v-row>
-    <v-col class="text-center">
-      <img src="/v.png" alt="Vuetify.js" class="mb-5">
-      <blockquote class="blockquote">
-        &#8220;First, solve the problem. Then, write the code.&#8221;
-        <footer>
-          <small />
-        </footer>
-      </blockquote>
-    </v-col>
-  </v-row>
+  <div id="container" class="line">
+    <div class="content">
+    <!--시작-->
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { IKakaoCertified } from '../../types/auth/auth'
 import { kakaoCertified } from '../../api/auth'
-@Component({ layout: 'empty', name: 'Kakao-callback' })
+@Component({ layout: 'empty', name: 'callback' })
 export default class extends Vue {
   private authData = {} as IKakaoCertified
   private code = (this.$route.query.code || '') as string
@@ -24,7 +18,7 @@ export default class extends Vue {
   async created() {
     this.authData = {
       apikey: '2e79fbfa9c3fe6aad98a3ca66e8e5f6f',
-      redirectUri: `${window.location.origin}/auth/kakao-callback`,
+      redirectUri: `${window.location.origin}/auth/callback`,
       code: this.code
     }
 
