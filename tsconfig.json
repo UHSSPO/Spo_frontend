@@ -3,18 +3,47 @@
     "target": "ES2018",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
+    "lib": [
+      "ESNext",
+      "ESNext.AsyncIterable",
+      "DOM"
+    ],
     "esModuleInterop": true,
     "allowJs": true,
     "sourceMap": true,
     "strict": true,
     "noEmit": true,
     "experimentalDecorators": true,
+    "strictPropertyInitialization": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/"],
+      "~/*": [
+        "./src/*"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
     },
-    "types": ["@nuxt/types", "@types/node", "@nuxt/vue-app", "@nuxtjs/axios"]
+    "types": [
+      "@types/node",
+      "@nuxt/types",
+      "@nuxtjs/axios",
+      "vuetify",
+      "nuxt-i18n"
+    ]
   },
-  "exclude": ["node_modules", ".nuxt", "dist"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "test/**/*.ts",
+    "test/**/*.vue"
+  ],
+  "exclude": [
+    "node_modules",
+    ".nuxt",
+    "dist"
+  ],
+  "files": [
+    "shims-vue.d.ts"
+  ]
 }

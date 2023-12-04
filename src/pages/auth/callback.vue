@@ -128,7 +128,10 @@ export default class extends Vue {
   }
 
   private get isButtonDisabled(): boolean {
-    if (this.checkDateFormat(this.formData.dateOfBirth) === true && this.checkPassword(this.formData.pw) === true && StringUtil.isNotEmpty(this.formData.nickName) && this.checkSecondPassword) {
+    if (this.checkDateFormat(this.formData.dateOfBirth) === true &&
+      this.checkPassword(this.formData.pw) === true &&
+      StringUtil.isNotEmpty(this.formData.nickName) &&
+      this.checkSecondPassword(this.checkPw) === true) {
       return true
     } else {
       return false
