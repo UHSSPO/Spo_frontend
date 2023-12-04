@@ -2,14 +2,14 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true
+    node: true,
   },
   extends: [
     '@nuxtjs/eslint-config-typescript',
     'plugin:nuxt/recommended',
     'prettier',
     'plugin:@typescript-eslint/recommended',
-    '@nuxtjs/eslint-config-typescript'
+    '@nuxtjs/eslint-config-typescript',
   ],
   plugins: ['nuxt'],
   // add your custom rules here
@@ -32,13 +32,14 @@ module.exports = {
 
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-mutable-exports.md
     'import/no-mutable-exports': 'off',
-    'space-before-function-paren': 'off'
+    'space-before-function-paren': 'off',
+    'comma-dangle': 'off',
   },
   parserOptions: {
     // 다른 설정...
-    types: ['@nuxt/types']
+    types: ['@nuxt/types'],
   },
   globals: {
-    Kakao: true
-  }
+    Kakao: true,
+  },
 }
