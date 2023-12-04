@@ -26,7 +26,7 @@ export default class STextField extends Vue {
   @Prop({ type: String, default: 'text' }) type?: string
   @Prop({ type: Array, default: () => [] }) rules?: Array<Function>
   @Prop() value!: string
-  @Prop({ default: false }) required?: string
+  @Prop({ default: false }) required?: boolean
   @Prop() maxLength?: number
   @Prop() disabled?: boolean
   @Prop() placeholder?: string
