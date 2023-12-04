@@ -11,30 +11,27 @@ export default {
     titleTemplate: 'SPO',
     title: 'SPO',
     htmlAttrs: {
-      lang: 'ko'
+      lang: 'ko',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
     ],
     // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
       {
-        src: 'https://developers.kakao.com/sdk/js/kakao.js'
-      }
-    ]
+        src: 'https://developers.kakao.com/sdk/js/kakao.js',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/scss/style.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '~/plugin/axios',
-    '~/plugin/axios-accessor'
-  ],
+  plugins: ['~/plugin/axios', '~/plugin/axios-accessor'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -45,20 +42,23 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    ['@nuxtjs/dotenv', { path: './', filename: `.env.${process.env.NODE_ENV}`.trimEnd() }]
+    [
+      '@nuxtjs/dotenv',
+      { path: './', filename: `.env.${process.env.NODE_ENV}`.trimEnd() },
+    ],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/scss/variables.scss'],
     theme: {
-      dark: false
+      dark: false,
       // themes: {
       //   dark: {
       //     primary: colors.blue.darken2,
@@ -70,10 +70,10 @@ export default {
       //     success: colors.green.accent3
       //   }
       // }
-    }
+    },
   },
   generate: {
-    fallback: true
+    fallback: true,
   },
 
   axios: {
@@ -81,27 +81,26 @@ export default {
     timeout: 30000,
     headers: {
       common: {
-        Accept: 'application/json, text/plain, */*'
-      }
-    }
+        Accept: 'application/json, text/plain, */*',
+      },
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    extend (config, ctx) {
+    extend(config, ctx) {
       if (ctx.isDev && process.client) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|ts|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/
+          exclude: /(node_modules)/,
         })
       }
-    }
+    },
   },
   env: {
-    mode: process.env.NODE_ENV
+    mode: process.env.NODE_ENV,
   },
-  loading: '~/components/common/CLoadingBar.vue'
-
+  loading: '~/components/common/SLoadingBar.vue',
 }

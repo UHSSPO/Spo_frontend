@@ -8,9 +8,9 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
-  name: 'CLoadingBar'
+  name: 'SLoadingBar'
 })
-export default class CLoadingBar extends Vue {
+export default class SLoadingBar extends Vue {
   private isLoading = false
 
   public start(): void {
