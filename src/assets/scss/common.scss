@@ -55,4 +55,27 @@
   }
 }
 
+.w-100 {
+  width: 100%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.sing-up {
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &-header {
+    margin-bottom: 20px;
+  }
+  &-input {
+    width: 50%;
+  }
+  &-button {
+    width: 50%;
+  }
+}
 

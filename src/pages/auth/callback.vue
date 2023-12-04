@@ -1,108 +1,79 @@
 <template>
   <div id="container" class="line">
     <div class="content">
-      <!--시작-->
-      <h1>카카오 계정으로 가입하기</h1>
-      <template>
-        <v-form>
-          <v-text-field
-            v-model="nickname"
-            label="닉네임"
-            required
-          />
-        </v-form>
-      </template>
-      <v-text-field
-        v-model="email"
-        :rules="emailRules"
-        label="이메일"
-        required
-      >
-        <input type="text" placeholder="닉네임을 입력하세요." style="text-align:left" value="">
-      </v-text-field>
-      <template>
-        <div>
-          <div class="mb-6">
-            Active picker: <code>{{ activePicker || 'null' }}</code>
-          </div>
-          <v-menu
-            ref="menu"
-            v-model="menu"
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
-          >
-            <template #activator="{ on, attrs }">
-              <v-text-field
-                v-model="date"
-                label="출생일자"
-                prepend-icon="mdi-calendar"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-              />
-            </template>
-            <v-date-picker
-              v-model="date"
-              :active-picker.sync="activePicker"
-              :max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10)"
-              min="1950-01-01"
-              @change="save"
-            />
-          </v-menu>
+      <div class="sing-up">
+        <div class="sing-up-header">
+          <h1>카카오 계정으로 가입하기</h1>
         </div>
-      </template>
+        <div class="sing-up-input">
+          <s-text-field
+            v-model="formData.email"
+            label="이메일"
+            :required="true"
+            :disabled="true"
+          />
+          <s-text-field
+            v-model="formData.nickName"
+            label="닉네임"
+            :required="true"
+            :max-length="10"
+          />
+          <s-text-field
+            v-model="formData.dateOfBirth"
+            label="생년월일"
+            :required="true"
+            :rules="[checkDateFormat]"
+          />
+          <s-text-field
+            v-model="formData.pw"
+            label="패스워드"
+            :required="true"
+            :rules="[checkPassword]"
+            type="password"
+          />
+          <s-text-field
+            v-model="checkPw"
+            label="패스워드 재입력"
+            :required="true"
+            :rules="[checkSecondPassword]"
+            type="password"
+          />
+        </div>
+        <div class="sing-up-button">
+          <s-button class="w-100" :disabled="!isButtonDisabled" @click="onClickSingUp">
+            가입
+          </s-button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      nickname: ''
-    }
-  },
-  methods: {
-    submitForm() {
-      // 닉네임 제출 또는 다른 처리 로직 추가
-      if (this.nickname) {
-        // 닉네임이 입력되었을 때의 처리
-        console.log('닉네임:', this.nickname)
-      } else {
-        // 닉네임이 입력되지 않았을 때의 처리
-        console.error('닉네임을 입력하세요.')
-      }
-    }
-  }
-}
-</script>
-<script>
-export default {
-  data: () => ({
-    valid: false,
-    email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+/.test(v) || 'E-mail must be valid'
-    ]
-  })
-}
-</script>
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { IKakaoCertified } from '../../types/auth/auth'
-import { kakaoCertified } from '../../api/auth'
-import STextField from '@/components/common/STextField.vue'
+import { IKakaoCertified, ISignUp } from '../../types/auth/auth'
+import { kakaoCertified, signUp } from '../../api/auth'
+import STextField from '../../components/common/STextField.vue'
+import SButton from '../../components/common/SButton.vue'
+import StringUtil from '../../util/StringUtil'
+import { commonStore } from '../../util/store-accessor'
 @Component({
-  components: { STextField },
+  components: { STextField, SButton },
   layout: 'empty',
   name: 'callback'
 })
 export default class extends Vue {
   private authData = {} as IKakaoCertified
   private code = (this.$route.query.code || '') as string
+  private formData = {
+    email: '',
+    pw: '',
+    dateOfBirth: '',
+    signUpChannel: '',
+    nickName: ''
+  } as ISignUp
+
+  private checkPw = ''
 
   async created() {
     this.authData = {
@@ -111,16 +82,57 @@ export default class extends Vue {
       code: this.code
     }
 
-    console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
     const response = await kakaoCertified(this.authData)
-    console.log('response', response)
+    this.formData.email = response.email
+    this.formData.nickName = response.nickName
+    this.formData.signUpChannel = 'kakao'
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
+  }
+
+  private async onClickSingUp() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    const response = await signUp(this.formData)
+    if (StringUtil.isNotEmpty(response)) {
+      commonStore.ADD_DIALOG({
+        id: 'SUCCESS_SIGN_UP',
+        text: '회원가입이 완료 됐습니다.',
+        callback: () => {
+          this.$router.push('/')
+        }
+      })
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
+  }
+
+  private checkDateFormat(value: string): boolean | string {
+    const regex = /^\d{6}$/
+    return regex.test(value) || 'YYMMDD 형식으로 입력해주세요.'
+  }
+
+  private checkPassword(value: string): boolean | string {
+    const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
+    return regex.test(value) || '패스워드는 8자리 이상 특수문자 포함(?제외) 영문자 포함하여 입력 해주세요.'
+  }
+
+  private checkSecondPassword(value: string): boolean | string {
+    return this.formData.pw === value || '패스워드와 패스워드 재입력이 불일치 합니다.'
+  }
+
+  private get isButtonDisabled(): boolean {
+    if (this.checkDateFormat(this.formData.dateOfBirth) === true && this.checkPassword(this.formData.pw) === true) {
+      return true
+    } else {
+      return false
+    }
   }
 }
 </script>
