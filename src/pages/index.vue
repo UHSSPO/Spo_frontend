@@ -53,7 +53,7 @@ export default class extends Vue {
       callback: async (response: DIALOG_RESULT) => {
         if (response === DIALOG_RESULT.CONFIRM) {
           await Kakao.Auth.authorize({
-            redirectUri: `${window.location.origin}/auth/callback`
+            redirectUri: `${window.location.origin}/auth/kakao-login`
           })
         } else {
           console.log('취소요')

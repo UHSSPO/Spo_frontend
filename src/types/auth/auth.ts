@@ -6,7 +6,7 @@ export interface IKakaoCertified {
 
 export interface ISignUp {
   email: string // 이메일
-  pw: string // 패스워드
+  pwd: string // 패스워드
   dateOfBirth: string // 생년월일
   signUpChannel: string // 가입채널
   nickName: string // 닉네임

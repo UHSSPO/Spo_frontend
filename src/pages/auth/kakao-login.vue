@@ -25,14 +25,14 @@
             :rules="[checkDateFormat]"
           />
           <s-text-field
-            v-model="formData.pw"
+            v-model="formData.pwd"
             label="패스워드"
             :required="true"
             :rules="[checkPassword]"
             type="password"
           />
           <s-text-field
-            v-model="checkPw"
+            v-model="checkPwd"
             label="패스워드 재입력"
             :required="true"
             :rules="[checkSecondPassword]"
@@ -60,25 +60,25 @@ import { commonStore } from '../../util/store-accessor'
 @Component({
   components: { STextField, SButton },
   layout: 'empty',
-  name: 'callback'
+  name: 'kakao-login'
 })
 export default class extends Vue {
   private authData = {} as IKakaoCertified
   private code = (this.$route.query.code || '') as string
   private formData = {
     email: '',
-    pw: '',
+    pwd: '',
     dateOfBirth: '',
     signUpChannel: '',
     nickName: ''
   } as ISignUp
 
-  private checkPw = ''
+  private checkPwd = ''
 
   async created() {
     this.authData = {
       apikey: '2e79fbfa9c3fe6aad98a3ca66e8e5f6f',
-      redirectUri: `${window.location.origin}/auth/callback`,
+      redirectUri: `${window.location.origin}/auth/kakao-login`,
       code: this.code
     }
 
@@ -124,14 +124,14 @@ export default class extends Vue {
   }
 
   private checkSecondPassword(value: string): boolean | string {
-    return this.formData.pw === value || '패스워드와 패스워드 재입력이 불일치 합니다.'
+    return this.formData.pwd === value || '패스워드와 패스워드 재입력이 불일치 합니다.'
   }
 
   private get isButtonDisabled(): boolean {
     if (this.checkDateFormat(this.formData.dateOfBirth) === true &&
-      this.checkPassword(this.formData.pw) === true &&
+      this.checkPassword(this.formData.pwd) === true &&
       StringUtil.isNotEmpty(this.formData.nickName) &&
-      this.checkSecondPassword(this.checkPw) === true) {
+      this.checkSecondPassword(this.checkPwd) === true) {
       return true
     } else {
       return false
