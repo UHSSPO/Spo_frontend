@@ -5,8 +5,13 @@ import { Globals } from './Globals'
 
 export default class StringUtil {
   // 숫자 콤마(,) 처리
-  public static setNumberComma(value: string | number, decimal?: number): string {
-    return numeral(value).format('0,0'.concat(decimal ? '.' + '0'.repeat(decimal) : ''))
+  public static setNumberComma(
+    value: string | number,
+    decimal?: number
+  ): string {
+    return numeral(value).format(
+      '0,0'.concat(decimal ? '.' + '0'.repeat(decimal) : '')
+    )
   }
 
   // 숫자 콤마(,) 처리
@@ -14,8 +19,15 @@ export default class StringUtil {
     return numeral(value).format('0,0.00')
   }
 
-  public static setCurrencyNumberComma(value: string | number, currency: string) {
-    if (currency === 'KRW') { return numeral(value).format('0,0') } else { return numeral(value).format('0,0.00') }
+  public static setCurrencyNumberComma(
+    value: string | number,
+    currency: string
+  ) {
+    if (currency === 'KRW') {
+      return numeral(value).format('0,0')
+    } else {
+      return numeral(value).format('0,0.00')
+    }
   }
 
   public static setNumberFormat(value: number | null, format: string): string {
@@ -35,14 +47,22 @@ export default class StringUtil {
       .toFormat(dateTimeFormat || Globals.DATETIME_FORMAT)
   }
 
-  public static getDateMonthPlus(value: number, dateTimeFormat?: string): string {
+  public static getDateMonthPlus(
+    value: number,
+    dateTimeFormat?: string
+  ): string {
     return DateTime.local()
       .setLocale('ko')
       .plus({ months: value })
       .toFormat(dateTimeFormat || Globals.DATE_FORMAT)
   }
 
-  public static getDatePlus(target: string, unit: ToRelativeUnit, value: number, dateTimeFormat?: string): string {
+  public static getDatePlus(
+    target: string,
+    unit: ToRelativeUnit,
+    value: number,
+    dateTimeFormat?: string
+  ): string {
     const duration = {} as Duration
     duration[unit] = value
     return DateTime.fromISO(target)
@@ -51,8 +71,14 @@ export default class StringUtil {
       .toFormat(dateTimeFormat || Globals.DATE_FORMAT)
   }
 
-  public static getDaysBetween(startDate: string, endDate: string): Array<String> {
-    const interval = Interval.fromDateTimes(DateTime.fromISO(startDate), DateTime.fromISO(endDate))
+  public static getDaysBetween(
+    startDate: string,
+    endDate: string
+  ): Array<String> {
+    const interval = Interval.fromDateTimes(
+      DateTime.fromISO(startDate),
+      DateTime.fromISO(endDate)
+    )
     const result = []
     for (const day of this.days(interval)) {
       result.push(day.toFormat(Globals.DATE_FORMAT))
@@ -76,7 +102,7 @@ export default class StringUtil {
       value === undefined ||
       value === null ||
       // eslint-disable-next-line use-isnan
-      value === NaN ||
+      isNaN(value) ||
       (typeof value === 'object' && _.isEmpty(value)) ||
       (typeof value === 'string' && value.trim().length === 0)
     )
@@ -112,9 +138,19 @@ export default class StringUtil {
    * @param won 원 단위
    * @param decimal 소수점 단위
    */
-  public static setWonUnit(value: string | number, won?: number, decimal?: number): string | number {
-    if (won && won > 0) { value = Number(value) / (won as number) }
-    if (StringUtil.isNotEmpty(decimal) && Number(decimal) >= 0) { value = Math.floor(Number(value) * Math.pow(10, Number(decimal))) / Math.pow(10, Number(decimal)) }
+  public static setWonUnit(
+    value: string | number,
+    won?: number,
+    decimal?: number
+  ): string | number {
+    if (won && won > 0) {
+      value = Number(value) / (won as number)
+    }
+    if (StringUtil.isNotEmpty(decimal) && Number(decimal) >= 0) {
+      value =
+        Math.floor(Number(value) * Math.pow(10, Number(decimal))) /
+        Math.pow(10, Number(decimal))
+    }
     return value
   }
 
