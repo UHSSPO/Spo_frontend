@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div id="heeader">
+    <div id="header">
       <div class="content">
         <a href="/"><img src="../static/v.png" alt="logo"></a>
         <ul>
