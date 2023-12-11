@@ -13,9 +13,9 @@
   padding:10px 0;
   background:#fff;
   border-bottom:1px solid #D6DBDF;
-  .header-con{
-    width:1380px;
-    margin:0 auto;
+  .content {
+    display: flex;
+    justify-content: space-between;
   }
 }
 
@@ -29,12 +29,8 @@
     }
   }
   .content{
-    position:relative;
-    width:1280px;
-    margin:0 auto;
     border-left:1px solid $line-color;
     border-right:1px solid $line-color;
-    box-sizing:border-box;
   }
 }
 
@@ -46,9 +42,7 @@
   height:40px;
   background:#fff;
   border-top:1px solid $line-color;
-  .footer-con{
-    width:1380px;
-    margin:0 auto;
+  .content{
     padding-top:10px;
     font-size:12px;
     color:#999;
@@ -61,6 +55,13 @@
 
 .w-50 {
   width: 50%;
+}
+
+.content {
+  position:relative;
+  width:1280px;
+  margin:0 auto;
+  box-sizing:border-box;
 }
 
 .sing-up {

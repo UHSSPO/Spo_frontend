@@ -1,12 +1,35 @@
 <template>
   <v-app>
     <div id="heeader">
-      <v-btn>test</v-btn>
+      <div class="content">
+        <a href="/"><img src="../static/v.png" alt="logo"></a>
+        <ul>
+          <li>
+            <a href="#">홈</a>
+          </li>
+          <li>
+            <a href="#">추천</a>
+          </li>
+          <li>
+            <a href="#">성향분석</a>
+          </li>
+          <li>
+            <a href="#">개인추천</a>
+          </li>
+          <li>
+            <a href="#">개인추천</a>
+          </li>
+          <li>
+            <a href="#">검색</a>
+          </li>
+        </ul>
+        <v-btn>test</v-btn>
+      </div>
     </div>
     <!-- src/page -->
     <Nuxt />
     <div id="footer">
-      <div class="footer-con">
+      <div class="content">
         test© test
       </div>
     </div>
@@ -20,7 +43,7 @@ import _ from 'lodash'
 import { DIALOG_TYPE, IDialog, IDialogResult } from '../types/common'
 import { commonStore } from '../util/store-accessor'
 import { Namespace } from '../util/Namespace'
-import SDialog from '../components/common/SDialog.vue'
+import SDialog from '~/components/common/SDialog.vue'
 
 const common = namespace(Namespace.COMMON)
 
