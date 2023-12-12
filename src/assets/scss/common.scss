@@ -101,7 +101,10 @@
     display: flex;
     margin: 20px 0;
   }
-  .content li {
+  .content ul:nth-child(2) {
+    padding: 0 34px;
+  }
+  .content ul:not(:nth-child(2)) li {
     padding: 0 10px;
     align-self: center;
     font-family: '../NanumGothic.ttf';
@@ -117,8 +120,11 @@
     color: #7f828b;
   }
 
-  .content ul:nth-child(2) li:not(:last-child) {
-    border-right: 1px solid #bcbcc2;
+  .content ul:nth-child(2) li:not(:last-child):after {
+    content: 'ㅣ';
+    display: inline-block;
+    margin: 0 10px;
+    color: $line-color;
   }
   .content .footer_logo {
     font-family: '../NanumGothic.ttf';
@@ -239,6 +245,9 @@
   }
 
   #footer {
+    .content {
+      height: auto;
+    }
     .content, .content ul {
       width: 100%;
       display: block;
@@ -249,7 +258,8 @@
       margin: 10px 0;
       border: 0 !important;
     }
+    .content ul:nth-child(2) li:after {
+      display: none !important;
+    }
   }
-
-
 }
