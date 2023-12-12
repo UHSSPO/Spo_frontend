@@ -8,7 +8,7 @@
 
 .header_menu_wrap {
   position: fixed;
-  display: flex;
+  display: none;
   z-index: 500;
   background: #fff;
   width:100%;
@@ -31,7 +31,6 @@
   height: 100px;
   background: #fcfcfc;
   border-bottom:1px solid  $line-color;
-  margin-top: 70px;
   .content {
     display: flex;
     justify-content: space-between;
@@ -62,9 +61,6 @@
   .content li {
     margin: 0 10px;
     align-self: center
-  }
-  .content li:not(.menu_search_list) {
-    border-bottom: 1px solid $line-color;
   }
   .content .v-text-field__details {
     display: none;
@@ -180,6 +176,10 @@
     display: none;
   }
 
+  .header_menu_wrap {
+    display: flex;
+  }
+
   .header_menu_wrap button{
     margin-left: auto;
     z-index: 500;
@@ -190,7 +190,7 @@
     height: 100%;
     width: 80%;
     z-index: 400;
-    margin-left: -80%;
+    margin: 70px 0 0 -80%;
     .content {
       width: 100%;
       display: block;
@@ -215,6 +215,10 @@
       background: #e3e3e3;
       transition: all .5s;
     }
+    .content li:not(.menu_search_list) {
+      border-bottom: 1px solid $line-color;
+    }
+
     .UserManager {
       border: 0;
     }
