@@ -2,7 +2,7 @@
   <div id="container" class="line">
     <div class="content">
       <v-btn color="primary" nuxt @click="goToPage">
-        Continue
+        회원가입
       </v-btn>
       <s-text-field v-model="value" placeholder="text" />
     </div>

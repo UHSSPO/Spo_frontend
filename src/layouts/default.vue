@@ -19,8 +19,20 @@
       <div class="UserManager">
         <div class="content">
           <ul>
-            <li><a href="#">로그인</a></li>
-            <li><a href="#">회원가입</a></li>
+            <li>
+              <v-col cols="auto">
+                <v-btn size="small">
+                  로그인
+                </v-btn>
+              </v-col>
+            </li>
+            <li>
+              <v-col cols="auto">
+                <v-btn size="small">
+                  회원가입
+                </v-btn>
+              </v-col>
+            </li>
           </ul>
         </div>
       </div>
