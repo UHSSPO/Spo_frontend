@@ -1,19 +1,37 @@
 <template>
   <v-app>
-    <div class="back_all_wrap" />
     <div class="header_menu_wrap">
-      <v-app-bar-nav-icon class="nav_btn" @click="onClickMenu" />
-      <a href="#" class="header_menu_logo">
-        <img src="../assets/image/SPO_LOGO.png" alt="logo">
-      </a>
-      <!--      onclick 이벤트 적용 내용    -->
-      <!--      1. .back_all_wrap { display:none; }-->
-      <!--      2. #header {  margin-left: -80%; }-->
-      <!--      3. .header_menu_wrap {width:100%;}-->
-      <!--      두번째 눌렀을때 스크립트 -->
-      <!--      1. .back_all_wrap {  display: block; }-->
-      <!--      2. #header {  margin-left: 0%; }-->
-      <!--      3. .header_menu_wrap {width:80%;}-->
+      <v-app-bar-nav-icon class="nav_btn" @click="appBarStatus" />
+      <a href="/" class="header_menu_logo"><img src="../assets/image/SPO_LOGO.png" alt="logo"></a>
+      <v-navigation-drawer v-model="appBarOpener"  absolute  temporary>
+        <v-list nav dense>
+          <v-list-item>
+            <v-list-item-title @click="appBarLink('menuHome')">홈</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title @click="appBarLink('menuRecommend')">추천</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title @click="appBarLink('menuAssay')">성향분석</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title @click="appBarLink('menuSelfRecommend')">개인추천</v-list-item-title>
+          </v-list-item>
+
+          <div class="header_mobile_form">
+            <v-list-item>
+              <v-list-item-title @click="appBarLink('menuLogin')">로그인</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-title @click="appBarLink('menuJoin')">회원가입</v-list-item-title>
+            </v-list-item>
+          </div>
+        </v-list>
+      </v-navigation-drawer>
     </div>
     <div id="header">
       <div class="UserManager">
@@ -21,6 +39,7 @@
           <ul>
             <li><a href="#">로그인</a></li>
             <li><a href="#">회원가입</a></li>
+            <li><a href="#">관리자 페이지</a></li>
           </ul>
         </div>
       </div>
@@ -35,9 +54,6 @@
           </li>
           <li>
             <a href="#">성향분석</a>
-          </li>
-          <li>
-            <a href="#">개인추천</a>
           </li>
           <li>
             <a href="#">개인추천</a>
@@ -92,6 +108,8 @@ import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
+import { signUp } from '~/api/auth'
+import StringUtil from '~/util/StringUtil'
 
 const common = namespace(Namespace.COMMON)
 
@@ -102,8 +120,16 @@ const common = namespace(Namespace.COMMON)
     SDialog,
   },
 })
+
 export default class extends Vue {
   @common.State private dialogs!: Array<any>
+
+  private appBarOpener = false
+  private appBarStatus() {
+    this.$nextTick(() => {
+      this.appBarOpener = true
+    })
+  }
 
   private onCloseDialog(value: IDialogResult) {
     const index = _.findIndex(this.dialogs, (dialog: IDialog) => {
@@ -112,8 +138,8 @@ export default class extends Vue {
     commonStore.REMOVE_DIALOG(index)
   }
 
-  private onClickMenu() {
-
+  private appBarLink(href : string) {
+    console.log(href)
   }
 }
 </script>
