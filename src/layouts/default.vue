@@ -3,22 +3,30 @@
     <div class="header_menu_wrap">
       <v-app-bar-nav-icon class="nav_btn" @click="appBarStatus" />
       <a href="/" class="header_menu_logo"><img src="../assets/image/SPO_LOGO.png" alt="logo"></a>
-      <v-navigation-drawer v-model="appBarOpener"  absolute  temporary>
+      <v-navigation-drawer v-model="appBarOpener" absolute temporary>
         <v-list nav dense>
           <v-list-item>
-            <v-list-item-title @click="appBarLink('menuHome')">홈</v-list-item-title>
+            <v-list-item-title @click="appBarLink('menuHome')">
+              홈
+            </v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="appBarLink('menuRecommend')">추천</v-list-item-title>
+            <v-list-item-title @click="appBarLink('menuRecommend')">
+              추천
+            </v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="appBarLink('menuAssay')">성향분석</v-list-item-title>
+            <v-list-item-title @click="appBarLink('menuAssay')">
+              성향분석
+            </v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="appBarLink('menuSelfRecommend')">개인추천</v-list-item-title>
+            <v-list-item-title @click="appBarLink('menuSelfRecommend')">
+              개인추천
+            </v-list-item-title>
           </v-list-item>
 
           <div class="header_mobile_form">
@@ -108,8 +116,6 @@ import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
-import { signUp } from '~/api/auth'
-import StringUtil from '~/util/StringUtil'
 
 const common = namespace(Namespace.COMMON)
 
@@ -126,9 +132,7 @@ export default class extends Vue {
 
   private appBarOpener = false
   private appBarStatus() {
-    this.$nextTick(() => {
-      this.appBarOpener = true
-    })
+    this.appBarOpener = true
   }
 
   private onCloseDialog(value: IDialogResult) {
