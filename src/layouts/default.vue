@@ -19,8 +19,10 @@
       <div class="UserManager">
         <div class="content">
           <ul>
-            <li><a href="#">로그인</a></li>
-            <li><a href="#">회원가입</a></li>
+            <li @click="onclickToLogin">
+              로그인
+            </li>
+            <li>회원가입</li>
           </ul>
         </div>
       </div>
@@ -115,5 +117,10 @@ export default class extends Vue {
   private onClickMenu() {
 
   }
+
+  private onclickToLogin() {
+    this.$router.push('/auth/login')
+  }
 }
+
 </script>
