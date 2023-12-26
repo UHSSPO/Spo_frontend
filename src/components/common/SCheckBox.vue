@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-checkbox v-model="checkbox">
+    <v-checkbox v-model="localValue" :rules="localRules" :disabled="disabled">
       <template #label>
         <div>
           I agree that
@@ -32,10 +32,10 @@ import StringUtil from '../../util/StringUtil'
   name: 'SCheckbox'
 })
 export default class SCheckbox extends Vue {
-  @Prop() disabled?: boolean
-  @Prop() required?: boolean
-  @Prop(Number) minLength?: number
-  @Prop(Number) maxLength?: number
+  @Prop() disabled!: boolean
+  @Prop() required!: boolean
+  @Prop(Number) minLength!: number
+  @Prop(Number) maxLength!: number
   @Prop(Array) rules?: Array<Function>
 
   private localValue = false
