@@ -22,7 +22,9 @@
             <li @click="onclickToLogin">
               로그인
             </li>
-            <li>회원가입</li>
+            <li @click="goToPage">
+              회원가입
+            </li>
           </ul>
         </div>
       </div>
@@ -89,11 +91,13 @@
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import _ from 'lodash'
-import { DIALOG_TYPE, IDialog, IDialogResult } from '~/types/common'
+import { DIALOG_RESULT, DIALOG_TYPE, IDialog, IDialogResult } from '~/types/common'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
+import { geTestApi } from '~/api/test-api'
+declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
 
@@ -106,6 +110,42 @@ const common = namespace(Namespace.COMMON)
 })
 export default class extends Vue {
   @common.State private dialogs!: Array<any>
+  async created() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    const res = await geTestApi()
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
+  }
+
+  kakaoInit() {
+    Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
+    Kakao.isInitialized()
+  }
+
+  mounted() {
+    this.kakaoInit()
+  }
+
+  private goToPage() {
+    commonStore.ADD_DIALOG({
+      id: 'test',
+      type: DIALOG_TYPE.CONFIRM_CANCEL,
+      text: '이동한다잉',
+      callback: async (response: DIALOG_RESULT) => {
+        if (response === DIALOG_RESULT.CONFIRM) {
+          await Kakao.Auth.authorize({
+            redirectUri: `${window.location.origin}/auth/kakao-login`
+          })
+        } else {
+          console.log('취소요')
+          console.log(this.value)
+        }
+      }
+    })
+  }
 
   private onCloseDialog(value: IDialogResult) {
     const index = _.findIndex(this.dialogs, (dialog: IDialog) => {
