@@ -46,7 +46,7 @@
       </v-navigation-drawer>
     </div>
     <div id="header">
-      <div class="UserManager">
+      <div class="user-manager">
         <div class="content">
           <ul>
             <li @click="onclickToLogin">
