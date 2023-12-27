@@ -133,21 +133,9 @@ export default class extends Vue {
     this.kakaoInit()
   }
 
-  private goToPage() {
-    commonStore.ADD_DIALOG({
-      id: 'test',
-      type: DIALOG_TYPE.CONFIRM_CANCEL,
-      text: '이동한다잉',
-      callback: async (response: DIALOG_RESULT) => {
-        if (response === DIALOG_RESULT.CONFIRM) {
-          await Kakao.Auth.authorize({
-            redirectUri: `${window.location.origin}/auth/kakao-login`
-          })
-        } else {
-          console.log('취소요')
-          console.log(this.value)
-        }
-      }
+  private async goToPage() {
+    await Kakao.Auth.authorize({
+      redirectUri: `${window.location.origin}/auth/kakao-login`
     })
   }
 

@@ -33,7 +33,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
-import { IKakaoCertified, ILogin, ISignUp } from '~/types/auth/auth'
+import { IKakaoCertified, ILogin, ISignUp, IUserInfo } from '~/types/auth/auth'
 import { login, signUp } from '~/api/auth'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
@@ -54,7 +54,10 @@ export default class Login extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    const response = await login(this.formData)
+    const response: IUserInfo = await login(this.formData)
+    if (StringUtil.isNotEmpty(response)) {
+      this.$router.push('/')
+    }
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
