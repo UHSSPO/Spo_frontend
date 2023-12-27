@@ -73,7 +73,7 @@
 
 #container{
   width:100%;
-  overflow:hidden;
+  overflow:scroll;
   &.line{
     //border-top:6px solid $line-color2;
     .content{
