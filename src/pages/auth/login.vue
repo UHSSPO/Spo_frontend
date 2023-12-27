@@ -1,11 +1,11 @@
 <template>
   <div id="container" class="line">
     <div class="content">
-      <div class="login">
-        <div class="login-header">
+      <div class="sing-up">
+        <div class="sing-up-header">
           <h1>로그인하기</h1>
         </div>
-        <div class="login-input">
+        <div class="sing-up-input">
           <s-text-field
             v-model="formData.email"
             label="이메일"
@@ -30,14 +30,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
 import { IKakaoCertified, ILogin, ISignUp, IUserInfo } from '~/types/auth/auth'
 import { login, signUp } from '~/api/auth'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
+import { Namespace } from '~/util/Namespace'
 
+const common = namespace(Namespace.COMMON)
 @Component({
   components: { STextField, SButton },
   layout: 'empty',
@@ -56,7 +58,8 @@ export default class Login extends Vue {
     })
     const response: IUserInfo = await login(this.formData)
     if (StringUtil.isNotEmpty(response)) {
-      this.$router.push('/')
+      commonStore.ADD_USER_INFO(response)
+      await this.$router.push('/')
     }
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
