@@ -102,7 +102,6 @@ export default class StringUtil {
       value === undefined ||
       value === null ||
       // eslint-disable-next-line use-isnan
-      isNaN(value) ||
       (typeof value === 'object' && _.isEmpty(value)) ||
       (typeof value === 'string' && value.trim().length === 0)
     )
