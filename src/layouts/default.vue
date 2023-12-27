@@ -31,11 +31,15 @@
 
           <div class="header_mobile_form">
             <v-list-item>
-              <v-list-item-title @click="appBarLink('menuLogin')">로그인</v-list-item-title>
+              <v-list-item-title @click="appBarLink('menuLogin')">
+                로그인
+              </v-list-item-title>
             </v-list-item>
 
             <v-list-item>
-              <v-list-item-title @click="appBarLink('menuJoin')">회원가입</v-list-item-title>
+              <v-list-item-title @click="appBarLink('menuJoin')">
+                회원가입
+              </v-list-item-title>
             </v-list-item>
           </div>
         </v-list>
@@ -123,7 +127,6 @@ import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
-import { geTestApi } from '~/api/test-api'
 declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
@@ -137,15 +140,6 @@ const common = namespace(Namespace.COMMON)
 })
 export default class extends Vue {
   @common.State private dialogs!: Array<any>
-  async created() {
-    this.$nextTick(() => {
-      this.$nuxt.$loading.start()
-    })
-    const res = await geTestApi()
-    this.$nextTick(() => {
-      this.$nuxt.$loading.finish()
-    })
-  }
 
   kakaoInit() {
     Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key

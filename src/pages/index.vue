@@ -8,9 +8,6 @@
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
-import { commonStore } from '../util/store-accessor'
-import { DIALOG_RESULT, DIALOG_TYPE } from '../types/common'
-import { geTestApi, geTestApiError400, geTestApiError500 } from '../api/test-api'
 import STextField from '../components/common/STextField.vue'
 
 @Component({
