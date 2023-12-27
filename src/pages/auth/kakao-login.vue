@@ -62,7 +62,7 @@ import { commonStore } from '../../util/store-accessor'
   layout: 'empty',
   name: 'kakao-login'
 })
-export default class extends Vue {
+export default class KakaoLogin extends Vue {
   private authData = {} as IKakaoCertified
   private code = (this.$route.query.code || '') as string
   private formData = {

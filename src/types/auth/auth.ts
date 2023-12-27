@@ -11,3 +11,22 @@ export interface ISignUp {
   signUpChannel: string // 가입채널
   nickName: string // 닉네임
 }
+export interface ILogin {
+  email: string // 이메일
+  pwd: string // 패스워드
+}
+
+export interface IUserDetail{
+  userSequence:number // 유저일련번호
+  email:string // 이메일
+  signUpChannel:string // 가입채널
+  investPropensity:string // 투자성향
+  userRole:string // 유저권한
+  nickName:string // 닉네임
+  dateOfBirth:string // 생년월일
+}
+
+export interface IUserInfo{
+  accessToken:string// jwt 토큰
+  user: IUserDetail
+}

@@ -45,9 +45,16 @@
       <div class="UserManager">
         <div class="content">
           <ul>
-            <li><a href="#">로그인</a></li>
-            <li><a href="#">회원가입</a></li>
-            <li><a href="#">관리자 페이지</a></li>
+            <li @click="onclickToLogin">
+              <a>
+                로그인
+              </a>
+            </li>
+            <li @click="goToPage">
+              <a>
+                회원가입
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -111,11 +118,13 @@
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import _ from 'lodash'
-import { DIALOG_TYPE, IDialog, IDialogResult } from '~/types/common'
+import { DIALOG_RESULT, DIALOG_TYPE, IDialog, IDialogResult } from '~/types/common'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
+import { geTestApi } from '~/api/test-api'
+declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
 
@@ -126,9 +135,32 @@ const common = namespace(Namespace.COMMON)
     SDialog,
   },
 })
-
 export default class extends Vue {
   @common.State private dialogs!: Array<any>
+  async created() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    const res = await geTestApi()
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
+  }
+
+  kakaoInit() {
+    Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
+    Kakao.isInitialized()
+  }
+
+  mounted() {
+    this.kakaoInit()
+  }
+
+  private async goToPage() {
+    await Kakao.Auth.authorize({
+      redirectUri: `${window.location.origin}/auth/kakao-login`
+    })
+  }
 
   private appBarOpener = false
   private appBarStatus() {
@@ -144,6 +176,10 @@ export default class extends Vue {
 
   private appBarLink(href : string) {
     console.log(href)
+  }
+
+  private onclickToLogin() {
+    this.$router.push('/auth/login')
   }
 }
 </script>
