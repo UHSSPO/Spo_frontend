@@ -98,12 +98,6 @@
             <li><a href="#">투자 유의 안내</a></li>
           </ul>
           <ul>
-            <li>SPO 주식회사</li>
-            <li>대표 NULL</li>
-            <li>사업자 등록번호 NULL</li>
-            <li>고객센터 NULL</li>
-          </ul>
-          <ul>
             <li>경기도 화성시 봉담읍 최루백로 72 이공관 802호</li>
           </ul>
         </div>
