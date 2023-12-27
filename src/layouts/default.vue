@@ -20,10 +20,14 @@
         <div class="content">
           <ul>
             <li @click="onclickToLogin">
-              로그인
+              <a>
+                로그인
+              </a>
             </li>
             <li @click="goToPage">
-              회원가입
+              <a>
+                회원가입
+              </a>
             </li>
           </ul>
         </div>

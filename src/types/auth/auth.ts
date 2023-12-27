@@ -11,3 +11,7 @@ export interface ISignUp {
   signUpChannel: string // 가입채널
   nickName: string // 닉네임
 }
+export interface ILogin {
+  email: string // 이메일
+  pwd: string // 패스워드
+}
