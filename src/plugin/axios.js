@@ -44,7 +44,7 @@ export default function ({ $axios, redirect, app }) {
           errorData.errors.forEach((item) => {
             addMessages += '\n' + item.message
           })
-        } else if (StringUtil.isNotEmpty(errorData.message)) {
+        } else if (errorData.message) {
           addMessages += '\n' + errorData.message
         } else {
           addMessages += '\n' + errorData
