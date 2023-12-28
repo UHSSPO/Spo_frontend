@@ -47,7 +47,7 @@
     </div>
     <div id="header">
       <div class="user-manager">
-        <div class="content">
+        <div class="content dynamic-layout">
           <ul>
             <li @click="onclickToLogin">
               <a>
@@ -62,7 +62,7 @@
           </ul>
         </div>
       </div>
-      <div class="content">
+      <div class="content dynamic-layout">
         <a href="/"><img src="../assets/image/SPO_LOGO.png" alt="logo"></a>
         <ul>
           <li>
