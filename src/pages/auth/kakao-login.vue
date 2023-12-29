@@ -1,6 +1,6 @@
 <template>
   <div id="container" class="line">
-    <div class="content">
+    <div class="content dynamic-layout">
       <div class="sing-up">
         <div class="sing-up-header">
           <h1>카카오 계정으로 가입하기</h1>
