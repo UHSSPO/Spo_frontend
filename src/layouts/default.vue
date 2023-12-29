@@ -50,7 +50,7 @@
         <div class="content">
           <ul v-if="StringUtil.isEmpty(token)">
             <li>
-              {{nickName}}
+              <!--{{ nickName }}-->
             </li>
             <li @click="onclickToLogin">
               <a>
@@ -131,24 +131,19 @@
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import _ from 'lodash'
+import { Mutation } from 'vuex-module-decorators'
 import { DIALOG_RESULT, DIALOG_TYPE, IDialog, IDialogResult } from '~/types/common'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
 import StringUtil from '~/util/StringUtil'
-import { Mutation } from 'vuex-module-decorators'
 import { IUserInfo } from '~/types/auth/auth'
 declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
 
 @Component({
-  computed: {
-    StringUtil() {
-      return StringUtil
-    }
-  },
   scrollToTop: true,
   components: {
     STextField,
@@ -196,11 +191,9 @@ export default class extends Vue {
   @common.State private token!: string
 
   private onclicklogout() {
-    console.log(this.userinfo)
+    // console.log(this.userinfo)
     alert('로그아웃 되었습니다!')
     commonStore.LOGOUT()
   }
-
-
 }
 </script>
