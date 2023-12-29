@@ -48,7 +48,10 @@
     <div id="header">
       <div class="user-manager">
         <div class="content">
-          <ul>
+          <ul v-if="StringUtil.isEmpty(token)">
+            <li>
+              {{nickName}}
+            </li>
             <li @click="onclickToLogin">
               <a>
                 로그인
@@ -57,6 +60,18 @@
             <li @click="goToPage">
               <a>
                 회원가입
+              </a>
+            </li>
+          </ul>
+          <ul v-else>
+            <li @click="onclicklogout()">
+              <a>
+                로그아웃
+              </a>
+            </li>
+            <li @click="goToPage">
+              <a>
+                내정보
               </a>
             </li>
           </ul>
@@ -121,11 +136,19 @@ import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
+import StringUtil from '~/util/StringUtil'
+import { Mutation } from 'vuex-module-decorators'
+import { IUserInfo } from '~/types/auth/auth'
 declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
 
 @Component({
+  computed: {
+    StringUtil() {
+      return StringUtil
+    }
+  },
   scrollToTop: true,
   components: {
     STextField,
@@ -169,5 +192,15 @@ export default class extends Vue {
   private onclickToLogin() {
     this.$router.push('/auth/login')
   }
+
+  @common.State private token!: string
+
+  private onclicklogout() {
+    console.log(this.userinfo)
+    alert('로그아웃 되었습니다!')
+    commonStore.LOGOUT()
+  }
+
+
 }
 </script>
