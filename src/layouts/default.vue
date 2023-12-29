@@ -54,7 +54,7 @@
                 로그인
               </a>
             </li>
-            <li @click="goToPage">
+            <li @click="goToDepts">
               <a>
                 회원가입
               </a>
@@ -121,7 +121,6 @@ import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
-declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
 
@@ -135,19 +134,8 @@ const common = namespace(Namespace.COMMON)
 export default class extends Vue {
   @common.State private dialogs!: Array<any>
 
-  kakaoInit() {
-    Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
-    Kakao.isInitialized()
-  }
-
-  mounted() {
-    this.kakaoInit()
-  }
-
-  private async goToPage() {
-    await Kakao.Auth.authorize({
-      redirectUri: `${window.location.origin}/auth/kakao-login`
-    })
+  private goToDepts() {
+    this.$router.push('/auth/depts')
   }
 
   private appBarOpener = false

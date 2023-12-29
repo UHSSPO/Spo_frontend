@@ -100,7 +100,38 @@
   .content{
     border-left:1px solid $line-color;
     border-right:1px solid $line-color;
+    .join-box {
+      border: 1px solid $line-color;
+      padding: 100px 40px;
+      width: 50%;
+      margin: 0 auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+    .sing-up-input {
+      width: 100%;
+    }
+    .sing-up-header {
+      margin-bottom: 50px;
+    }
+    .sing-up-button {
+      margin: 0 auto;
+    }
+    .btn-img{
+      background: url("../image/KAKAO_LOGIN.png");
+      width: 300px;
+      height: 5.5vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
   }
+
+
+
 }
 
 #footer{
