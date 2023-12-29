@@ -49,29 +49,34 @@
       <div class="user-manager">
         <div class="content">
           <ul v-if="StringUtil.isEmpty(token)">
-            <li>
-              <!--{{ nickName }}-->
-            </li>
             <li @click="onclickToLogin">
-              <a>
+              <a class="header_user_color">
                 로그인
               </a>
             </li>
             <li @click="goToPage">
-              <a>
+              <a class="header_user_color">
                 회원가입
               </a>
             </li>
           </ul>
           <ul v-else>
+            <li class="header_user_color">
+              {{ $store.state.common.userInfo.nickName }} 님 환영합니다!
+            </li>
             <li @click="onclicklogout()">
-              <a>
+              <a class="header_user_color">
                 로그아웃
               </a>
             </li>
             <li @click="goToPage">
-              <a>
-                내정보
+              <a class="header_user_color">
+                마이페이지
+              </a>
+            </li>
+            <li v-if="($store.state.common.userInfo.userRole)=='ADM'">
+              <a class="header_user_color">
+                관리자페이지
               </a>
             </li>
           </ul>
@@ -131,14 +136,11 @@
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import _ from 'lodash'
-import { Mutation } from 'vuex-module-decorators'
-import { DIALOG_RESULT, DIALOG_TYPE, IDialog, IDialogResult } from '~/types/common'
+import { IDialog, IDialogResult } from '~/types/common'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
-import StringUtil from '~/util/StringUtil'
-import { IUserInfo } from '~/types/auth/auth'
 declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
@@ -150,14 +152,18 @@ const common = namespace(Namespace.COMMON)
     SDialog,
   },
 })
-export default class extends Vue {
-  @common.State private dialogs!: Array<any>
 
+export default class extends Vue {
   kakaoInit() {
     Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
     Kakao.isInitialized()
   }
 
+  @common.State private dialogs!: Array<any>
+  @common.State private token!: string
+  @common.State private userData!: Array<any>
+
+  private appBarOpener = false
   mounted() {
     this.kakaoInit()
   }
@@ -168,7 +174,6 @@ export default class extends Vue {
     })
   }
 
-  private appBarOpener = false
   private appBarStatus() {
     this.appBarOpener = true
   }
@@ -188,11 +193,11 @@ export default class extends Vue {
     this.$router.push('/auth/login')
   }
 
-  @common.State private token!: string
-
   private onclicklogout() {
-    // console.log(this.userinfo)
-    alert('로그아웃 되었습니다!')
+    commonStore.ADD_DIALOG({
+      id: 'LOGOUT',
+      text: '로그아웃되었습니다!'
+    })
     commonStore.LOGOUT()
   }
 }
