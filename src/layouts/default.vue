@@ -62,7 +62,7 @@
           </ul>
           <ul v-else>
             <li class="header_user_color">
-              {{ $store.state.common.userInfo.nickName }} 님 환영합니다!
+              {{ userInfo.nickName }} 님 환영합니다!
             </li>
             <li @click="onclicklogout()">
               <a class="header_user_color">
@@ -74,7 +74,7 @@
                 마이페이지
               </a>
             </li>
-            <li v-if="($store.state.common.userInfo.userRole)=='ADM'">
+            <li v-if="(userInfo.userRole)=='ADM'">
               <a class="header_user_color">
                 관리자페이지
               </a>
@@ -83,7 +83,7 @@
         </div>
       </div>
       <div class="content">
-        <a href="/"><img src="../assets/image/SPO_LOGO.png" alt="logo"></a>
+        <a href="/" class="font0"><img src="../assets/image/SPO_LOGO.png" alt="logo"></a>
         <ul>
           <li>
             <a href="#">홈</a>
@@ -141,6 +141,7 @@ import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
+import { IUserDetail } from '~/types/auth/auth'
 declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
@@ -161,7 +162,7 @@ export default class extends Vue {
 
   @common.State private dialogs!: Array<any>
   @common.State private token!: string
-  @common.State private userData!: Array<any>
+  @common.State private userInfo!: IUserDetail
 
   private appBarOpener = false
   mounted() {

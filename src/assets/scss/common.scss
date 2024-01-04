@@ -54,6 +54,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 0;
   }
   .v-toolbar__content {
     height: 100px;
@@ -75,6 +76,9 @@
   .content a, .content input {
     color: #333;
     font-family: '../NanumGothic.ttf';
+  }
+  .content .font0 {
+    font-size: 0;
   }
   .content li {
     margin: 0 10px;
