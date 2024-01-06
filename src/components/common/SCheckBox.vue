@@ -1,27 +1,15 @@
 <template>
-  <v-container fluid>
-    <v-checkbox v-model="localValue" :rules="localRules" :disabled="disabled">
-      <template #label>
-        <div>
-          I agree that
-          <v-tooltip bottom>
-            <template #activator="{ on }">
-              <a
-                target="_blank"
-                href="https://vuetifyjs.com"
-                @click.stop
-                v-on="on"
-              >
-                Vuetify
-              </a>
-            </template>
-            Opens in new window
-          </v-tooltip>
-          is awesome
-        </div>
-      </template>
-    </v-checkbox>
-  </v-container>
+  <V-checkbox
+    v-model="selected"
+    :disabled="disabled"
+    :label="label"
+    :readonly="readonly"
+    :rules="rules"
+    class="chk"
+    false-value="N"
+    true-value="Y"
+    @change="onChange"
+  />
 </template>
 
 <script lang="ts">
