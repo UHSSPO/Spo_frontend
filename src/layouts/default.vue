@@ -138,24 +138,33 @@ const common = namespace(Namespace.COMMON)
   },
 })
 export default class extends Vue {
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
   @common.State private dialogs!: Array<any>
+  private appBarOpener = false
 
   kakaoInit() {
     Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
     Kakao.isInitialized()
   }
 
+  /********************************************************************************
+   * Life Cycle
+   ********************************************************************************/
   mounted() {
     this.kakaoInit()
   }
 
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
   private async goToPage() {
     await Kakao.Auth.authorize({
       redirectUri: `${window.location.origin}/auth/kakao-login`
     })
   }
 
-  private appBarOpener = false
   private appBarStatus() {
     this.appBarOpener = true
   }

@@ -46,12 +46,18 @@ const common = namespace(Namespace.COMMON)
   name: 'login'
 })
 export default class Login extends Vue {
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
   private formData = {
     email: '',
     pwd: ''
 
   } as ILogin
 
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
   private async onClickLogin() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()

@@ -63,6 +63,9 @@ import { commonStore } from '../../util/store-accessor'
   name: 'kakao-login'
 })
 export default class KakaoLogin extends Vue {
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
   private authData = {} as IKakaoCertified
   private code = (this.$route.query.code || '') as string
   private formData = {
@@ -75,6 +78,9 @@ export default class KakaoLogin extends Vue {
 
   private checkPwd = ''
 
+  /********************************************************************************
+   * Life Cycle
+   ********************************************************************************/
   async created() {
     this.authData = {
       apikey: '2e79fbfa9c3fe6aad98a3ca66e8e5f6f',
@@ -94,6 +100,9 @@ export default class KakaoLogin extends Vue {
     })
   }
 
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
   private async onClickSingUp() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
