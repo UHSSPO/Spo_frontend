@@ -1,6 +1,6 @@
 <template>
   <div id="container" class="line">
-    <div class="content">
+    <div class="content dynamic-layout">
       <div class="sing-up">
         <div class="sing-up-header">
           <h1>로그인하기</h1>
@@ -47,12 +47,18 @@ const common = namespace(Namespace.COMMON)
   name: 'login'
 })
 export default class Login extends Vue {
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
   private formData = {
     email: '',
     pwd: ''
 
   } as ILogin
 
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
   private async onClickLogin() {
     if (StringUtil.isEmpty(this.formData.email) && StringUtil.isEmpty(this.formData.pwd)) {
       return false

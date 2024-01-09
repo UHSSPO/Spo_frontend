@@ -47,7 +47,7 @@
     </div>
     <div id="header">
       <div class="user-manager">
-        <div class="content">
+        <div class="content dynamic-layout">
           <ul v-if="StringUtil.isEmpty(token)">
             <li @click="onclickToLogin">
               <a class="header_user_color">
@@ -57,6 +57,11 @@
             <li @click="goToPage">
               <a class="header_user_color">
                 회원가입
+              </a>
+            </li>
+            <li onclick="alert('작업해야함!')">
+              <a>
+                관리자페이지
               </a>
             </li>
           </ul>
@@ -82,7 +87,7 @@
           </ul>
         </div>
       </div>
-      <div class="content">
+      <div class="content dynamic-layout">
         <a href="/" class="font0">
           <img src="../assets/image/SPO_LOGO.png" alt="logo">
         </a>
@@ -155,6 +160,12 @@ const common = namespace(Namespace.COMMON)
     SDialog,
   },
 })
+export default class extends Vue {
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
+  @common.State private dialogs!: Array<any>
+  private appBarOpener = false
 
 export default class extends Vue {
   kakaoInit() {
@@ -167,10 +178,16 @@ export default class extends Vue {
   @common.State private userInfo!: IUserDetail
 
   private appBarOpener = false
+  /********************************************************************************
+   * Life Cycle
+   ********************************************************************************/
   mounted() {
     this.kakaoInit()
   }
 
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
   private async goToPage() {
     await Kakao.Auth.authorize({
       redirectUri: `${window.location.origin}/auth/kakao-login`
