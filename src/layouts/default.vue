@@ -54,7 +54,7 @@
                 로그인
               </a>
             </li>
-            <li @click="goToDepts">
+            <li @click="goToSignUp">
               <a>
                 회원가입
               </a>
@@ -134,8 +134,8 @@ const common = namespace(Namespace.COMMON)
 export default class extends Vue {
   @common.State private dialogs!: Array<any>
 
-  private goToDepts() {
-    this.$router.push('/auth/depts')
+  private goToSignUp() {
+    this.$router.push('/auth/sign-up')
   }
 
   private appBarOpener = false

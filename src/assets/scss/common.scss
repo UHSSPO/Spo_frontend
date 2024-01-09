@@ -94,27 +94,25 @@
   &.line{
     //border-top:6px solid $line-color2;
     .content{
-      height: 100vh;
+      height: calc(100vh - 80px);
     }
   }
   .content{
     border-left:1px solid $line-color;
     border-right:1px solid $line-color;
-    display: flex;
-    align-items: center;
     .join-box {
       border: 1px solid $line-color;
       padding: 100px 40px;
       width: 50%;
       margin: 0 auto;
     }
-    .sing-up-input {
+    .sign-up-input {
       width: 100%;
     }
-    .sing-up-header {
+    .sign-up-header {
       margin-bottom: 50px;
     }
-    .sing-up-button {
+    .sign-up-button {
       margin: 0 auto;
       width: 100%;
     }
@@ -137,6 +135,11 @@
       border-bottom: 1px  solid #7f828b;
       padding: 5px;
       margin-top: 40px ;
+    }
+    &.center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
@@ -208,7 +211,7 @@
   box-sizing:border-box;
 }
 
-.sing-up {
+.sign-up {
   padding: 30px 40px;
   display: flex;
   flex-direction: column;
