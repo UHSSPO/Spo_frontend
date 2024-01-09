@@ -11,6 +11,7 @@
     outlined
     @change="onChange"
     @input="onInput"
+    @keypress="onkeypress"
   />
 </template>
 
@@ -32,6 +33,7 @@ export default class STextField extends Vue {
   @Prop() placeholder?: string
   @Prop() private readonly counter?: number
   @Prop(Number) private readonly minLength?: number
+  @Prop() private readonly keyFilterRegex?: any
 
   private localValue = ''
   private localRules: Array<Function> = []
@@ -53,6 +55,15 @@ export default class STextField extends Vue {
 
   @Emit('input')
   private onInput(eventValue: any) {
+    return eventValue
+  }
+
+  @Emit('keypress')
+  private onkeypress(eventValue: any) {
+    if (this.keyFilterRegex && !this.keyFilterRegex.test(eventValue.key)) {
+      eventValue.preventDefault()
+      return
+    }
     return eventValue
   }
 

@@ -74,7 +74,7 @@
                 마이페이지
               </a>
             </li>
-            <li v-if="(userInfo.userRole)=='ADM'">
+            <li v-if="userInfo.userRole === 'ADM'">
               <a class="header_user_color">
                 관리자페이지
               </a>
@@ -83,7 +83,9 @@
         </div>
       </div>
       <div class="content">
-        <a href="/" class="font0"><img src="../assets/image/SPO_LOGO.png" alt="logo"></a>
+        <a href="/" class="font0">
+          <img src="../assets/image/SPO_LOGO.png" alt="logo">
+        </a>
         <ul>
           <li>
             <a href="#">홈</a>
@@ -98,9 +100,9 @@
             <a href="#">개인추천</a>
           </li>
           <li class="menu_search_list">
-            <form action="#">
+            <div>
               <s-text-field placeholder="종목명 검색" />
-            </form>
+            </div>
           </li>
         </ul>
       </div>
