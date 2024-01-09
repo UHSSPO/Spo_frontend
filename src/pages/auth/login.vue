@@ -17,6 +17,7 @@
             label="패스워드"
             :required="true"
             type="password"
+            @keypress.enter.prevent="onClickLogin"
           />
           <div class="login-button">
             <s-button class="w-100" @click="onClickLogin">
@@ -59,6 +60,9 @@ export default class Login extends Vue {
    * Method (Event, Business Logic)
    ********************************************************************************/
   private async onClickLogin() {
+    if (StringUtil.isEmpty(this.formData.email) && StringUtil.isEmpty(this.formData.pwd)) {
+      return false
+    }
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })

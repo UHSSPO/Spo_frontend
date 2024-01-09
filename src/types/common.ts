@@ -26,3 +26,8 @@ export interface IDialogResult {
   id: string
   result: DIALOG_RESULT
 }
+
+export enum USER_TYPE_ROLE {
+  USER = 'USR', // 일반유저
+  ADMIN = 'ADM', // 어드민
+}

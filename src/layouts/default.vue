@@ -48,14 +48,14 @@
     <div id="header">
       <div class="user-manager">
         <div class="content dynamic-layout">
-          <ul>
+          <ul v-if="StringUtil.isEmpty(token)">
             <li @click="onclickToLogin">
-              <a>
+              <a class="header_user_color">
                 로그인
               </a>
             </li>
             <li @click="goToPage">
-              <a>
+              <a class="header_user_color">
                 회원가입
               </a>
             </li>
@@ -65,10 +65,32 @@
               </a>
             </li>
           </ul>
+          <ul v-else>
+            <li class="header_user_color">
+              {{ userInfo.nickName }} 님 환영합니다!
+            </li>
+            <li @click="onclicklogout()">
+              <a class="header_user_color">
+                로그아웃
+              </a>
+            </li>
+            <li @click="goToPage">
+              <a class="header_user_color">
+                마이페이지
+              </a>
+            </li>
+            <li v-if="userInfo.userRole === 'ADM'">
+              <a class="header_user_color">
+                관리자페이지
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
       <div class="content dynamic-layout">
-        <a href="/"><img src="../assets/image/SPO_LOGO.png" alt="logo"></a>
+        <a href="/" class="font0">
+          <img src="../assets/image/SPO_LOGO.png" alt="logo">
+        </a>
         <ul>
           <li>
             <a href="#">홈</a>
@@ -83,9 +105,9 @@
             <a href="#">개인추천</a>
           </li>
           <li class="menu_search_list">
-            <form action="#">
+            <div>
               <s-text-field placeholder="종목명 검색" />
-            </form>
+            </div>
           </li>
         </ul>
       </div>
@@ -121,11 +143,12 @@
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import _ from 'lodash'
-import { DIALOG_RESULT, DIALOG_TYPE, IDialog, IDialogResult } from '~/types/common'
+import { IDialog, IDialogResult } from '~/types/common'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
+import { IUserDetail } from '~/types/auth/auth'
 declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
@@ -144,11 +167,17 @@ export default class extends Vue {
   @common.State private dialogs!: Array<any>
   private appBarOpener = false
 
+export default class extends Vue {
   kakaoInit() {
     Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
     Kakao.isInitialized()
   }
 
+  @common.State private dialogs!: Array<any>
+  @common.State private token!: string
+  @common.State private userInfo!: IUserDetail
+
+  private appBarOpener = false
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
@@ -182,6 +211,14 @@ export default class extends Vue {
 
   private onclickToLogin() {
     this.$router.push('/auth/login')
+  }
+
+  private onclicklogout() {
+    commonStore.ADD_DIALOG({
+      id: 'LOGOUT',
+      text: '로그아웃되었습니다!'
+    })
+    commonStore.LOGOUT()
   }
 }
 </script>
