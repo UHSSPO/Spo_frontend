@@ -59,11 +59,6 @@
                 회원가입
               </a>
             </li>
-            <li onclick="alert('작업해야함!')">
-              <a>
-                관리자페이지
-              </a>
-            </li>
           </ul>
           <ul v-else>
             <li class="header_user_color">
@@ -168,6 +163,7 @@ export default class extends Vue {
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
+
   @common.State private dialogs!: Array<any>
   @common.State private token!: string
   @common.State private userInfo!: IUserDetail
@@ -188,7 +184,6 @@ export default class extends Vue {
       redirectUri: `${window.location.origin}/auth/kakao-login`
     })
   }
-
 
   private goToSignUp() {
     this.$router.push('/auth/sign-up')

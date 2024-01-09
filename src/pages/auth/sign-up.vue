@@ -27,15 +27,6 @@ declare let Kakao: any
   components: { SButton }
 })
 export default class SignUp extends Vue {
-  kakaoInit() {
-    Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
-    Kakao.isInitialized()
-  }
-
-  mounted() {
-    this.kakaoInit()
-  }
-
   private async goToPage() {
     await Kakao.Auth.authorize({
       redirectUri: `${window.location.origin}/auth/kakao-login`

@@ -103,7 +103,7 @@ export default class KakaoLogin extends Vue {
   /********************************************************************************
    * Method (Event, Business Logic)
    ********************************************************************************/
-  private async onClickSingUp() {
+  private async onClickSignUp() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
