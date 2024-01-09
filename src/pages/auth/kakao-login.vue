@@ -5,7 +5,7 @@
         <div class="sing-up-header">
           <h1>카카오 계정으로 가입하기</h1>
         </div>
-        <div class="sing-up-input">
+        <div class="sign-up-input">
           <s-text-field
             v-model="formData.email"
             label="이메일"
@@ -39,8 +39,8 @@
             type="password"
           />
         </div>
-        <div class="sing-up-button">
-          <s-button class="w-100" :disabled="!isButtonDisabled" @click="onClickSingUp">
+        <div class="sign-up-button">
+          <s-button class="w-100" :disabled="!isButtonDisabled" @click="onClickSignUp">
             가입
           </s-button>
         </div>

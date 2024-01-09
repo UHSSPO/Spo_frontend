@@ -54,7 +54,7 @@
                 로그인
               </a>
             </li>
-            <li @click="goToPage">
+            <li @click="goToSignUp">
               <a class="header_user_color">
                 회원가입
               </a>
@@ -161,18 +161,13 @@ const common = namespace(Namespace.COMMON)
   },
 })
 export default class extends Vue {
-  /********************************************************************************
-   * Variables (Local, VUEX)
-   ********************************************************************************/
-  @common.State private dialogs!: Array<any>
-  private appBarOpener = false
-
-export default class extends Vue {
   kakaoInit() {
     Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
     Kakao.isInitialized()
   }
-
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
   @common.State private dialogs!: Array<any>
   @common.State private token!: string
   @common.State private userInfo!: IUserDetail
@@ -192,6 +187,11 @@ export default class extends Vue {
     await Kakao.Auth.authorize({
       redirectUri: `${window.location.origin}/auth/kakao-login`
     })
+  }
+
+
+  private goToSignUp() {
+    this.$router.push('/auth/sign-up')
   }
 
   private appBarStatus() {

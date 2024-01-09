@@ -5,7 +5,7 @@
         <div class="sing-up-header">
           <h1>로그인하기</h1>
         </div>
-        <div class="sing-up-input">
+        <div class="sign-up-input">
           <s-text-field
             v-model="formData.email"
             label="이메일"
