@@ -54,6 +54,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 0;
   }
   .v-toolbar__content {
     height: 100px;
@@ -65,7 +66,7 @@
   .user-manager .content {
     height: 30px;
   }
-  .user-manager .content a {
+  .user-manager .content .header_user_color {
     color: #7f828b;
   }
   .content ul {
@@ -75,6 +76,9 @@
   .content a, .content input {
     color: #333;
     font-family: '../NanumGothic.ttf';
+  }
+  .content .font0 {
+    font-size: 0;
   }
   .content li {
     margin: 0 10px;
@@ -88,6 +92,7 @@
     margin-bottom: 0;
   }
 }
+
 
 #container{
   width:100%;
@@ -237,10 +242,17 @@
   display: none;
 }
 
-@media screen and (max-width: 768px) {
-  .back_all_wrap {
-    display: none;
+@media screen and  (max-width: 1280px){
+  .dynamic-layout {
+    width: 100vw;
+    margin: 0;
+    ul {
+      margin-right: 10px;
+    }
   }
+}
+
+@media screen and (max-width: 768px) {
 
   .header_menu_wrap {
     display: flex;

@@ -1,8 +1,8 @@
 <template>
   <div id="container" class="line">
-    <div class="content">
-      <div class="sign-up">
-        <div class="sign-up-header">
+    <div class="content dynamic-layout">
+      <div class="sing-up">
+        <div class="sing-up-header">
           <h1>카카오 계정으로 가입하기</h1>
         </div>
         <div class="sign-up-input">
@@ -63,6 +63,9 @@ import { commonStore } from '../../util/store-accessor'
   name: 'kakao-login'
 })
 export default class KakaoLogin extends Vue {
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
   private authData = {} as IKakaoCertified
   private code = (this.$route.query.code || '') as string
   private formData = {
@@ -75,6 +78,9 @@ export default class KakaoLogin extends Vue {
 
   private checkPwd = ''
 
+  /********************************************************************************
+   * Life Cycle
+   ********************************************************************************/
   async created() {
     this.authData = {
       apikey: '2e79fbfa9c3fe6aad98a3ca66e8e5f6f',
@@ -94,7 +100,10 @@ export default class KakaoLogin extends Vue {
     })
   }
 
-  private async onClickSignUp() {
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
+  private async onClickSingUp() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
