@@ -92,6 +92,15 @@ export default class KakaoLogin extends Vue {
       this.$nuxt.$loading.start()
     })
     const response = await kakaoCertified(this.authData)
+    if (response.email) {
+      commonStore.ADD_DIALOG({
+        id: 'EMAIL_CHECK',
+        text: '이미 가입된 이메일입니다. 관리자에게 문의 해주세요.',
+        callback: () => {
+          this.$router.push('/')
+        }
+      })
+    }
     this.formData.email = response.email
     this.formData.nickName = response.nickName
     this.formData.signUpChannel = 'kakao'
