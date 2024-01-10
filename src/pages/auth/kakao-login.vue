@@ -1,11 +1,11 @@
 <template>
   <div id="container" class="line">
-    <div class="content">
+    <div class="content dynamic-layout">
       <div class="sing-up">
         <div class="sing-up-header">
           <h1>카카오 계정으로 가입하기</h1>
         </div>
-        <div class="sing-up-input">
+        <div class="sign-up-input">
           <s-text-field
             v-model="formData.email"
             label="이메일"
@@ -39,8 +39,8 @@
             type="password"
           />
         </div>
-        <div class="sing-up-button">
-          <s-button class="w-100" :disabled="!isButtonDisabled" @click="onClickSingUp">
+        <div class="sign-up-button">
+          <s-button class="w-100" :disabled="!isButtonDisabled" @click="onClickSignUp">
             가입
           </s-button>
         </div>
@@ -63,6 +63,9 @@ import { commonStore } from '../../util/store-accessor'
   name: 'kakao-login'
 })
 export default class KakaoLogin extends Vue {
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
   private authData = {} as IKakaoCertified
   private code = (this.$route.query.code || '') as string
   private formData = {
@@ -75,6 +78,9 @@ export default class KakaoLogin extends Vue {
 
   private checkPwd = ''
 
+  /********************************************************************************
+   * Life Cycle
+   ********************************************************************************/
   async created() {
     this.authData = {
       apikey: '2e79fbfa9c3fe6aad98a3ca66e8e5f6f',
@@ -86,6 +92,15 @@ export default class KakaoLogin extends Vue {
       this.$nuxt.$loading.start()
     })
     const response = await kakaoCertified(this.authData)
+    if (response.email) {
+      commonStore.ADD_DIALOG({
+        id: 'EMAIL_CHECK',
+        text: '이미 가입된 이메일입니다. 관리자에게 문의 해주세요.',
+        callback: () => {
+          this.$router.push('/')
+        }
+      })
+    }
     this.formData.email = response.email
     this.formData.nickName = response.nickName
     this.formData.signUpChannel = 'kakao'
@@ -94,7 +109,10 @@ export default class KakaoLogin extends Vue {
     })
   }
 
-  private async onClickSingUp() {
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
+  private async onClickSignUp() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })

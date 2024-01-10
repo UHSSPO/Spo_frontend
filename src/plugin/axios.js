@@ -5,6 +5,7 @@ import qs from 'qs'
 
 import StringUtil from '../util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
+import { Globals } from '@/util/Globals'
 
 export default function ({ $axios, redirect, app }) {
   $axios.onRequest((config) => {
@@ -12,9 +13,9 @@ export default function ({ $axios, redirect, app }) {
     config.headers['Access-Control-Allow-Origin'] = 'application/json'
     config.withCredentials = true
     config.paramsSerializer = params => qs.stringify(params, { arrayFormat: 'repeat' })
-    // if (commonStore.token) {
-    //   config.headers[Globals.AUTH_HEADER] = 'BEARER ' + commonStore.token
-    // }
+    if (commonStore.token) {
+      config.headers[Globals.AUTH_HEADER] = 'BEARER ' + commonStore.token
+    }
   })
 
   $axios.onResponse((response) => {

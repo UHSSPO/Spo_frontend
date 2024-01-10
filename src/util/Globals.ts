@@ -5,4 +5,8 @@ export class Globals {
   public static readonly DATETIME_FILE_FORMAT = 'yyyyLLdd_HHmmss'
   public static readonly DATETIME_FORMAT = 'yyyy-LL-dd HH:mm:ss'
   public static readonly DATE_FORMAT = 'yyyy-LL-dd'
+
+  public static readonly PERSISTED_STATE_KEY = 'SPO'
+
+  public static readonly AUTH_HEADER = 'Authorization'
 }

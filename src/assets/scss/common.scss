@@ -54,6 +54,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 0;
   }
   .v-toolbar__content {
     height: 100px;
@@ -65,7 +66,7 @@
   .user-manager .content {
     height: 30px;
   }
-  .user-manager .content a {
+  .user-manager .content .header_user_color {
     color: #7f828b;
   }
   .content ul {
@@ -75,6 +76,9 @@
   .content a, .content input {
     color: #333;
     font-family: '../NanumGothic.ttf';
+  }
+  .content .font0 {
+    font-size: 0;
   }
   .content li {
     margin: 0 10px;
@@ -89,19 +93,63 @@
   }
 }
 
+
 #container{
   width:100%;
-  overflow:scroll;
   &.line{
     //border-top:6px solid $line-color2;
     .content{
-      height: 100vh;
+      height: calc(100vh - 80px);
     }
   }
   .content{
     border-left:1px solid $line-color;
     border-right:1px solid $line-color;
+    .join-box {
+      border: 1px solid $line-color;
+      padding: 100px 40px;
+      width: 50%;
+      margin: 0 auto;
+    }
+    .sign-up-input {
+      width: 100%;
+    }
+    .sign-up-header {
+      margin-bottom: 15px;
+    }
+    .sign-up-button {
+      margin: 0 auto;
+      width: 100%;
+    }
+    .btn-img{
+      background: rgb(254, 229, 0);
+      border-radius: 10px;
+      width: 80%;
+      margin: 0 auto;
+      height: 5vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .btn-img span {
+      margin: 0 10px;
+    }
+    .btn-login {
+      color: #7f828b;
+      font-size: 15px;
+      border-bottom: 1px  solid #7f828b;
+      padding: 5px;
+      margin-top: 40px ;
+    }
+    &.center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
+
+
+
 }
 
 #footer{
@@ -168,7 +216,7 @@
   box-sizing:border-box;
 }
 
-.sing-up {
+.sign-up {
   padding: 30px 40px;
   display: flex;
   flex-direction: column;
@@ -194,10 +242,17 @@
   display: none;
 }
 
-@media screen and (max-width: 768px) {
-  .back_all_wrap {
-    display: none;
+@media screen and  (max-width: 1280px){
+  .dynamic-layout {
+    width: 100vw;
+    margin: 0;
+    ul {
+      margin-right: 10px;
+    }
   }
+}
+
+@media screen and (max-width: 768px) {
 
   .header_menu_wrap {
     display: flex;

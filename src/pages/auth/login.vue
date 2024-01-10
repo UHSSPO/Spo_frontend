@@ -1,11 +1,11 @@
 <template>
   <div id="container" class="line">
-    <div class="content">
-      <div class="sing-up">
-        <div class="sing-up-header">
+    <div class="content dynamic-layout">
+      <div class="sign-up">
+        <div class="sign-up-header">
           <h1>로그인하기</h1>
         </div>
-        <div class="sing-up-input">
+        <div class="sign-up-input">
           <s-text-field
             v-model="formData.email"
             label="이메일"
@@ -17,6 +17,7 @@
             label="패스워드"
             :required="true"
             type="password"
+            @keypress.enter.prevent="onClickLogin"
           />
           <div class="login-button">
             <s-button class="w-100" @click="onClickLogin">
@@ -46,13 +47,22 @@ const common = namespace(Namespace.COMMON)
   name: 'login'
 })
 export default class Login extends Vue {
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
   private formData = {
     email: '',
     pwd: ''
 
   } as ILogin
 
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
   private async onClickLogin() {
+    if (StringUtil.isEmpty(this.formData.email) && StringUtil.isEmpty(this.formData.pwd)) {
+      return false
+    }
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })

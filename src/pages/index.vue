@@ -17,6 +17,9 @@ import STextField from '../components/common/STextField.vue'
   }
 })
 export default class extends Vue {
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
   private value = ''
 }
 </script>
