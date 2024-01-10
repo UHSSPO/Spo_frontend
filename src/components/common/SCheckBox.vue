@@ -14,7 +14,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
-import StringUtil from '../../util/StringUtil'
 
 @Component({
   name: 'SCheckbox'
@@ -22,12 +21,17 @@ import StringUtil from '../../util/StringUtil'
 export default class SCheckbox extends Vue {
   @Prop() disabled!: boolean
   @Prop() required!: boolean
+  @Prop() label!: string
+  @Prop() readonly!: boolean
   @Prop(Number) minLength!: number
   @Prop(Number) maxLength!: number
   @Prop(Array) rules?: Array<Function>
 
-  private localValue = false
+  private selected = false
   private localRules: Array<Function> = []
+  private onChange(newValue: boolean) {
+    console.log('Checkbox value changed:', newValue)
+  }
 
   @Watch('rules')
   private onWatchRules(newRules: Array<Function>) {
