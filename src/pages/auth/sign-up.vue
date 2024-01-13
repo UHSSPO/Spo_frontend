@@ -1,6 +1,6 @@
 <template>
   <div id="container" class="line">
-    <div class="content center">
+    <div class="content center dynamic-layout">
       <div class="sign-up join-box">
         <div class="sign-up-header">
           <h1>회원가입</h1>
