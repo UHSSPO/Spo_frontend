@@ -14,5 +14,10 @@ export default {
       numberOfRadioButtons: 5,
     }
   },
+  methods: {
+    handleRadioChange() {
+      console.log('Selected Radio:', this.radioGroup)
+    },
+  },
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="chk-group">
     <div :class="['v-input theme--light v-input--selection-controls v-input--checkbox', !isValidation ? 'v-input--has-state error--text' : '']">
-      <V-checkbox
+      <v-checkbox
         v-for="(item, index) in localItems"
         :key="index"
         v-model="localValues[index]"

@@ -1,5 +1,5 @@
 <template>
-  <V-checkbox
+  <v-checkbox
     v-model="selected"
     :disabled="disabled"
     :label="label"
