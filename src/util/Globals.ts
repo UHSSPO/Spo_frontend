@@ -9,4 +9,16 @@ export class Globals {
   public static readonly PERSISTED_STATE_KEY = 'SPO'
 
   public static readonly AUTH_HEADER = 'Authorization'
+
+  public static readonly YES = 'Y'
+  public static readonly NO = 'N'
+
+  // 코드
+  public static readonly CODE_00 = '00'
+  public static readonly CODE_01 = '01'
+  public static readonly CODE_02 = '02'
+  public static readonly CODE_03 = '03'
+  public static readonly CODE_04 = '04'
+  public static readonly CODE_05 = '05'
+  public static readonly CODE_06 = '06'
 }

@@ -1,25 +1,26 @@
 <template>
   <div id="container" class="line">
     <div class="content">
-      <s-text-field v-model="value" placeholder="text" />
     </div>
   </div>
 </template>
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
-import STextField from '../components/common/STextField.vue'
+declare let Kakao: any
 
 @Component({
   layout: 'empty',
-  components: {
-    STextField
-  }
+  components: {}
 })
 export default class extends Vue {
-  /********************************************************************************
-   * Variables (Local, VUEX)
-   ********************************************************************************/
-  private value = ''
+  kakaoInit() {
+    Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
+    Kakao.isInitialized()
+  }
+
+  mounted() {
+    this.kakaoInit()
+  }
 }
 </script>
