@@ -26,3 +26,8 @@ export interface IDialogResult {
   id: string
   result: DIALOG_RESULT
 }
+
+export interface ICodeInfo {
+  cd: string | number
+  cdVal: string
+}

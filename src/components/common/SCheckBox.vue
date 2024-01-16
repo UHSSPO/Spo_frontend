@@ -3,61 +3,44 @@
     v-model="selected"
     :disabled="disabled"
     :label="label"
-    :readonly="readonly"
-    :rules="rules"
-    class="chk"
     false-value="N"
     true-value="Y"
     @change="onChange"
   />
 </template>
-
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
+/*
+  label 제목
+  v-model 값 Y or N
+  <s-check-box v-model="value" label="테스트123" />
+   */
+import { Component, Emit, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component({
-  name: 'SCheckbox'
+  name: 'SCheckbox',
 })
 export default class SCheckbox extends Vue {
-  @Prop() disabled!: boolean
-  @Prop() required!: boolean
-  @Prop() label!: string
-  @Prop() readonly!: boolean
-  @Prop(Number) minLength!: number
-  @Prop(Number) maxLength!: number
-  @Prop(Array) rules?: Array<Function>
-
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
   private selected = false
   private localRules: Array<Function> = []
-  private onChange(newValue: boolean) {
-    console.log('Checkbox value changed:', newValue)
+
+  /********************************************************************************
+   * Properties
+   ********************************************************************************/
+  @Prop() disabled!: boolean
+  @Prop() label!: string
+
+  @Emit('input')
+  private onInput() {
+    return this.selected
   }
 
-  @Watch('rules')
-  private onWatchRules(newRules: Array<Function>) {
-    this.setRules(newRules)
-  }
-
-  created(): void {
-    this.setRules(this.rules)
-  }
-
-  private setRules(customRules?: Array<Function>) {
-    this.localRules = []
-
-    if (!this.disabled) {
-      if (this.required) {
-        this.localRules.push((value: boolean) => value || 'The checkbox is required.')
-      }
-
-      if (this.minLength !== undefined) {
-        this.localRules.push((value: boolean) => value || 'Please check the checkbox.')
-      }
-
-      if (customRules) {
-        this.localRules = [...this.localRules, ...customRules]
-      }
-    }
+  @Emit('change')
+  private onChange() {
+    this.onInput()
+    return this.selected
   }
 }
 </script>
