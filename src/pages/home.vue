@@ -1,23 +1,26 @@
 <template>
   <div id="container" class="line">
-    <div />
+    <div class="content">
+      test
+    </div>
   </div>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
+
 import { Component, Vue } from 'nuxt-property-decorator'
-declare let Kakao: any
 
 @Component({
   layout: 'empty',
   components: {}
 })
-export default class extends Vue {
+export default class home extends Vue {
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
-  created (): void {
-    this.$router.push('/home')
+  created(): void {
+    console.log('/home')
   }
 }
+
 </script>
