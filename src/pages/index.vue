@@ -1,7 +1,6 @@
 <template>
   <div id="container" class="line">
-    <div class="content">
-    </div>
+    <div class="content" />
   </div>
 </template>
 
@@ -14,13 +13,5 @@ declare let Kakao: any
   components: {}
 })
 export default class extends Vue {
-  kakaoInit() {
-    Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
-    Kakao.isInitialized()
-  }
-
-  mounted() {
-    this.kakaoInit()
-  }
 }
 </script>
