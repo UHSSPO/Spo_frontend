@@ -147,7 +147,48 @@
       align-items: center;
     }
   }
-
+  .boardWrap {
+    width: 48%;
+    margin: 0 1%;
+    padding: 10px 0;
+    .boardListWrap {
+      margin: 10px 0;
+      width: 100%;
+      text-align: center;
+      padding: 0;
+      > .boardList {
+        padding: 10px;
+        border-bottom: 1px solid $line-color;
+        border-top: 1px solid $line-color;
+        ul {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 0;
+          border-bottom: 1px solid $line-color;
+          p {
+            margin: 0;
+          }
+          li:nth-child(2) {
+            text-align: left;
+            width: 310px;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+          }
+        }
+        ul:last-child {
+          border: 0;
+        }
+      }
+      tr:first-child {
+        background: #f8f8f8;
+      }
+      tr:hover {
+        background: #f8f8f8;
+      }
+    }
+  }
 
 
 }
