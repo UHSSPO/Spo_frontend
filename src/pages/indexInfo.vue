@@ -140,6 +140,23 @@ export default class indexInfo extends Vue {
     this.privateRoller()
   }
 
+  private intervalId: number | null = null
+  private currentSlide = 0
+  private items = [
+    {
+      src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+    },
+    {
+      src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+    },
+    {
+      src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+    },
+    {
+      src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+    },
+  ]
+
   private privateRoller(): void {
     const roller: HTMLElement | null = document.querySelector('.roller')
     if (!roller) {
@@ -171,25 +188,6 @@ export default class indexInfo extends Vue {
 
     roller.classList.add('original')
     clone.classList.add('clone')
-  }
-
-  data() {
-    return {
-      items: [
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-        },
-      ],
-    }
   }
 }
 
