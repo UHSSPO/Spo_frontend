@@ -2,6 +2,14 @@
   font-family: '../NanumGothic.ttf' !important;
 }
 
+.textBlue {
+  color: #007AFF;
+}
+
+.textRed {
+  color: #ee6161;
+}
+
 .wrap{
   position:relative;
   width:100%;
@@ -147,9 +155,48 @@
       align-items: center;
     }
   }
+  .exploreWrap {
+    width: 28%;
+    margin: 0 1%;
+    padding: 10px 0;
+    overflow: hidden;
+    .exploreItem {
+      display: flex;
+      justify-content: space-between;
+      .exploreBtn {
+        button {
+          border: 1px solid $line-color;
+          padding: 2px;
+          height: 30px;
+        }
+      }
+    }
+    ul {
+      margin: 10px 0;
+      padding: 0;
+      border: 1px solid $line-color;
+      border-bottom: 0;
 
-
-
+      li:first-child {
+        text-align: center;
+        background: #5e8bce;
+        p{
+          color: #ffffff;
+        }
+        .exploreListTile {
+          font-weight: bold;
+          font-size: 1.2em;
+        }
+      }
+      li {
+        padding: 20px;
+        border-bottom: 1px solid $line-color;
+        p{
+          margin: 0;
+        }
+      }
+    }
+  }
 }
 
 #footer{
