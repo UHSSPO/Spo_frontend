@@ -146,6 +146,41 @@
       justify-content: center;
       align-items: center;
     }
+    .rankWrap {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      .commendWrap {
+        width: 48%;
+        margin: 0 1%;
+
+        table {
+          margin: 10px 0;
+          width:100%;
+          text-align: center;
+          border-top: 1px solid $line-color;
+          td {
+            padding: 10px;
+            border-bottom: 1px solid $line-color;
+            height: 45px;
+            a {
+              color: #333333;
+              display: block;
+            }
+            img {
+              height: 100%;
+              cursor: pointer;
+            }
+          }
+          tr:first-child {
+            background: #f8f8f8;
+          }
+          tr:hover {
+            background: #f8f8f8;
+          }
+        }
+      }
+    }
   }
 
 
@@ -319,7 +354,7 @@
   animation: 200s linear 0s infinite normal none running rollingleft2;
 }
 
-@keyframes rollingleft1 { /* 원본용 */
+@keyframes rollingleft1 {
   0% {
     transform: translateX(0);
   }
@@ -334,7 +369,7 @@
   }
 }
 
-@keyframes rollingleft2 { /* 클론용 */
+@keyframes rollingleft2 {
   0% {
     transform: translateX(0);
   }
@@ -372,6 +407,16 @@
   #container {
     .v-carousel {
       display: none;
+    }
+
+    .content {
+      width: 100%;
+      .rankWrap {
+        .commendWrap {
+          width: 100%;
+          margin: 0;
+        }
+      }
     }
 
     .rollingbanner > .wrap {
