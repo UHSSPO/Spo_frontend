@@ -358,6 +358,7 @@
 
   .header_menu_wrap {
     display: flex;
+    margin: 0;
   }
 
   #header {
@@ -366,6 +367,16 @@
 
   #__layout, #__nuxt, #app{
     min-width: auto;
+  }
+
+  #container {
+    .v-carousel {
+      display: none;
+    }
+
+    .rollingbanner > .wrap {
+      width: 100%;
+    }
   }
 
   #footer {

@@ -1,6 +1,17 @@
 <template>
   <div id="container" class="line">
     <div class="content">
+      <template>
+        <v-carousel>
+          <v-carousel-item
+            v-for="(item,i) in items"
+            :key="i"
+            :src="item.src"
+            reverse-transition="fade-transition"
+            transition="fade-transition"
+          />
+        </v-carousel>
+      </template>
       <div class="rollerContainer">
         <div class="rollingbanner">
           <div class="wrap">
@@ -125,6 +136,10 @@ export default class indexInfo extends Vue {
     console.log('/indexInfo')
   }
 
+  mounted() {
+    this.privateRoller()
+  }
+
   private privateRoller(): void {
     const roller: HTMLElement | null = document.querySelector('.roller')
     if (!roller) {
@@ -158,8 +173,23 @@ export default class indexInfo extends Vue {
     clone.classList.add('clone')
   }
 
-  mounted() {
-    this.privateRoller()
+  data() {
+    return {
+      items: [
+        {
+          src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+        },
+        {
+          src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+        },
+        {
+          src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+        },
+        {
+          src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+        },
+      ],
+    }
   }
 }
 
