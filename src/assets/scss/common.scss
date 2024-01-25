@@ -184,7 +184,7 @@
             background: #f8f8f8;
           }
           tr:hover {
-            background: #f8f8f8;
+            background: #FCFCFC;
           }
         }
       }
@@ -505,7 +505,7 @@
   50% {
     transform: translateX(-100%);
   }
-  50.01% {
+  50.0001% {
     transform: translateX(100%);
   }
   100% {
