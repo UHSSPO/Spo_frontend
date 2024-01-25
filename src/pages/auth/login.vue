@@ -53,7 +53,6 @@ export default class Login extends Vue {
   private formData = {
     email: '',
     pwd: ''
-
   } as ILogin
 
   /********************************************************************************
