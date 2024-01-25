@@ -12,8 +12,8 @@
           />
         </v-carousel>
       </template>
-      <div class="rollerContainer">
-        <div class="rollingbanner">
+      <div class="roller-container">
+        <div class="rolling-banner">
           <div class="wrap">
             <div class="roller">
               <ul>
