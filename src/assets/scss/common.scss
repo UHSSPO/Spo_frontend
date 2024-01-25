@@ -155,6 +155,41 @@
       align-items: center;
     }
   }
+  .rankWrap {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    .interestWrap {
+      width: 68%;
+      margin: 0 1%;
+
+      table {
+        margin: 10px 0;
+        width: 100%;
+        text-align: center;
+        border-top: 1px solid $line-color;
+        td {
+          padding: 10px;
+          border-bottom: 1px solid $line-color;
+          height: 45px;
+          a {
+            color: #333333;
+            display: block;
+          }
+          img {
+            height: 100%;
+            cursor: pointer;
+          }
+        }
+        tr:first-child {
+          background: #f8f8f8;
+        }
+        tr:hover {
+          background: #f8f8f8;
+        }
+      }
+    }
+  }
   .exploreWrap {
     width: 28%;
     margin: 0 1%;
