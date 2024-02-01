@@ -21,7 +21,7 @@
                 <span class="status down">
                   <span class="num">{{ item.clpr | setDecimalNumberComma }}</span>
                   <span v-if="item.fltRt === 0" class="zero"><em>{{ item.fltRt }}</em></span>
-                  <span v-else class="rate" :class="{minus: item.fltRt < 0}"><em>{{ item.fltRt }}</em></span>
+                  <span v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}"><em>{{ item.fltRt }}</em></span>
                 </span>
               </a>
             </li>
