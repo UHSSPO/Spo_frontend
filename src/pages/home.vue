@@ -8,6 +8,14 @@
         <commend />
         <popularity />
       </div>
+      <div class="rankWrap">
+        <Interest />
+        <Explore />
+      </div>
+      <div class="rankWrap">
+        <div style="width: 28%; margin: 0 1%; " />
+        <Board />
+      </div>
     </div>
   </div>
 </template>
@@ -18,12 +26,15 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import IndexInfo from '~/components/home/IndexInfo.vue'
 import Commend from '~/components/home/Commend.vue'
 import Popularity from '~/components/home/Popularity.vue'
+import Interest from '~/components/home/Interest.vue'
 import { MarketIndex } from '~/api/home'
 import { IMarketIndex } from '~/types/home/home'
+import Explore from '~/components/home/Explore.vue'
+import Board from '~/components/home/Board.vue'
 
 @Component({
   layout: 'empty',
-  components: { IndexInfo, Commend, Popularity }
+  components: { IndexInfo, Commend, Popularity, Interest, Explore, Board }
 })
 export default class home extends Vue {
   /********************************************************************************

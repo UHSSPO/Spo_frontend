@@ -10,6 +10,7 @@ export interface ISignUp {
   dateOfBirth: string // 생년월일
   signUpChannel: string // 가입채널
   nickName: string // 닉네임
+  success: boolean;
 }
 export interface ILogin {
   email: string // 이메일
