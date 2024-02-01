@@ -1,6 +1,6 @@
 <template>
   <div class="commendWrap">
-    <h3>추천드리는 종목</h3>
+    <h3>추천 종목</h3>
     <table class="commendRank">
       <tr>
         <td />
