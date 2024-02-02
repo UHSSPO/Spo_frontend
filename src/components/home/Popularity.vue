@@ -59,9 +59,13 @@
         <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
       </tr>
       <tr>
-        <td colspan="7">
-          <a href="#">더보기</a>
-        </td>
+        <td>6</td>
+        <td>컬리</td>
+        <td>13,200</td>
+        <td>-2.22%</td>
+        <td>9,890</td>
+        <td>5,399억</td>
+        <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
       </tr>
     </table>
   </div>
