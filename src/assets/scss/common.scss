@@ -276,19 +276,18 @@
       text-align: center;
       padding: 0;
       > .boardList {
-        padding: 10px;
         border-bottom: 1px solid $line-color;
         border-top: 1px solid $line-color;
-        ul {
+        .boardListWrap {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 10px 0;
+          padding: 10px;
           border-bottom: 1px solid $line-color;
           p {
             margin: 0;
           }
-          li:nth-child(2) {
+          .boardListThird {
             text-align: left;
             width: 310px;
             overflow:hidden;
@@ -296,7 +295,7 @@
             white-space:nowrap;
           }
         }
-        ul:last-child {
+        .boardListWrap:last-child {
           border: 0;
         }
       }
