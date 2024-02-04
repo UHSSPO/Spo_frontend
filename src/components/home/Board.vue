@@ -3,61 +3,50 @@
     <h3>게시판</h3>
     <ul class="boardListWrap">
       <li class="boardList">
-        <ul>
-          <li>해우소</li>
-          <li>
+        <div class="boardListWrap">
+          <div>해우소</div>
+          <div class="boardListThird">
             <p>준비는끝났다는얘기</p>
             <span>서서히 시작되리라 조심스레 예측합니다...</span>
-          </li>
-          <li>
+          </div>
+          <div>
             <a href="#">더보기</a>
-          </li>
-          <li>4시간 전</li>
-        </ul>
-        <ul>
-          <li>해우소</li>
-          <li>
+          </div>
+          <div>4시간 전</div>
+        </div>
+        <div class="boardListWrap">
+          <div>해우소</div>
+          <div class="boardListThird">
             <p>준비는끝났다는얘기</p>
             <span>서서히 시작되리라 조심스레 예측합니다...</span>
-          </li>
-          <li>
+          </div>
+          <div>
             <a href="#">더보기</a>
-          </li>
-          <li>4시간 전</li>
-        </ul>
-        <ul>
-          <li>해우소</li>
-          <li>
+          </div>
+          <div>4시간 전</div>
+        </div>
+        <div class="boardListWrap">
+          <div>해우소</div>
+          <div class="boardListThird">
             <p>준비는끝났다는얘기</p>
             <span>서서히 시작되리라 조심스레 예측합니다...</span>
-          </li>
-          <li>
+          </div>
+          <div>
             <a href="#">더보기</a>
-          </li>
-          <li>4시간 전</li>
-        </ul>
-        <ul>
-          <li>해우소</li>
-          <li>
+          </div>
+          <div>4시간 전</div>
+        </div>
+        <div class="boardListWrap">
+          <div>해우소</div>
+          <div class="boardListThird">
             <p>준비는끝났다는얘기</p>
             <span>서서히 시작되리라 조심스레 예측합니다...</span>
-          </li>
-          <li>
+          </div>
+          <div>
             <a href="#">더보기</a>
-          </li>
-          <li>4시간 전</li>
-        </ul>
-        <ul>
-          <li>해우소</li>
-          <li>
-            <p>준비는끝났다는얘기</p>
-            <span>서서히 시작되리라 조심스레 예측합니다...</span>
-          </li>
-          <li>
-            <a href="#">더보기</a>
-          </li>
-          <li>4시간 전</li>
-        </ul>
+          </div>
+          <div>4시간 전</div>
+        </div>
       </li>
     </ul>
   </div>
