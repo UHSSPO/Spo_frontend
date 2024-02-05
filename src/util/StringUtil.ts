@@ -21,7 +21,7 @@ export default class StringUtil {
 
   public static setKoreanNumber(number: bigint) {
     if (number.toString().length >= 15) {
-      return numeral(number.toString().slice(0, 4)).format('0,0') + '조' + numeral(number.toString().slice(4, 8)).format('0,0') + '억'
+      return numeral(number.toString().slice(0, 3)).format('0,0') + '조' + numeral(number.toString().slice(3, 7)).format('0,0') + '억'
     } else if (number.toString().length >= 14) {
       return numeral(number.toString().slice(0, 2)).format('0,0') + '조' + numeral(number.toString().slice(2, 6)).format('0,0') + '억'
     } else if (number.toString().length >= 13) {
