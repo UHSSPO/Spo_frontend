@@ -8,16 +8,21 @@
         <td>전일종가</td>
         <td>등락률</td>
         <td>주문건</td>
-        <td>시가총액</td>
+        <td>시가총액(억)</td>
         <td>즐겨찾기</td>
       </tr>
       <tr v-for="(item, idx) in popularStock" :key="idx">
         <td>{{ idx+1 }}</td>
         <td>{{ item.itmsNm }}</td>
-        <td>{{ item.clpr }}</td>
-        <td>{{ item.fltRt }}</td>
-        <td>{{ item.trqu }}</td>
-        <td>{{ item.mrktTotAmt }}</td>
+        <td>{{ item.clpr | setNumberComma }}</td>
+        <td v-if="item.fltRt === 0">
+          {{ item.fltRt }}
+        </td>
+        <td v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
+          {{ item.fltRt }}
+        </td>
+        <td>{{ item.trqu | setNumberComma }}</td>
+        <td>{{ item.mrktTotAmt | setKoreanNumber }}</td>
         <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
       </tr>
     </table>

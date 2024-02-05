@@ -6,7 +6,7 @@
       </div>
       <div class="rankWrap">
         <commend />
-        <popularity />
+        <popularity :popular-stock="popularStock" />
       </div>
       <div class="rankWrap">
         <Interest />
@@ -50,7 +50,7 @@ export default class home extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    Promise.all([this.getMarketIndex, this.getPopularStock])
+    Promise.all([this.getMarketIndex(), this.getPopularStock()])
       .finally(() => {
         this.$nextTick(() => {
           this.$nuxt.$loading.finish()
