@@ -27,8 +27,8 @@ import IndexInfo from '~/components/home/IndexInfo.vue'
 import Commend from '~/components/home/Commend.vue'
 import Popularity from '~/components/home/Popularity.vue'
 import Interest from '~/components/home/Interest.vue'
-import { MarketIndex } from '~/api/home'
-import { IMarketIndex } from '~/types/home/home'
+import { MarketIndex, PopularStock } from '~/api/home'
+import { IMarketIndex, IPopularStock } from '~/types/home/home'
 import Explore from '~/components/home/Explore.vue'
 import Board from '~/components/home/Board.vue'
 
@@ -41,6 +41,7 @@ export default class home extends Vue {
    * Variables (Local, VUEX)
    ********************************************************************************/
   private marketIndex = [] as Array<IMarketIndex>
+  private popularStock = [] as Array<IPopularStock>
 
   /********************************************************************************
    * Life Cycle
@@ -49,7 +50,7 @@ export default class home extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    Promise.all([this.getMarketIndex()])
+    Promise.all([this.getMarketIndex, this.getPopularStock])
       .finally(() => {
         this.$nextTick(() => {
           this.$nuxt.$loading.finish()
@@ -63,6 +64,12 @@ export default class home extends Vue {
   private getMarketIndex() {
     MarketIndex().then((response: Array<IMarketIndex>) => {
       this.marketIndex = response
+    })
+  }
+
+  private getPopularStock() {
+    PopularStock().then((response: Array<IPopularStock>) => {
+      this.popularStock = response
     })
   }
 }
