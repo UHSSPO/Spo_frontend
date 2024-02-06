@@ -36,7 +36,7 @@
 
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { IMarketIndex } from '~/types/home/home'
-import { MarketIndex } from '~/api/home'
+import { MarketIndex } from '~/api/stock'
 
 @Component({
   layout: 'empty',
