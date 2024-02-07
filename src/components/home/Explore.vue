@@ -12,99 +12,39 @@
       </div>
     </div>
     <ul v-show="currentOrder === 'views'">
-      <li>
+      <li v-for="(item, index) in theme" :key="index">
         <p class="exploreListTile">
-          조회수가 높은 순
+          {{ item.highViews }}
         </p>
       </li>
-      <li>
-        <p>두나무</p>
-        <span>115,000원</span>
-        <span class="textBlue">-10.16%</span>
-      </li>
-      <li>
-        <p>에이피알</p>
-        <span>364,000원</span>
-        <span class="textRed">+3.7%</span>
-      </li>
-      <li>
-        <p>지엔티파마</p>
-        <span>20,100원</span>
-        <span class="textBlue">-0.50%</span>
-      </li>
-      <li>
-        <p>비바리퍼블리카</p>
-        <span>49,900원</span>
-        <span class="textBlue">-2.16%</span>
-      </li>
-      <li>
-        <p>그래핀스퀘어</p>
-        <span>172,000원</span>
-        <span class="textBlue">-0.58%</span>
+      <li v-for="(item, index) in highViews" :key="index">
+        <p>{{ item.itmsNm }}</p>
+        <span>{{ item.clpr }}</span>
+        <span class="textBlue">{{ item.fltRt }}</span>
       </li>
     </ul>
     <ul v-show="currentOrder === 'asc'">
-      <li>
+      <li v-for="(item, index) in theme" :key="index">
         <p class="exploreListTile">
-          상승률 높은 순
+          {{ item.increaseStock }}
         </p>
       </li>
-      <li>
-        <p>두나무</p>
-        <span>115,000원</span>
-        <span class="textBlue">-10.16%</span>
-      </li>
-      <li>
-        <p>에이피알</p>
-        <span>364,000원</span>
-        <span class="textRed">+3.7%</span>
-      </li>
-      <li>
-        <p>지엔티파마</p>
-        <span>20,100원</span>
-        <span class="textBlue">-0.50%</span>
-      </li>
-      <li>
-        <p>비바리퍼블리카</p>
-        <span>49,900원</span>
-        <span class="textBlue">-2.16%</span>
-      </li>
-      <li>
-        <p>그래핀스퀘어</p>
-        <span>172,000원</span>
-        <span class="textBlue">-0.58%</span>
+      <li v-for="(item, index) in increaseStock" :key="index">
+        <p>{{ item.itmsNm }}</p>
+        <span>{{ item.clpr }}</span>
+        <span class="textBlue">{{ item.fltRt }}</span>
       </li>
     </ul>
     <ul v-show="currentOrder === 'desc'">
-      <li>
+      <li v-for="(item, index) in theme" :key="index">
         <p class="exploreListTile">
-          하략률 높은 순
+          {{ item.declineStock }}
         </p>
       </li>
-      <li>
-        <p>두나무</p>
-        <span>115,000원</span>
-        <span class="textBlue">-10.16%</span>
-      </li>
-      <li>
-        <p>에이피알</p>
-        <span>364,000원</span>
-        <span class="textRed">+3.7%</span>
-      </li>
-      <li>
-        <p>지엔티파마</p>
-        <span>20,100원</span>
-        <span class="textBlue">-0.50%</span>
-      </li>
-      <li>
-        <p>비바리퍼블리카</p>
-        <span>49,900원</span>
-        <span class="textBlue">-2.16%</span>
-      </li>
-      <li>
-        <p>그래핀스퀘어</p>
-        <span>172,000원</span>
-        <span class="textBlue">-0.58%</span>
+      <li v-for="(item, index) in declineStock" :key="index">
+        <p>{{ item.itmsNm }}</p>
+        <span>{{ item.clpr }}</span>
+        <span class="textBlue">{{ item.fltRt }}</span>
       </li>
     </ul>
   </div>
@@ -112,13 +52,16 @@
 
 <script lang="ts">
 
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { IDeclineStock, IHighViews, IIncreaseStock, IMarketIndex, ITheme } from '~/types/home/home'
 
 @Component({
   layout: 'empty',
   components: {}
 })
 export default class Explore extends Vue {
+  @Prop() private readonly theme!: Array<ITheme>
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
