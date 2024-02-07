@@ -14,23 +14,7 @@ export interface IPopularStock {
   trqu: number // 거래량
   mrktTotAmt: number // 시가총액
 }
-export interface IHighViews {
-  stockInfoSequence: number // 주식상장정보 일련번호
-  itmsNm: string // 주식명
-  clpr: number // 종가
-  fltRt: number // 등락률
-  trqu: number // 거래량
-  mrktTotAmt: number // 시가총액
-}
-export interface IIncreaseStock {
-  stockInfoSequence: number // 주식상장정보 일련번호
-  itmsNm: string // 주식명
-  clpr: number // 종가
-  fltRt: number // 등락률
-  trqu: number // 거래량
-  mrktTotAmt: number // 시가총액
-}
-export interface IDeclineStock {
+export interface IThemeStockInfo {
   stockInfoSequence: number // 주식상장정보 일련번호
   itmsNm: string // 주식명
   clpr: number // 종가
@@ -39,8 +23,7 @@ export interface IDeclineStock {
   mrktTotAmt: number // 시가총액
 }
 export interface ITheme{
-  highViews:Array<IHighViews> // 조회수 높은순
-  increaseStock:Array<IIncreaseStock> // 상승률 높은순
-  declineStock:Array<IDeclineStock> // 하락률 높은순
-
+  highViews:Array<IThemeStockInfo> // 조회수 높은순
+  increaseStock:Array<IThemeStockInfo> // 상승률 높은순
+  declineStock:Array<IThemeStockInfo> // 하락률 높은순
 }

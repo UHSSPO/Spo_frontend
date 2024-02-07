@@ -12,36 +12,36 @@
       </div>
     </div>
     <ul v-show="currentOrder === 'views'">
-      <li v-for="(item, index) in theme" :key="index">
+      <li>
         <p class="exploreListTile">
-          {{ item.highViews }}
+          조회수 높은순
         </p>
       </li>
-      <li v-for="(item, index) in highViews" :key="index">
+      <li v-for="(item, index) in theme.highViews" :key="index">
         <p>{{ item.itmsNm }}</p>
         <span>{{ item.clpr }}</span>
         <span class="textBlue">{{ item.fltRt }}</span>
       </li>
     </ul>
     <ul v-show="currentOrder === 'asc'">
-      <li v-for="(item, index) in theme" :key="index">
+      <li>
         <p class="exploreListTile">
-          {{ item.increaseStock }}
+          등락률 높은순
         </p>
       </li>
-      <li v-for="(item, index) in increaseStock" :key="index">
+      <li v-for="(item, index) in theme.increaseStock" :key="index">
         <p>{{ item.itmsNm }}</p>
         <span>{{ item.clpr }}</span>
         <span class="textBlue">{{ item.fltRt }}</span>
       </li>
     </ul>
     <ul v-show="currentOrder === 'desc'">
-      <li v-for="(item, index) in theme" :key="index">
+      <li>
         <p class="exploreListTile">
-          {{ item.declineStock }}
+          하락률 높은순
         </p>
       </li>
-      <li v-for="(item, index) in declineStock" :key="index">
+      <li v-for="(item, index) in theme.declineStock" :key="index">
         <p>{{ item.itmsNm }}</p>
         <span>{{ item.clpr }}</span>
         <span class="textBlue">{{ item.fltRt }}</span>
@@ -53,22 +53,21 @@
 <script lang="ts">
 
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { IDeclineStock, IHighViews, IIncreaseStock, IMarketIndex, ITheme } from '~/types/home/home'
+import { IMarketIndex, ITheme, IThemeStockInfo } from '~/types/home/home'
 
 @Component({
   layout: 'empty',
   components: {}
 })
 export default class Explore extends Vue {
-  @Prop() private readonly theme!: Array<ITheme>
+  /********************************************************************************
+   * Properties
+   ********************************************************************************/
+  @Prop() private readonly theme!: ITheme
 
   /********************************************************************************
-   * Life Cycle
+   * Variables (Local, VUEX)
    ********************************************************************************/
-  created(): void {
-    console.log('/explore')
-  }
-
   private orders: string[] = ['views', 'asc', 'desc']
   private currentOrderIndex = 0
 
