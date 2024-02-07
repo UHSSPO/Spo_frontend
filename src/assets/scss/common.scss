@@ -159,6 +159,12 @@
       justify-content: space-between;
       padding: 20px;
       .commendWrap, .popularityWrap {
+        .commend-wrap-tit {
+          display: flex;
+          &-tool {
+            margin-left: 4px;
+          }
+        }
         width: 48%;
         margin: 0 1%;
 
@@ -595,4 +601,8 @@
       display: none !important;
     }
   }
+}
+
+.tooltip-text {
+  color: #FFFFFF;
 }
