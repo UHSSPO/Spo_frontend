@@ -10,7 +10,7 @@
       </div>
       <div class="rankWrap">
         <Interest />
-        <Explore />
+        <Explore v-if="StringUtil.isNotEmpty(theme)" :theme="theme" />
       </div>
       <div class="rankWrap">
         <div style="width: 28%; margin: 0 1%; " />
@@ -27,8 +27,10 @@ import IndexInfo from '~/components/home/IndexInfo.vue'
 import Commend from '~/components/home/Commend.vue'
 import Popularity from '~/components/home/Popularity.vue'
 import Interest from '~/components/home/Interest.vue'
-import { MarketIndex, PopularStock } from '~/api/home'
-import { IMarketIndex, IPopularStock } from '~/types/home/home'
+
+import { MarketIndex, PopularStock, Theme } from '~/api/stock'
+import { IMarketIndex, IPopularStock, ITheme } from '~/types/home/home'
+
 import Explore from '~/components/home/Explore.vue'
 import Board from '~/components/home/Board.vue'
 
@@ -41,7 +43,10 @@ export default class home extends Vue {
    * Variables (Local, VUEX)
    ********************************************************************************/
   private marketIndex = [] as Array<IMarketIndex>
+
   private popularStock = [] as Array<IPopularStock>
+
+  private theme = [] as Array<ITheme>
 
   /********************************************************************************
    * Life Cycle
@@ -50,7 +55,7 @@ export default class home extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    Promise.all([this.getMarketIndex(), this.getPopularStock()])
+    Promise.all([this.getMarketIndex(), this.getPopularStock(), this.getTheme()])
       .finally(() => {
         this.$nextTick(() => {
           this.$nuxt.$loading.finish()
@@ -70,6 +75,12 @@ export default class home extends Vue {
   private getPopularStock() {
     PopularStock().then((response: Array<IPopularStock>) => {
       this.popularStock = response
+    })
+  }
+
+  private getTheme() {
+    Theme().then((response: Array<ITheme>) => {
+      this.theme = response
     })
   }
 }
