@@ -1,6 +1,9 @@
 <template>
   <div class="commendWrap">
-    <h3>추천 종목</h3>
+    <div class="commend-wrap-tit">
+      <h3>추천 종목</h3>
+      <s-tool-tip class="commend-wrap-tit-tool" detail="SPO에서 직접 기업을 평가하여 추천해주고 있어요." />
+    </div>
     <table class="commendRank">
       <tr>
         <td />
@@ -70,10 +73,11 @@
 <script lang="ts">
 
 import { Component, Vue } from 'nuxt-property-decorator'
+import SToolTip from '~/components/common/SToolTip.vue'
 
 @Component({
   layout: 'empty',
-  components: {}
+  components: { SToolTip }
 })
 export default class Commend extends Vue {
   /********************************************************************************
