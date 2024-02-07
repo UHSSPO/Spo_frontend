@@ -4,8 +4,12 @@ import StringUtil from '@/util/StringUtil'
 /**
  * 숫자 콤마 설정
  */
-Vue.filter('setNumberComma', (value, decimal) => {
-  return StringUtil.setNumberComma(value, decimal)
+Vue.filter('setNumberComma', (value) => {
+  return StringUtil.setNumberComma(value)
+})
+
+Vue.filter('setKoreanNumber', (value) => {
+  return StringUtil.setKoreanNumber(value)
 })
 /**
  * HHMMSS 설정
