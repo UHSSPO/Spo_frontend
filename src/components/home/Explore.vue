@@ -19,8 +19,13 @@
       </li>
       <li v-for="(item, index) in theme.highViews" :key="index">
         <p>{{ item.itmsNm }}</p>
-        <span>{{ item.clpr }}</span>
-        <span class="textBlue">{{ item.fltRt }}</span>
+        <span>{{ item.clpr | setNumberComma }}</span>
+        <span v-if="item.fltRt === 0">
+          {{ item.fltRt }}
+        </span>
+        <span v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
+          {{ item.fltRt }}
+        </span>
       </li>
     </ul>
     <ul v-show="currentOrder === 'asc'">
@@ -31,8 +36,13 @@
       </li>
       <li v-for="(item, index) in theme.increaseStock" :key="index">
         <p>{{ item.itmsNm }}</p>
-        <span>{{ item.clpr }}</span>
-        <span class="textBlue">{{ item.fltRt }}</span>
+        <span>{{ item.clpr | setNumberComma }}</span>
+        <span v-if="item.fltRt === 0">
+          {{ item.fltRt }}
+        </span>
+        <span v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
+          {{ item.fltRt }}
+        </span>
       </li>
     </ul>
     <ul v-show="currentOrder === 'desc'">
@@ -43,8 +53,13 @@
       </li>
       <li v-for="(item, index) in theme.declineStock" :key="index">
         <p>{{ item.itmsNm }}</p>
-        <span>{{ item.clpr }}</span>
-        <span class="textBlue">{{ item.fltRt }}</span>
+        <span>{{ item.clpr | setNumberComma }}</span>
+        <span v-if="item.fltRt === 0">
+          {{ item.fltRt }}
+        </span>
+        <span v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
+          {{ item.fltRt }}
+        </span>
       </li>
     </ul>
   </div>
