@@ -283,6 +283,23 @@
         }
       }
     }
+    .zero {
+      color: #121212;
+      font-weight: bold;
+    }
+
+    .minus {
+      color: #007AFF;
+      font-weight: bold;
+    }
+
+    .plus {
+      color: #ee6161;
+      font-weight: bold;
+    }
+    .plus:before {
+      content: '+'
+    }
   }
   .boardWrap {
     width: 68%;
