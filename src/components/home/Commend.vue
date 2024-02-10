@@ -6,12 +6,12 @@
         <s-tool-tip class="commend-wrap-tit-tool" detail="SPO에서 직접 기업을 평가하여 추천해주고 있어요." />
       </div>
       <div class="commend-btn-wrap">
-        <button @click="changeOrder('shortBtn')">
+        <s-button @click="changeOrder('shortBtn')">
           단기추천
-        </button>
-        <button @click="changeOrder('longBtn')">
+        </s-button>
+        <s-button @click="changeOrder('longBtn')">
           장기추천
-        </button>
+        </s-button>
       </div>
     </div>
 
@@ -148,10 +148,11 @@
 
 import { Component, Vue } from 'nuxt-property-decorator'
 import SToolTip from '~/components/common/SToolTip.vue'
+import SButton from '~/components/common/SButton.vue'
 
 @Component({
   layout: 'empty',
-  components: { SToolTip }
+  components: { SToolTip, SButton }
 })
 export default class Commend extends Vue {
   /********************************************************************************

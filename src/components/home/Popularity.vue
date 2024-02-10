@@ -1,7 +1,7 @@
 <template>
   <div class="popularityWrap">
     <h3>인기 종목</h3>
-    <table class="popularityRank">
+    <table class="popularityRank popularity">
       <tr>
         <td />
         <td>종목명</td>
@@ -59,3 +59,9 @@ export default class Popularity extends Vue {
 }
 
 </script>
+
+<style lang="scss">
+.popularity {
+  margin-top: 1px !important;
+}
+</style>
