@@ -100,3 +100,21 @@ html{
 .v-chip.v-chip--outlined.v-chip.v-chip{
   background:#fff !important;
 }
+
+.theme--light.v-btn.v-btn--has-bg {
+  background-color: #FFFFFF;
+}
+
+.v-btn--is-elevated {
+  box-shadow: none;
+}
+
+button {
+  border: 1px solid $line-color;
+  padding: 10px;
+}
+
+.click {
+  background: #5e8bce !important;
+  color: #FFFFFF !important;
+}

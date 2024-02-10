@@ -6,10 +6,10 @@
         <s-tool-tip class="commend-wrap-tit-tool" detail="SPO에서 직접 기업을 평가하여 추천해주고 있어요." />
       </div>
       <div class="commend-btn-wrap">
-        <s-button @click="changeOrder('shortBtn')">
+        <s-button :class="{click : currentOrderIndex === 0 }" @click="changeOrder('shortBtn')">
           단기추천
         </s-button>
-        <s-button @click="changeOrder('longBtn')">
+        <s-button :class="{click : currentOrderIndex === 1 }" @click="changeOrder('longBtn')">
           장기추천
         </s-button>
       </div>
