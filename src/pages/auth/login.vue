@@ -20,7 +20,7 @@
             @keypress.enter.prevent="onClickLogin"
           />
           <div class="login-button">
-            <s-button class="w-100" @click="onClickLogin">
+            <s-button class="w-100 s-button" @click="onClickLogin">
               로그인하기
             </s-button>
           </div>

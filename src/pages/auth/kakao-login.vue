@@ -40,7 +40,7 @@
           />
         </div>
         <div class="sign-up-button">
-          <s-button class="w-100" :disabled="!isButtonDisabled" @click="onClickSignUp">
+          <s-button class="w-100 s-button" :disabled="!isButtonDisabled" @click="onClickSignUp">
             가입
           </s-button>
         </div>
@@ -93,7 +93,7 @@ export default class KakaoLogin extends Vue {
       this.$nuxt.$loading.start()
     })
     const response = await kakaoCertified(this.authData)
-    if (response.success) {
+    if (response.check) {
       commonStore.ADD_DIALOG({
         id: 'EMAIL_CHECK',
         text: '이미 가입된 이메일입니다. 관리자에게 문의 해주세요.',
