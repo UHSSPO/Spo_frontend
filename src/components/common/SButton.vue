@@ -50,3 +50,18 @@ export default class SButton extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.theme--light.v-btn.v-btn--has-bg {
+  background-color: #FFFFFF !important;
+}
+
+.v-btn--is-elevated {
+  box-shadow: none;
+}
+
+button {
+  border: 1px solid $line-color;
+  padding: 10px;
+}
+</style>
