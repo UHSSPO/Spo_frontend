@@ -50,3 +50,7 @@ export default class SButton extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+
+</style>

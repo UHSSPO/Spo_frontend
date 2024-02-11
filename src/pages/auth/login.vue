@@ -1,7 +1,7 @@
 <template>
-  <div id="container" class="line">
+  <div id="container-depth" class="line">
     <div class="content dynamic-layout">
-      <div class="sign-up">
+      <div class="sign-up-login">
         <div class="sign-up-header">
           <h1>로그인하기</h1>
         </div>
@@ -20,7 +20,7 @@
             @keypress.enter.prevent="onClickLogin"
           />
           <div class="login-button">
-            <s-button class="w-100" @click="onClickLogin">
+            <s-button class="w-100 s-button" @click="onClickLogin">
               로그인하기
             </s-button>
           </div>
