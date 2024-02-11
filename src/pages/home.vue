@@ -1,6 +1,6 @@
 <template>
   <div id="container" class="line">
-    <div class="content">
+    <div class="content  dynamic-layout">
       <div class="index-wrap">
         <index-info v-if="StringUtil.isNotEmpty(marketIndex)" :market-index="marketIndex" />
       </div>
