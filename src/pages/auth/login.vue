@@ -1,5 +1,5 @@
 <template>
-  <div id="container" class="line">
+  <div id="container-depth" class="line">
     <div class="content dynamic-layout">
       <div class="sign-up-login">
         <div class="sign-up-header">
