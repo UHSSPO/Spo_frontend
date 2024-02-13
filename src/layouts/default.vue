@@ -64,7 +64,7 @@
             <li class="header_user_color">
               {{ userInfo.nickName }} 님 환영합니다!
             </li>
-            <li @click="onclicklogout()">
+            <li @click="onClickLogout()">
               <a class="header_user_color">
                 로그아웃
               </a>
@@ -208,12 +208,15 @@ export default class extends Vue {
     this.$router.push('/auth/login')
   }
 
-  private onclicklogout() {
+  private onClickLogout() {
     commonStore.ADD_DIALOG({
       id: 'LOGOUT',
-      text: '로그아웃되었습니다!'
+      text: '로그아웃되었습니다!',
+      callback: () => {
+        commonStore.LOGOUT()
+        window.location.reload()
+      }
     })
-    commonStore.LOGOUT()
   }
 }
 </script>

@@ -5,9 +5,8 @@
         <index-info v-if="StringUtil.isNotEmpty(marketIndex)" :market-index="marketIndex" />
       </div>
       <div class="rankWrap">
-        <commend :short-investment="shortInvestment" :long-investment="longInvestment" />
-
-        <popularity :popular-stock="popularStock" />
+        <commend :short-investment="shortInvestment" :long-investment="longInvestment" @init="initCommend" />
+        <popularity :popular-stock="popularStock" @init="initCommend" />
       </div>
       <div class="rankWrap">
         <Interest />
@@ -57,15 +56,7 @@ export default class home extends Vue {
    * Life Cycle
    ********************************************************************************/
   created(): void {
-    this.$nextTick(() => {
-      this.$nuxt.$loading.start()
-    })
-    Promise.all([this.getMarketIndex(), this.getPopularStock(), this.getTheme(), this.getShortInvestment(), this.getLongInvestment()])
-      .finally(() => {
-        this.$nextTick(() => {
-          this.$nuxt.$loading.finish()
-        })
-      })
+    this.initCommend()
   }
 
   /********************************************************************************
@@ -99,6 +90,18 @@ export default class home extends Vue {
     LongInvestment().then((response: Array<ILongInvestment>) => {
       this.longInvestment = response
     })
+  }
+
+  private initCommend() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    Promise.all([this.getMarketIndex(), this.getPopularStock(), this.getTheme(), this.getShortInvestment(), this.getLongInvestment()])
+      .finally(() => {
+        this.$nextTick(() => {
+          this.$nuxt.$loading.finish()
+        })
+      })
   }
 }
 

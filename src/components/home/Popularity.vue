@@ -23,7 +23,10 @@
         </td>
         <td>{{ item.trqu | setNumberComma }}</td>
         <td>{{ item.mrktTotAmt | setKoreanNumber }}</td>
-        <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
+        <td>
+          <img v-if="item.interestStockYn === Globals.NO" src="~/assets/image/star.png" alt="favorites" @click="favoritesList(item.stockInfoSequence)">
+          <img v-else src="~/assets/image/colorstar.png" alt="favorites" @click="favoritesList(item.stockInfoSequence)">
+        </td>
       </tr>
     </table>
   </div>
@@ -31,31 +34,36 @@
 
 <script lang="ts">
 
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { Component, Emit, Prop, Vue } from 'nuxt-property-decorator'
 import { IMarketIndex, IPopularStock } from '~/types/home/home'
+import { UpdateInterestStock } from '~/api/stock'
+import StringUtil from '~/util/StringUtil'
 
 @Component({
   layout: 'empty',
   components: {}
 })
 export default class Popularity extends Vue {
+  /********************************************************************************
+   * Properties
+   ********************************************************************************/
     @Prop() private readonly popularStock!: Array<IPopularStock>
-    /********************************************************************************
+  @Emit('init')
+    private initCommend() {
+      return false
+    }
+
+  /********************************************************************************
    * Life Cycle
    ********************************************************************************/
-    created(): void {
-      console.log('/popularity')
+  private async favoritesList(stockInfoSequence: number) {
+    this.$nuxt.$loading.start()
+    const response = await UpdateInterestStock(stockInfoSequence)
+    if (StringUtil.isNotEmpty(response)) {
+      this.initCommend()
     }
-
-    private isColorStar = true
-
-    private get currentImage(): string {
-      return this.isColorStar ? require('~/assets/image/star.png') : require('~/assets/image/colorstar.png')
-    }
-
-    private favoritesList(): void {
-      this.isColorStar = !this.isColorStar
-    }
+    this.$nuxt.$loading.finish()
+  }
 }
 
 </script>

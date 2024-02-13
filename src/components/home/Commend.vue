@@ -39,7 +39,10 @@
         </td>
         <td>{{ item.trqu | setNumberComma }}</td>
         <td>{{ item.mrktTotAmt | setKoreanNumber }}</td>
-        <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
+        <td>
+          <img v-if="item.interestStockYn === Globals.NO" src="~/assets/image/star.png" alt="favorites" @click="favoritesList(item.stockInfoSequence)">
+          <img v-else src="~/assets/image/colorstar.png" alt="favorites" @click="favoritesList(item.stockInfoSequence)">
+        </td>
       </tr>
       <tr>
         <td colspan="7">
@@ -71,7 +74,10 @@
         </td>
         <td>{{ item.trqu | setNumberComma }}</td>
         <td>{{ item.mrktTotAmt | setKoreanNumber }}</td>
-        <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
+        <td>
+          <img v-if="item.interestStockYn === Globals.NO" src="~/assets/image/star.png" alt="favorites" @click="favoritesList(item.stockInfoSequence)">
+          <img v-else src="~/assets/image/colorstar.png" alt="favorites" @click="favoritesList(item.stockInfoSequence)">
+        </td>
       </tr>
       <tr>
         <td colspan="7">
@@ -84,18 +90,28 @@
 
 <script lang="ts">
 
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { Component, Emit, Prop, Vue } from 'nuxt-property-decorator'
 import SToolTip from '~/components/common/SToolTip.vue'
 import SButton from '~/components/common/SButton.vue'
 import { ILongInvestment, IPopularStock, IShortInvestment } from '~/types/home/home'
+import { UpdateInterestStock } from '~/api/stock'
+import StringUtil from '~/util/StringUtil'
 
 @Component({
   layout: 'empty',
   components: { SToolTip, SButton }
 })
 export default class Commend extends Vue {
+  /********************************************************************************
+   * Properties
+   ********************************************************************************/
   @Prop() private readonly shortInvestment!: Array<IShortInvestment>
   @Prop() private readonly longInvestment!: Array<ILongInvestment>
+
+  @Emit('init')
+  private initCommend() {
+    return false
+  }
 
   /********************************************************************************
    * Life Cycle
@@ -103,18 +119,17 @@ export default class Commend extends Vue {
   private orders: string[] = ['short', 'long']
   private currentOrderIndex = 0
 
-  private isColorStar = true
-
-  private get currentImage(): string {
-    return this.isColorStar ? require('~/assets/image/star.png') : require('~/assets/image/colorstar.png')
-  }
-
-  private favoritesList(): void {
-    this.isColorStar = !this.isColorStar
-  }
-
   get currentOrder(): string {
     return this.orders[this.currentOrderIndex]
+  }
+
+  private async favoritesList(stockInfoSequence: number) {
+    this.$nuxt.$loading.start()
+    const response = await UpdateInterestStock(stockInfoSequence)
+    if (StringUtil.isNotEmpty(response)) {
+      this.initCommend()
+    }
+    this.$nuxt.$loading.finish()
   }
 
   changeOrder(direction: string): void {

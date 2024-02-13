@@ -13,6 +13,7 @@ export interface IPopularStock {
   fltRt: number // 등락률
   trqu: number // 거래량
   mrktTotAmt: number // 시가총액
+  interestStockYn: string // 즐겨찾기
 }
 export interface IThemeStockInfo {
   stockInfoSequence: number // 주식상장정보 일련번호
@@ -35,6 +36,7 @@ export interface IShortInvestment {
   fltRt: number // 등락률
   trqu: number // 거래량
   mrktTotAmt: number // 시가총액
+  interestStockYn: string // 즐겨찾기
 }
 
 export interface ILongInvestment {
@@ -44,4 +46,5 @@ export interface ILongInvestment {
   fltRt: number // 등락률
   trqu: number // 거래량
   mrktTotAmt: number // 시가총액
+  interestStockYn: string // 즐겨찾기
 }
