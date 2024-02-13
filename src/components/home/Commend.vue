@@ -27,49 +27,18 @@
         <td>시가총액</td>
         <td>즐겨찾기</td>
       </tr>
-      <tr>
-        <td>1</td>
-        <td>3S</td>
-        <td>4,100</td>
-        <td>+0.37</td>
-        <td>58,962,730</td>
-        <td>2조 6,482억</td>
-        <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>에이피알</td>
-        <td>364,000</td>
-        <td>+3.7%</td>
-        <td>13,139</td>
-        <td>2조 6,482억</td>
-        <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>두나무</td>
-        <td>115,000</td>
-        <td>-10.16%</td>
-        <td>68,336</td>
-        <td>4조 14억</td>
-        <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>야놀자</td>
-        <td>45,600</td>
-        <td>-0.44%</td>
-        <td>20,910</td>
-        <td>4조 6,064억</td>
-        <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>컬리</td>
-        <td>13,200</td>
-        <td>-2.22%</td>
-        <td>9,890</td>
-        <td>5,399억</td>
+      <tr v-for="(item, idx) in shortInvestment" :key="idx">
+        <td>{{ idx+1 }}</td>
+        <td>{{ item.itmsNm }}</td>
+        <td>{{ item.clpr | setNumberComma }}</td>
+        <td v-if="item.fltRt === 0">
+          {{ item.fltRt }}
+        </td>
+        <td v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
+          {{ item.fltRt }}
+        </td>
+        <td>{{ item.trqu | setNumberComma }}</td>
+        <td>{{ item.mrktTotAmt | setKoreanNumber }}</td>
         <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
       </tr>
       <tr>
@@ -90,49 +59,18 @@
         <td>시가총액</td>
         <td>즐겨찾기</td>
       </tr>
-      <tr>
-        <td>1</td>
-        <td>3S</td>
-        <td>4,100</td>
-        <td>+0.37</td>
-        <td>58,962,730</td>
-        <td>2조 6,482억</td>
-        <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>에이피알</td>
-        <td>364,000</td>
-        <td>+3.7%</td>
-        <td>13,139</td>
-        <td>2조 6,482억</td>
-        <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>두나무</td>
-        <td>115,000</td>
-        <td>-10.16%</td>
-        <td>68,336</td>
-        <td>4조 14억</td>
-        <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>야놀자</td>
-        <td>45,600</td>
-        <td>-0.44%</td>
-        <td>20,910</td>
-        <td>4조 6,064억</td>
-        <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>컬리</td>
-        <td>13,200</td>
-        <td>-2.22%</td>
-        <td>9,890</td>
-        <td>5,399억</td>
+      <tr v-for="(item, idx) in longInvestment" :key="idx">
+        <td>{{ idx+1 }}</td>
+        <td>{{ item.itmsNm }}</td>
+        <td>{{ item.clpr | setNumberComma }}</td>
+        <td v-if="item.fltRt === 0">
+          {{ item.fltRt }}
+        </td>
+        <td v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
+          {{ item.fltRt }}
+        </td>
+        <td>{{ item.trqu | setNumberComma }}</td>
+        <td>{{ item.mrktTotAmt | setKoreanNumber }}</td>
         <td><img :src="currentImage" alt="favorites" @click="favoritesList()"></td>
       </tr>
       <tr>
@@ -146,15 +84,19 @@
 
 <script lang="ts">
 
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import SToolTip from '~/components/common/SToolTip.vue'
 import SButton from '~/components/common/SButton.vue'
+import { ILongInvestment, IPopularStock, IShortInvestment } from '~/types/home/home'
 
 @Component({
   layout: 'empty',
   components: { SToolTip, SButton }
 })
 export default class Commend extends Vue {
+  @Prop() private readonly shortInvestment!: Array<IShortInvestment>
+  @Prop() private readonly longInvestment!: Array<ILongInvestment>
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
