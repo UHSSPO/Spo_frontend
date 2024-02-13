@@ -214,7 +214,7 @@ export default class extends Vue {
       text: '로그아웃되었습니다!',
       callback: () => {
         commonStore.LOGOUT()
-        window.location.reload()
+        this.$router.push('/')
       }
     })
   }
