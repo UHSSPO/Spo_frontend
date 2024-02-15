@@ -5,7 +5,7 @@
         <div class="commendWrap w-100">
           <div class="commend-main-title">
             <v-icon>
-              mdi-alert-circle-outline
+              mdi-finance
             </v-icon>
             <h3>SPO에서 직접 기업을 평가하여 추천해주고 있는 </h3><h2>추천종목</h2>
           </div>
