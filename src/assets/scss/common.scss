@@ -173,6 +173,18 @@
         }
       }
       .commendWrap, .popularityWrap, .interestWrap {
+        .commend-main-title {
+          height: 150px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid $line-color;
+          margin-bottom: 10px;
+          background: #f3f3f3;
+          h3 {
+            font-weight: bold;
+          }
+        }
         .commend-wrap-tit {
           display: flex;
           justify-content: space-between;
@@ -214,9 +226,10 @@
           td {
             border-bottom: 1px solid $line-color;
             height: 45px;
-            a {
+            .more {
               color: #333333;
               display: block;
+              cursor: pointer;
             }
             img {
               height: 100%;
@@ -457,7 +470,7 @@
   padding-bottom: 0;
 }
 .w-100 {
-  width: 100%;
+  width: 100% !important;
 }
 
 .w-50 {

@@ -45,8 +45,8 @@
         </td>
       </tr>
       <tr>
-        <td colspan="7">
-          <a href="#">더보기</a>
+        <td colspan="7" @click="onclickToCommend()">
+          <span class="more">더보기</span>
         </td>
       </tr>
     </table>
@@ -80,8 +80,8 @@
         </td>
       </tr>
       <tr>
-        <td colspan="7">
-          <a href="#">더보기</a>
+        <td colspan="7" @click="onclickToCommend()">
+          <span class="more">더보기</span>
         </td>
       </tr>
     </table>
@@ -138,6 +138,10 @@ export default class Commend extends Vue {
     } else if (direction === 'longBtn') {
       this.currentOrderIndex = 1
     }
+  }
+
+  private onclickToCommend() {
+    this.$router.push('/commend')
   }
 }
 
