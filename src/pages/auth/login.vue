@@ -1,6 +1,6 @@
 <template>
   <div id="container-depth" class="line">
-    <div class="content dynamic-layout">
+    <div class="content center dynamic-layout">
       <div class="sign-up-login">
         <div class="sign-up-header">
           <h1>로그인하기</h1>

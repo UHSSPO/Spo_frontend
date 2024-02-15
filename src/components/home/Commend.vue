@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <table v-show="currentOrder === 'short'" class="commendRank">
+    <table v-if="currentOrder === 'short'" class="commendRank">
       <tr>
         <td />
         <td>
@@ -45,12 +45,12 @@
         </td>
       </tr>
       <tr>
-        <td colspan="7">
-          <a href="#">더보기</a>
+        <td colspan="7" @click="onclickToCommend()">
+          <span class="more">더보기</span>
         </td>
       </tr>
     </table>
-    <table v-show="currentOrder === 'long'" class="commendRank">
+    <table v-else-if="currentOrder === 'long'" class="commendRank">
       <tr>
         <td />
         <td>
@@ -80,8 +80,8 @@
         </td>
       </tr>
       <tr>
-        <td colspan="7">
-          <a href="#">더보기</a>
+        <td colspan="7" @click="onclickToCommend()">
+          <span class="more">더보기</span>
         </td>
       </tr>
     </table>
@@ -152,6 +152,10 @@ export default class Commend extends Vue {
     } else if (direction === 'longBtn') {
       this.currentOrderIndex = 1
     }
+  }
+
+  private onclickToCommend() {
+    this.$router.push('/commend')
   }
 }
 

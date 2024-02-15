@@ -105,9 +105,10 @@
 #container{
   width:100%;
   &.line{
-    //.content{
-    //  height: calc(100vh - 200px);
-    //}
+    border-top:6px solid $line-color2;
+    .content{
+      min-height: calc(100vh - 200px);
+    }
   }
   .content {
     border-left: 1px solid $line-color;
@@ -172,6 +173,18 @@
         }
       }
       .commendWrap, .popularityWrap, .interestWrap {
+        .commend-main-title {
+          height: 150px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid $line-color;
+          margin-bottom: 10px;
+          background: #f3f3f3;
+          h3 {
+            font-weight: bold;
+          }
+        }
         .commend-wrap-tit {
           display: flex;
           justify-content: space-between;
@@ -213,9 +226,10 @@
           td {
             border-bottom: 1px solid $line-color;
             height: 45px;
-            a {
+            .more {
               color: #333333;
               display: block;
+              cursor: pointer;
             }
             img {
               height: 100%;
@@ -351,7 +365,7 @@
   width:100%;
   &.line{
     .content{
-      height: calc(100vh - 80px);
+      height: calc(100vh - 200px);
     }
   }
   .content {
@@ -393,10 +407,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-
-    .btn-img span {
-
     }
 
     .btn-login {
@@ -459,7 +469,7 @@
   padding-bottom: 0;
 }
 .w-100 {
-  width: 100%;
+  width: 100% !important;
 }
 
 .w-50 {
@@ -475,10 +485,10 @@
 }
 
 .sign-up-login {
-  padding: 150px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   &-header {
     margin-bottom: 20px;
   }
