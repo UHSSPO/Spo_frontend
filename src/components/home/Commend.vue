@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <table v-show="currentOrder === 'short'" class="commendRank">
+    <table v-if="currentOrder === 'short'" class="commendRank">
       <tr>
         <td />
         <td>
@@ -50,7 +50,7 @@
         </td>
       </tr>
     </table>
-    <table v-show="currentOrder === 'long'" class="commendRank">
+    <table v-else-if="currentOrder === 'long'" class="commendRank">
       <tr>
         <td />
         <td>

@@ -28,12 +28,10 @@
               </td>
               <td>전일종가</td>
               <td>등락률</td>
-              <td>주문건</td>
               <td>시가총액</td>
               <td>즐겨찾기</td>
             </tr>
             <tr>
-              <td>a</td>
               <td>a</td>
               <td>a</td>
               <td>a</td>
@@ -52,12 +50,10 @@
               </td>
               <td>전일종가</td>
               <td>등락률</td>
-              <td>주문건</td>
               <td>시가총액</td>
               <td>즐겨찾기</td>
             </tr>
             <tr>
-              <td>b</td>
               <td>b</td>
               <td>b</td>
               <td>b</td>
