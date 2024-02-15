@@ -4,10 +4,14 @@
       <h3>테마별 탐색</h3>
       <div class="exploreBtn">
         <s-button @click="changeOrder('prev')">
-          <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M20 .755l-14.374 11.245 14.374 11.219-.619.781-15.381-12 15.391-12 .609.755z" /></svg>
+          <v-icon>
+            mdi-chevron-left
+          </v-icon>
         </s-button>
         <s-button @click="changeOrder('next')">
-          <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M4 .755l14.374 11.245-14.374 11.219.619.781 15.381-12-15.391-12-.609.755z" /></svg>
+          <v-icon>
+            mdi-chevron-right
+          </v-icon>
         </s-button>
       </div>
     </div>
