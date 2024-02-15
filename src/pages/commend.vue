@@ -4,7 +4,10 @@
       <div class="rankWrap">
         <div class="commendWrap w-100">
           <div class="commend-main-title">
-            <h3>SPO에서 직접 기업을 평가하여 추천해주고 있는 추천종목을 확인해보세요!</h3>
+            <v-icon>
+              mdi-alert-circle-outline
+            </v-icon>
+            <h3>SPO에서 직접 기업을 평가하여 추천해주고 있는 </h3><h2>추천종목</h2>
           </div>
           <div class="commend-wrap-tit">
             <div class="commend-title-wrap">
