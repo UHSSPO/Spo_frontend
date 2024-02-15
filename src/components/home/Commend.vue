@@ -90,12 +90,16 @@
 
 <script lang="ts">
 
-import { Component, Emit, Prop, Vue } from 'nuxt-property-decorator'
+import { Component, Emit, namespace, Prop, Vue } from 'nuxt-property-decorator'
 import SToolTip from '~/components/common/SToolTip.vue'
 import SButton from '~/components/common/SButton.vue'
 import { ILongInvestment, IPopularStock, IShortInvestment } from '~/types/home/home'
 import { UpdateInterestStock } from '~/api/stock'
 import StringUtil from '~/util/StringUtil'
+import { commonStore } from '~/util/store-accessor'
+import { Namespace } from '~/util/Namespace'
+
+const common = namespace(Namespace.COMMON)
 
 @Component({
   layout: 'empty',
@@ -107,6 +111,7 @@ export default class Commend extends Vue {
    ********************************************************************************/
   @Prop() private readonly shortInvestment!: Array<IShortInvestment>
   @Prop() private readonly longInvestment!: Array<ILongInvestment>
+  @common.State private token!: string
 
   @Emit('init')
   private initCommend() {
@@ -124,12 +129,21 @@ export default class Commend extends Vue {
   }
 
   private async favoritesList(stockInfoSequence: number) {
-    this.$nuxt.$loading.start()
-    const response = await UpdateInterestStock(stockInfoSequence)
-    if (StringUtil.isNotEmpty(response)) {
-      this.initCommend()
+    if (StringUtil.isEmpty(this.token)) {
+      commonStore.ADD_DIALOG({
+        id: 'ERROR',
+        text: '로그인이 필요한 서비스입니다!'
+      })
+      this.$nuxt.$loading.finish()
+      return false
+    } else {
+      this.$nuxt.$loading.start()
+      const response = await UpdateInterestStock(stockInfoSequence)
+      if (StringUtil.isNotEmpty(response)) {
+        this.initCommend()
+      }
+      this.$nuxt.$loading.finish()
     }
-    this.$nuxt.$loading.finish()
   }
 
   changeOrder(direction: string): void {
