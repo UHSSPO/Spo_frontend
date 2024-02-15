@@ -3,12 +3,12 @@
     <div class="exploreItem">
       <h3>테마별 탐색</h3>
       <div class="exploreBtn">
-        <button @click="changeOrder('prev')">
+        <s-button @click="changeOrder('prev')">
           <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M20 .755l-14.374 11.245 14.374 11.219-.619.781-15.381-12 15.391-12 .609.755z" /></svg>
-        </button>
-        <button @click="changeOrder('next')">
+        </s-button>
+        <s-button @click="changeOrder('next')">
           <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M4 .755l14.374 11.245-14.374 11.219.619.781 15.381-12-15.391-12-.609.755z" /></svg>
-        </button>
+        </s-button>
       </div>
     </div>
     <ul v-show="currentOrder === 'views'">
@@ -69,10 +69,11 @@
 
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { IMarketIndex, ITheme, IThemeStockInfo } from '~/types/home/home'
+import SButton from '~/components/common/SButton.vue'
 
 @Component({
   layout: 'empty',
-  components: {}
+  components: { SButton }
 })
 export default class Explore extends Vue {
   /********************************************************************************
