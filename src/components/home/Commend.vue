@@ -129,11 +129,6 @@ export default class Commend extends Vue {
   }
 
   private async favoritesList(stockInfoSequence: number) {
-    this.$nuxt.$loading.start()
-    const response = await UpdateInterestStock(stockInfoSequence)
-    if (StringUtil.isNotEmpty(response)) {
-      this.initCommend()
-    }
     if (StringUtil.isEmpty(this.token)) {
       commonStore.ADD_DIALOG({
         id: 'ERROR',
@@ -141,8 +136,14 @@ export default class Commend extends Vue {
       })
       this.$nuxt.$loading.finish()
       return false
+    } else {
+      this.$nuxt.$loading.start()
+      const response = await UpdateInterestStock(stockInfoSequence)
+      if (StringUtil.isNotEmpty(response)) {
+        this.initCommend()
+      }
+      this.$nuxt.$loading.finish()
     }
-    this.$nuxt.$loading.finish()
   }
 
   changeOrder(direction: string): void {
