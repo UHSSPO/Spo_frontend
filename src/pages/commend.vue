@@ -4,10 +4,17 @@
       <div class="rankWrap">
         <div class="commendWrap w-100">
           <div class="commend-main-title">
-            <v-icon>
-              mdi-finance
-            </v-icon>
-            <h3>SPO에서 직접 기업을 평가하여 추천해주고 있는 </h3><h2>추천종목</h2>
+            <div class="commend-main-area">
+              <div class="flex-center">
+                <v-icon>
+                  mdi-finance
+                </v-icon>
+                <h3>SPO에서 직접 기업을 평가하여 추천해주고 있는 </h3><h2>추천종목</h2>
+              </div>
+              <div class="commend-main-txt">
+                전년도 재무제표와 손익계산서, 최근 주가현황 등 분석해서 높은 점수를 받은 종목들이에요 🙈🙉
+              </div>
+            </div>
           </div>
           <div class="commend-wrap-tit">
             <div class="commend-title-wrap">
