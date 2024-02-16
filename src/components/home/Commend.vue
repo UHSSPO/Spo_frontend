@@ -155,7 +155,14 @@ export default class Commend extends Vue {
   }
 
   private onclickToCommend() {
-    this.$router.push('/commend')
+    if (StringUtil.isEmpty(this.token)) {
+      commonStore.ADD_DIALOG({
+        id: 'ERROR',
+        text: '로그인이 필요한 서비스입니다!'
+      })
+    } else {
+      this.$router.push('/commend')
+    }
   }
 }
 
