@@ -105,7 +105,6 @@
 #container{
   width:100%;
   &.line{
-    border-top:6px solid $line-color2;
     .content{
       min-height: calc(100vh - 200px);
     }
@@ -180,9 +179,21 @@
           justify-content: center;
           border: 1px solid $line-color;
           margin-bottom: 10px;
-          background: #f3f3f3;
-          h3 {
+          background: #fafafa;
+          border-radius: 30px;
+          box-shadow: 0 4px 16px 0 rgba(0, 0, 0, .05);
+          .commend-main-txt {
+            margin-top: 12px;
+            font-size: 18px;
+          }
+          i {
+            font-size: 50px;
+            margin: 0 10px;
+            color: #ea313e;
+          }
+          h2 {
             font-weight: bold;
+            margin: 0 5px;
           }
         }
         .commend-wrap-tit {
@@ -696,6 +707,17 @@
         display: block;
         padding: 0;
         .commendWrap, .popularityWrap, .interestWrap, .exploreWrap, .boardWrap{
+          .commend-main-title {
+            i {
+              font-size: 30px;
+            }
+            h3{
+              font-size: 1em
+            }
+            h2 {
+              font-size: 1.1em
+            }
+          }
           width: 100%;
           padding: 20px;
           .boardListThird {
@@ -736,4 +758,10 @@
 
 .tooltip-text {
   color: #FFFFFF;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
