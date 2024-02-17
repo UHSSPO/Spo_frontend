@@ -11,7 +11,7 @@
     :single-line="singleLine"
     :outlined="!singleLine"
     :hide-details="hideDetails"
-    append-icon="mdi-magnify"
+    :append-icon="appendIcon ? 'mdi-magnify' : ''"
     @change="onChange"
     @input="onInput"
     @keypress="onkeypress"

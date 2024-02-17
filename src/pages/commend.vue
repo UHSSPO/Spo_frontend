@@ -23,7 +23,14 @@
             </div>
             <div class="commend-btn-wrap">
               <div class="mr-2 table-field">
-                <s-text-field v-model="search" placeholder="종목명 검색" class="table-input" :single-line="true" :hide-details="true" />
+                <s-text-field
+                  v-model="search"
+                  placeholder="종목명 검색"
+                  class="table-input"
+                  :single-line="true"
+                  :hide-details="true"
+                  :append-icon="true"
+                />
               </div>
               <s-button :class="{click : currentOrderIndex === 0 }" @click="changeOrder(0)">
                 단기추천
