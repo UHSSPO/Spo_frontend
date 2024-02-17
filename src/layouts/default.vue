@@ -88,10 +88,10 @@
         </a>
         <ul>
           <li>
-            <a href="#">홈</a>
+            <a @click="movePage('home')">홈</a>
           </li>
           <li>
-            <a href="#">추천</a>
+            <a @click="movePage('commend')">추천</a>
           </li>
           <li>
             <a href="#">성향분석</a>
@@ -191,6 +191,10 @@ export default class extends Vue {
 
   private appBarStatus() {
     this.appBarOpener = true
+  }
+
+  private movePage(page: string) {
+    this.$router.push(`/${page}`)
   }
 
   private onCloseDialog(value: IDialogResult) {
