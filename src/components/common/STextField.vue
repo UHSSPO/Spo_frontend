@@ -8,7 +8,10 @@
     :maxlength="maxLength"
     :disabled="disabled"
     :placeholder="placeholder"
-    outlined
+    :single-line="singleLine"
+    :outlined="!singleLine"
+    :hide-details="hideDetails"
+    append-icon="mdi-magnify"
     @change="onChange"
     @input="onInput"
     @keypress="onkeypress"
@@ -30,6 +33,9 @@ export default class STextField extends Vue {
   @Prop({ default: false }) required?: boolean
   @Prop() maxLength?: number
   @Prop() disabled?: boolean
+  @Prop({ default: false }) singleLine?: boolean
+  @Prop({ default: false }) hideDetails?: boolean
+  @Prop({ default: false }) appendIcon?: boolean
   @Prop() placeholder?: string
   @Prop() private readonly counter?: number
   @Prop(Number) private readonly minLength?: number
