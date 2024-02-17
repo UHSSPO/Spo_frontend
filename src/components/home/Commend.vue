@@ -6,10 +6,10 @@
         <s-tool-tip class="commend-wrap-tit-tool" detail="SPO에서 직접 기업을 평가하여 추천해주고 있어요." />
       </div>
       <div class="commend-btn-wrap">
-        <s-button :class="{click : currentOrderIndex === 0 }" @click="changeOrder('shortBtn')">
+        <s-button :class="{click : currentOrderIndex === 0 }" @click="changeOrder('short')">
           단기추천
         </s-button>
-        <s-button :class="{click : currentOrderIndex === 1 }" @click="changeOrder('longBtn')">
+        <s-button :class="{click : currentOrderIndex === 1 }" @click="changeOrder('long')">
           장기추천
         </s-button>
       </div>
@@ -134,7 +134,6 @@ export default class Commend extends Vue {
         id: 'ERROR',
         text: '로그인이 필요한 서비스입니다!'
       })
-      this.$nuxt.$loading.finish()
       return false
     } else {
       this.$nuxt.$loading.start()
@@ -147,9 +146,9 @@ export default class Commend extends Vue {
   }
 
   changeOrder(direction: string): void {
-    if (direction === 'shortBtn') {
+    if (direction === 'short') {
       this.currentOrderIndex = 0
-    } else if (direction === 'longBtn') {
+    } else if (direction === 'long') {
       this.currentOrderIndex = 1
     }
   }
@@ -161,7 +160,12 @@ export default class Commend extends Vue {
         text: '로그인이 필요한 서비스입니다!'
       })
     } else {
-      this.$router.push('/commend')
+      this.$router.push({
+        name: 'commend',
+        query: {
+          currentOrderIndex: this.currentOrderIndex.toString()
+        }
+      })
     }
   }
 }

@@ -209,7 +209,13 @@
           }
         }
         .commend-btn-wrap {
+          display: flex;
+          align-items: center;
           justify-content: flex-end;
+          .table-field {
+            position: relative;
+            bottom: 8px;
+          }
           .commend-activeBtn {
             background: #000;
           }
@@ -765,3 +771,21 @@
   justify-content: center;
   align-items: center;
 }
+
+.table-start {
+  width: 25px;
+  height: 25px;
+}
+
+//.table-input {
+//  margin-right: 12px !important;
+//  .v-text-field__details {
+//    display: none;
+//  }
+//  fieldset {
+//    height: 35px;
+//  }
+//  .v-text-field__slot {
+//    height: 32px;
+//  }
+//}

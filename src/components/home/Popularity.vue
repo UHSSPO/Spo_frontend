@@ -47,11 +47,11 @@ export default class Popularity extends Vue {
   /********************************************************************************
    * Properties
    ********************************************************************************/
-    @Prop() private readonly popularStock!: Array<IPopularStock>
+  @Prop() private readonly popularStock!: Array<IPopularStock>
   @Emit('init')
-    private initCommend() {
-      return false
-    }
+  private initCommend() {
+    return false
+  }
 
   /********************************************************************************
    * Life Cycle

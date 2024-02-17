@@ -37,6 +37,7 @@ export interface IShortInvestment {
   trqu: number // 거래량
   mrktTotAmt: number // 시가총액
   interestStockYn: string // 즐겨찾기
+  rating?: string // 등급
 }
 
 export interface ILongInvestment {
@@ -47,4 +48,5 @@ export interface ILongInvestment {
   trqu: number // 거래량
   mrktTotAmt: number // 시가총액
   interestStockYn: string // 즐겨찾기
+  rating?: string // 등급
 }

@@ -47,6 +47,16 @@ export default function ({ $axios, redirect, app }) {
           })
         } else if (errorData.message) {
           addMessages += '\n' + errorData.message
+        } else if (errorCode === 401) {
+          commonStore.ADD_DIALOG({
+            id: 'ERROR_401',
+            title: '오류',
+            text: '토큰이 만료됐습니다.',
+            callback: () => {
+              commonStore.LOGOUT()
+              this.$router.push('/')
+            }
+          })
         } else {
           addMessages += '\n' + errorData
         }
