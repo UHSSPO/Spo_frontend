@@ -36,7 +36,7 @@
       </tr>
       <tr>
         <td colspan="6">
-          <a href="#">더보기</a>
+          <span href="#">더보기</span>
         </td>
       </tr>
     </table>
