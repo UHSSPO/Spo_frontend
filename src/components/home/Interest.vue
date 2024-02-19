@@ -1,13 +1,16 @@
 <template>
-  <div class="interestWrap">
+  <div class="interestWrap" :class="{empty : StringUtil.isEmpty(token)}">
     <h3>나의 관심 종목</h3>
     <table v-if="StringUtil.isEmpty(token)" class="interestList">
-      <div class="tip">
-        <v-icon>
+      <div class="empty-area">
+        <v-icon size="70">
           mdi-alert-circle-outline
         </v-icon>
-        <span>
-          로그인 후 이용가능합니다.
+        <span class="empty-area-tit">
+          로그인 후 이용가능해요.
+        </span>
+        <span class="empty-area-txt">
+          지금 바로 무료로 <a @click="onClickSignUp"> 회원가입 </a>
         </span>
       </div>
     </table>
@@ -31,9 +34,11 @@
         <td>{{ item.trqu | setNumberComma }}</td>
         <td>{{ item.mrktTotAmt | setKoreanNumber }}</td>
       </tr>
-      <td colspan="6">
-        <a href="#">더보기</a>
-      </td>
+      <tr>
+        <td colspan="6">
+          <a href="#">더보기</a>
+        </td>
+      </tr>
     </table>
   </div>
 </template>
@@ -61,6 +66,10 @@ export default class Interest extends Vue {
    ********************************************************************************/
   created(): void {
     console.log('/commend')
+  }
+
+  private onClickSignUp() {
+    this.$router.push('/auth/sign-up')
   }
 }
 
