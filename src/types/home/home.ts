@@ -47,3 +47,12 @@ export interface ILongInvestment {
   interestStockYn: string // 즐겨찾기
   rating?: string // 등급
 }
+
+export interface IInterest {
+  stockInfoSequence: number // 주식상장정보 일련번호
+  itmsNm: string // 주식명
+  clpr: number // 종가
+  fltRt: number // 등락률
+  trqu: number // 거래량
+  mrktTotAmt: number // 시가총액
+}

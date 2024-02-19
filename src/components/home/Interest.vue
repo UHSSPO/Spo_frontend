@@ -1,50 +1,38 @@
 <template>
-  <div class="interestWrap">
+  <div class="interestWrap" :class="{empty : StringUtil.isEmpty(token)}">
     <h3>나의 관심 종목</h3>
-    <table class="interestList">
+    <table v-if="StringUtil.isEmpty(token)" class="interestList">
+      <div class="empty-area">
+        <v-icon size="70">
+          mdi-alert-circle-outline
+        </v-icon>
+        <span class="empty-area-tit">
+          로그인 후 이용가능해요.
+        </span>
+        <span class="empty-area-txt">
+          지금 바로 무료로 <a @click="onClickSignUp"> 회원가입 </a>
+        </span>
+      </div>
+    </table>
+    <table v-else>
       <tr>
-        <td>
-          종목명
-        </td>
+        <td>종목명</td>
         <td>전일종가</td>
         <td>등락률</td>
         <td>주문건</td>
         <td>시가총액</td>
       </tr>
-      <tr>
-        <td>3S</td>
-        <td>4,100</td>
-        <td>+0.37</td>
-        <td>58,962,730</td>
-        <td>2조 6,482억</td>
-      </tr>
-      <tr>
-        <td>에이피알</td>
-        <td>364,000</td>
-        <td>+3.7%</td>
-        <td>13,139</td>
-        <td>2조 6,482억</td>
-      </tr>
-      <tr>
-        <td>두나무</td>
-        <td>115,000</td>
-        <td>-10.16%</td>
-        <td>68,336</td>
-        <td>4조 14억</td>
-      </tr>
-      <tr>
-        <td>야놀자</td>
-        <td>45,600</td>
-        <td>-0.44%</td>
-        <td>20,910</td>
-        <td>4조 6,064억</td>
-      </tr>
-      <tr>
-        <td>컬리</td>
-        <td>13,200</td>
-        <td>-2.22%</td>
-        <td>9,890</td>
-        <td>5,399억</td>
+      <tr v-for="(item, idx) in interest" :key="idx">
+        <td>{{ item.itmsNm }}</td>
+        <td>{{ item.clpr | setNumberComma }}</td>
+        <td v-if="item.fltRt === 0">
+          {{ item.fltRt }}
+        </td>
+        <td v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
+          {{ item.fltRt }}
+        </td>
+        <td>{{ item.trqu | setNumberComma }}</td>
+        <td>{{ item.mrktTotAmt | setKoreanNumber }}</td>
       </tr>
       <tr>
         <td colspan="6">
@@ -57,18 +45,31 @@
 
 <script lang="ts">
 
-import { Component, Vue } from 'nuxt-property-decorator'
-
+import { Component, namespace, Prop, Vue } from 'nuxt-property-decorator'
+import { IInterest } from '~/types/home/home'
+import { Namespace } from '~/util/Namespace'
+import SToolTip from '~/components/common/SToolTip.vue'
+const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
-  components: {}
+  components: { SToolTip }
 })
+
 export default class Interest extends Vue {
+  /********************************************************************************
+   * Properties
+   ********************************************************************************/
+  @Prop() private readonly interest!: Array<IInterest>
+  @common.State private token!: string
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
   created(): void {
     console.log('/commend')
+  }
+
+  private onClickSignUp() {
+    this.$router.push('/auth/sign-up')
   }
 }
 

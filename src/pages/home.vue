@@ -9,7 +9,7 @@
         <popularity :popular-stock="popularStock" @init="initCommend" />
       </div>
       <div class="rankWrap">
-        <Interest />
+        <Interest :interest="interest" />
         <Explore v-if="StringUtil.isNotEmpty(theme)" :theme="theme" />
       </div>
       <div class="rankWrap">
@@ -28,8 +28,8 @@ import Commend from '~/components/home/Commend.vue'
 import Popularity from '~/components/home/Popularity.vue'
 import Interest from '~/components/home/Interest.vue'
 
-import { LongInvestment, MarketIndex, PopularStock, ShortInvestment, Theme } from '~/api/stock'
-import { ILongInvestment, IMarketIndex, IPopularStock, IShortInvestment, ITheme } from '~/types/home/home'
+import { LongInvestment, MarketIndex, PopularStock, ShortInvestment, Theme, GetInterest } from '~/api/stock'
+import { IInterest, ILongInvestment, IMarketIndex, IPopularStock, IShortInvestment, ITheme } from '~/types/home/home'
 
 import Explore from '~/components/home/Explore.vue'
 import Board from '~/components/home/Board.vue'
@@ -51,6 +51,8 @@ export default class home extends Vue {
   private shortInvestment = [] as Array<IShortInvestment>
 
   private longInvestment = [] as Array<ILongInvestment>
+
+  private interest = [] as Array<IInterest>
 
   /********************************************************************************
    * Life Cycle
@@ -92,11 +94,17 @@ export default class home extends Vue {
     })
   }
 
+  private getInterest() {
+    GetInterest().then((response:Array<IInterest>) => {
+      this.interest = response
+    })
+  }
+
   private initCommend() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    Promise.all([this.getMarketIndex(), this.getPopularStock(), this.getTheme(), this.getShortInvestment(), this.getLongInvestment()])
+    Promise.all([this.getMarketIndex(), this.getPopularStock(), this.getTheme(), this.getShortInvestment(), this.getLongInvestment(), this.getInterest()])
       .finally(() => {
         this.$nextTick(() => {
           this.$nuxt.$loading.finish()
