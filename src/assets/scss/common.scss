@@ -183,6 +183,7 @@
           border-radius: 30px;
           box-shadow: 0 4px 16px 0 rgba(0, 0, 0, .05);
           .commend-main-txt {
+            text-align: center;
             margin-top: 12px;
             font-size: 18px;
           }
@@ -397,6 +398,52 @@
       }
       tr:hover {
         background: #f8f8f8;
+      }
+    }
+  }
+
+  .detailsWarp {
+    width: 70%;
+    margin: 0 auto;
+    .detailsWarpTitle {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 50px 0;
+      .chartWrap {
+        width: 30%;
+        .chart {
+          height: 100px;
+          border: 1px solid $line-color;
+        }
+      }
+    }
+    .detailsContent {
+      .detailsContentItem {
+        margin-bottom: 50px;
+        h3{
+          font-weight: bold;
+        }
+        .detailsInfoWrap {
+          margin: 10px 0;
+          li {
+            display: flex;
+            padding: 20px;
+            border-bottom: 1px solid $line-color;
+            p {
+              margin: 0;
+            }
+            .detailsInfoTitle {
+              width: 15%;
+            }
+          }
+        }
+      }
+      .stickchart {
+        width: 100%;
+        height: 300px;
+        border: 1px solid $line-color;
+        margin: 30px 0;
       }
     }
   }
