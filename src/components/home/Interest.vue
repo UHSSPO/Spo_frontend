@@ -19,7 +19,6 @@
         <td>종목명</td>
         <td>전일종가</td>
         <td>등락률</td>
-        <td>주문건</td>
         <td>시가총액</td>
       </tr>
       <tr v-for="(item, idx) in interest" :key="idx">
@@ -31,7 +30,6 @@
         <td v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
           {{ item.fltRt }}
         </td>
-        <td>{{ item.trqu | setNumberComma }}</td>
         <td>{{ item.mrktTotAmt | setKoreanNumber }}</td>
       </tr>
       <tr>
