@@ -24,9 +24,11 @@
         <td>시가총액</td>
         <td>즐겨찾기</td>
       </tr>
-      <tr v-for="(item, idx) in shortInvestment" :key="idx" @click="onclickToDetails()">
+      <tr v-for="(item, idx) in shortInvestment" :key="idx">
         <td>{{ idx+1 }}</td>
-        <td>{{ item.itmsNm }}</td>
+        <td>
+          <a class="font-black" @click="onClickToDetails">{{ item.itmsNm }}</a>
+        </td>
         <td>{{ item.clpr | setNumberComma }}</td>
         <td v-if="item.fltRt === 0">
           {{ item.fltRt }}
@@ -58,9 +60,11 @@
         <td>시가총액</td>
         <td>즐겨찾기</td>
       </tr>
-      <tr v-for="(item, idx) in longInvestment" :key="idx" @click="onclickToDetails()">
+      <tr v-for="(item, idx) in longInvestment" :key="idx">
         <td>{{ idx+1 }}</td>
-        <td>{{ item.itmsNm }}</td>
+        <td>
+          <a class="font-black" @click="onClickToDetails">{{ item.itmsNm }}</a>
+        </td>
         <td>{{ item.clpr | setNumberComma }}</td>
         <td v-if="item.fltRt === 0">
           {{ item.fltRt }}
@@ -165,7 +169,7 @@ export default class Commend extends Vue {
     }
   }
 
-  private onclickToDetails() {
+  private onClickToDetails() {
     this.$router.push('/details')
   }
 }

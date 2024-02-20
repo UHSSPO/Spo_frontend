@@ -2,7 +2,7 @@
   <v-app>
     <div class="header_menu_wrap">
       <v-app-bar-nav-icon class="nav_btn" @click="appBarStatus" />
-      <a href="/" class="header_menu_logo"><img src="../assets/image/SPO_LOGO.png" alt="logo"></a>
+      <a class="header_menu_logo" @click="onClickHome"><img src="../assets/image/SPO_LOGO.png" alt="logo"></a>
       <v-navigation-drawer v-model="appBarOpener" absolute temporary>
         <v-list nav dense>
           <v-list-item>
@@ -83,7 +83,7 @@
         </div>
       </div>
       <div class="content dynamic-layout">
-        <a href="/" class="font0">
+        <a class="font0" @click="onClickHome">
           <img src="../assets/image/SPO_LOGO.png" alt="logo">
         </a>
         <ul>
@@ -221,6 +221,10 @@ export default class extends Vue {
         this.$router.push('/')
       }
     })
+  }
+
+  private onClickHome() {
+    this.$router.push('/home')
   }
 }
 </script>
