@@ -269,6 +269,20 @@
       .interestWrap {
         width: 68%;
         margin: 0 1%;
+        .blank{
+          display: flex;
+          height: 90%;
+          justify-content: center;
+          align-items: center;
+          &-area{
+            display: flex;
+            flex-direction: column;
+            span{
+              color: #121212;
+              font-size: 22px;
+            }
+          }
+        }
         &.empty {
           border-bottom: 1px solid #D6DBDF;
           .interestList {
@@ -298,7 +312,6 @@
           width: auto !important;
         }
       }
-
     }
   }
   .exploreWrap {

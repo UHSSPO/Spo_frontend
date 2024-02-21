@@ -14,6 +14,16 @@
         </span>
       </div>
     </table>
+    <table v-else-if="interest.length === 0" class="blank">
+      <div class="blank-area">
+        <v-icon size="70">
+          mdi-alert-circle-outline
+        </v-icon>
+        <span>
+          즐겨찾기 종목을 추가해주세요!!
+        </span>
+      </div>
+    </table>
     <table v-else>
       <tr>
         <td>종목명</td>
