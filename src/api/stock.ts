@@ -11,6 +11,8 @@ export const ShortInvestment = () => ApiUtil.get('/stock/recommend/short-investm
 export const LongInvestment = () => ApiUtil.get('/stock/recommend/long-investment', {})
 
 export const GetInterest = () => ApiUtil.get('/stock/my/interest', {})
+
+export const getDetails = () => ApiUtil.get('/stock/my/Details', {})
 // 관심주식 등록
 export const UpdateInterestStock = (stockInfoSequence: number) => ApiUtil.post('/stock/interest', { stockInfoSequence })
 

@@ -16,12 +16,13 @@
               </div>
             </div>
           </div>
+          <!--          v-if="StockInfo.stockInfoSequence === $route.query.currentOrderIndex"-->
           <div class="detailsWarp">
             <div class="detailsWarpTitle">
               <div class="detailsItem">
                 <span class="ItemCode">000660코스피</span>
                 <h3 class="ItemName">
-                  SK하이닉스
+                  SK하이닉스{{ StockInfo.stockInfoSequence }}
                 </h3>
                 <h1 class="ItemValue">
                   151,300 <span>원 <span class="plus">3.07%</span></span>
@@ -196,14 +197,17 @@
 </template>
 
 <script lang="ts">
-
 import { Component, Emit, namespace, Prop, Vue } from 'nuxt-property-decorator'
 import { Namespace } from '~/util/Namespace'
+import { IStockInfo } from '~/types/details/details'
 
 const common = namespace(Namespace.COMMON)
 
 export default class Commend extends Vue {
-
+  /********************************************************************************
+   * Properties
+   ********************************************************************************/
+  @Prop({ default: {} }) private readonly StockInfo!: IStockInfo
 }
 
 </script>

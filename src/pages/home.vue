@@ -28,11 +28,12 @@ import Commend from '~/components/home/Commend.vue'
 import Popularity from '~/components/home/Popularity.vue'
 import Interest from '~/components/home/Interest.vue'
 
-import { LongInvestment, MarketIndex, PopularStock, ShortInvestment, Theme, GetInterest } from '~/api/stock'
+import { LongInvestment, MarketIndex, PopularStock, ShortInvestment, Theme, GetInterest, getDetails } from '~/api/stock'
 import { IInterest, ILongInvestment, IMarketIndex, IPopularStock, IShortInvestment, ITheme } from '~/types/home/home'
 
 import Explore from '~/components/home/Explore.vue'
 import Board from '~/components/home/Board.vue'
+import { IStockInfo } from '~/types/details/details'
 
 @Component({
   layout: 'empty',
@@ -53,6 +54,8 @@ export default class home extends Vue {
   private longInvestment = [] as Array<ILongInvestment>
 
   private interest = [] as Array<IInterest>
+
+  private StockInfo: IInterest[] = []
 
   /********************************************************************************
    * Life Cycle
@@ -99,6 +102,12 @@ export default class home extends Vue {
       this.interest = response
     })
   }
+
+  // private getDetails() {
+  //   getDetails().then((response:Array<IStockInfo>) => {
+  //     this.StockInfo = response
+  //   })
+  // }
 
   private initCommend() {
     this.$nextTick(() => {
