@@ -24,7 +24,6 @@ export default class CommonModule extends VuexModule implements ICommonState {
   public ADD_USER_INFO(userInfo: IUserInfo) {
     this.token = userInfo.accessToken
     this.userInfo = userInfo.user
-    console.log(this.token, this.userInfo)
   }
 
   @Mutation

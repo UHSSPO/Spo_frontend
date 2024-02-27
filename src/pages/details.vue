@@ -20,12 +20,12 @@
           <div class="detailsWarp">
             <div class="detailsWarpTitle">
               <div class="detailsItem">
-                <span class="ItemCode">000660코스피</span>
+                <span class="ItemCode">{{ stockInfo.srtnCd.slice(1, stockInfo.srtnCd.length) }} {{ stockInfo.mrktCtg }}</span>
                 <h3 class="ItemName">
-                  SK하이닉스{{ StockInfo.stockInfoSequence }}
+                  {{ stockInfo.itmsNm }}
                 </h3>
                 <h1 class="ItemValue">
-                  151,300 <span>원 <span class="plus">3.07%</span></span>
+                  {{ stockInfo.priceInfo.clpr | setNumberComma }} <span>원 <span class="plus">3.07%</span></span>
                 </h1>
               </div>
               <div class="detailsItem chartWrap">
@@ -197,17 +197,37 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, namespace, Prop, Vue } from 'nuxt-property-decorator'
-import { Namespace } from '~/util/Namespace'
+import { Component, Vue } from 'nuxt-property-decorator'
 import { IStockInfo } from '~/types/details/details'
+import { getDetail } from '~/api/stock'
 
-const common = namespace(Namespace.COMMON)
-
-export default class Commend extends Vue {
+@Component({
+  layout: 'empty',
+})
+export default class extends Vue {
   /********************************************************************************
-   * Properties
+   * Variables (Local, VUEX)
    ********************************************************************************/
-  @Prop({ default: {} }) private readonly StockInfo!: IStockInfo
+  private stockInfo = {} as IStockInfo
+  private stockInfoSequence = 0
+
+  /********************************************************************************
+   * Life Cycle
+   ********************************************************************************/
+  async created() {
+    this.stockInfoSequence = Number(this.$route.query.stockInfoSequence)
+    await this.getDetail()
+  }
+
+  private async getDetail() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    this.stockInfo = await getDetail(this.stockInfoSequence)
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
+  }
 }
 
 </script>

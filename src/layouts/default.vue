@@ -205,7 +205,7 @@ export default class extends Vue {
   }
 
   private appBarLink(href : string) {
-    console.log(href)
+    // console.log(href)
   }
 
   private onclickToLogin() {
