@@ -234,7 +234,6 @@ export default class detail extends Vue {
       this.$nuxt.$loading.start()
     })
     this.stockInfo = await getDetail(this.stockInfoSequence)
-    console.log(this.stockInfo)
     this.chartData = this.setSummedData(this.stockInfo.prc15tnMonInfo)
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
