@@ -69,12 +69,6 @@ export default class Interest extends Vue {
    ********************************************************************************/
   @Prop() private readonly interest!: Array<IInterest>
   @common.State private token!: string
-  /********************************************************************************
-   * Life Cycle
-   ********************************************************************************/
-  created(): void {
-    console.log('/commend')
-  }
 
   private onClickSignUp() {
     this.$router.push('/auth/sign-up')

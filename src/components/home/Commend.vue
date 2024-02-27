@@ -27,7 +27,7 @@
       <tr v-for="(item, idx) in shortInvestment" :key="idx">
         <td>{{ idx+1 }}</td>
         <td>
-          <a class="font-black" @click="onClickToDetails">{{ item.itmsNm }}</a>
+          <a class="font-black" @click="onClickToDetails(item.stockInfoSequence)">{{ item.itmsNm }}</a>
         </td>
         <td>{{ item.clpr | setNumberComma }}</td>
         <td v-if="item.fltRt === 0">
@@ -63,7 +63,7 @@
       <tr v-for="(item, idx) in longInvestment" :key="idx">
         <td>{{ idx+1 }}</td>
         <td>
-          <a class="font-black" @click="onClickToDetails">{{ item.itmsNm }}</a>
+          <a class="font-black" @click="onClickToDetails(item.stockInfoSequence)">{{ item.itmsNm }}</a>
         </td>
         <td>{{ item.clpr | setNumberComma }}</td>
         <td v-if="item.fltRt === 0">
@@ -118,9 +118,6 @@ export default class Commend extends Vue {
     return false
   }
 
-  /********************************************************************************
-   * Life Cycle
-   ********************************************************************************/
   private orders: string[] = ['short', 'long']
   private currentOrderIndex = 0
 
@@ -169,8 +166,13 @@ export default class Commend extends Vue {
     }
   }
 
-  private onClickToDetails() {
-    this.$router.push('/details')
+  private onClickToDetails(stockInfoSequence: number) {
+    this.$router.push({
+      name: 'details',
+      query: {
+        stockInfoSequence: stockInfoSequence.toString()
+      }
+    })
   }
 }
 

@@ -61,12 +61,6 @@ import { Component, Vue } from 'nuxt-property-decorator'
   components: {}
 })
 export default class Board extends Vue {
-  /********************************************************************************
-   * Life Cycle
-   ********************************************************************************/
-  created(): void {
-    console.log('/board')
-  }
 }
 
 </script>

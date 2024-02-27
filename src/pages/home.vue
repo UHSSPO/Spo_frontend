@@ -54,6 +54,8 @@ export default class home extends Vue {
 
   private interest = [] as Array<IInterest>
 
+  private StockInfo: IInterest[] = []
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
@@ -99,6 +101,12 @@ export default class home extends Vue {
       this.interest = response
     })
   }
+
+  // private getDetails() {
+  //   getDetails().then((response:Array<IStockInfo>) => {
+  //     this.StockInfo = response
+  //   })
+  // }
 
   private initCommend() {
     this.$nextTick(() => {
