@@ -20,16 +20,18 @@
           <div class="detailsWarp">
             <div class="detailsWarpTitle">
               <div class="detailsItem">
-                <span class="ItemCode">{{ stockInfo.srtnCd.slice(1, stockInfo.srtnCd.length) }} {{ stockInfo.mrktCtg }}</span>
+                <span class="ItemCode">{{ stockInfo.srtnCd }} {{ stockInfo.mrktCtg }}</span>
                 <h3 class="ItemName">
-                  {{ stockInfo.itmsNm }}
+                  {{ stockInfo.itmsNm }}1
                 </h3>
                 <h1 class="ItemValue">
-                  {{ stockInfo.priceInfo.clpr | setNumberComma }} <span>원 <span class="plus">3.07%</span></span>
+                  {{ stockInfo.priceInfo?.clpr }} <span>원 <span class="plus">3.07%</span></span>
                 </h1>
               </div>
               <div class="detailsItem chartWrap">
-                <div class="chart" />
+                <div class="chart">
+                  <s-line-chart v-if="chartData" :options="options" :data="chartData" type="line" :height="200" />
+                </div>
               </div>
             </div>
             <div class="detailsContent">
@@ -198,18 +200,26 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { IStockInfo } from '~/types/details/details'
+import _ from 'lodash'
+import { IPriceInfo, IStockInfo } from '~/types/details/details'
 import { getDetail } from '~/api/stock'
+import SLineChart from '~/components/common/SLineChart.vue'
+import ChartUtil from '~/util/ChartUtil'
 
 @Component({
   layout: 'empty',
+  components: {
+    SLineChart
+  }
 })
-export default class extends Vue {
+export default class detail extends Vue {
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
   private stockInfo = {} as IStockInfo
   private stockInfoSequence = 0
+  private options = ChartUtil.getLineCommonOptions()
+  private chartData = {}
 
   /********************************************************************************
    * Life Cycle
@@ -224,9 +234,28 @@ export default class extends Vue {
       this.$nuxt.$loading.start()
     })
     this.stockInfo = await getDetail(this.stockInfoSequence)
+    console.log(this.stockInfo)
+    this.chartData = this.setSummedData(this.stockInfo.prc15tnMonInfo)
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
+  }
+
+  private setSummedData(array: any) {
+    return {
+      datasets: [
+        {
+          borderColor: 'rgba(255,173,182,0.94)',
+          backgroundColor: 'rgba(250,178,183,0.94)',
+          borderWidth: 2,
+          lineTension: 0,
+          pointRadius: 0,
+          data: _.map(array, 'clpr') as any
+        }
+      ],
+
+      labels: _.map(array, 'updateAt') as any
+    }
   }
 }
 

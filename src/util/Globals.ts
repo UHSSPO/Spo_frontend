@@ -21,4 +21,12 @@ export class Globals {
   public static readonly CODE_04 = '04'
   public static readonly CODE_05 = '05'
   public static readonly CODE_06 = '06'
+
+  public static readonly CHART_DEFAULT_FONT_SIZE = 12 // 차트 범례 크기
+  public static readonly CHART_DEFAULT_FONT_TICK_SIZE = 12 // 차트 눈금 글자 크기
+  public static readonly CHART_DEFAULT_BOX_SIZE = 6 // 차트 포인트 크기
+  public static readonly CHART_DEFAULT_XY_VALUE_COLOR = '#343434' // X,Y축 데이터 색상
+  public static readonly CHART_DEFAULT_XY_LINE_COLOR = '#EBEBEB' // X,Y축 라인 색상
+  public static readonly CHART_DEFAULT_LINE_COLOR = '#7272CB' // 항목 dot & 라인 컬러
+  public static readonly CHART_DEFAULT_LINE_FONT_COLOR = '#343434' // 항목 폰트 컬러
 }

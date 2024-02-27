@@ -11,15 +11,15 @@ import { v4 } from 'uuid'
 const zoom = require('chartjs-plugin-zoom')
 
 @Component({
-  name: 'KChart'
+  name: 'SLineChart'
 })
-export default class KChart extends Vue {
+export default class SLineChart extends Vue {
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
   private id = ''
-  private ctx: HTMLCanvasElement | any
-  private myChart: Chart | any = null
+  private ctx: HTMLCanvasElement | null = null
+  private myChart: Chart | null = null
 
   /********************************************************************************
    * Properties
@@ -34,7 +34,7 @@ export default class KChart extends Vue {
     if (value) {
       setTimeout(() => {
         this.renderChart()
-      }, 0)
+      }, 10)
     }
   }
 
@@ -54,15 +54,18 @@ export default class KChart extends Vue {
    * Method (Event, Business Logic)
    ********************************************************************************/
   private renderChart(): void {
-    if (this.myChart == null) {
-      this.myChart = new Chart.Chart(this.ctx, {
-        type: this.type,
-        options: this.options,
-        data: this.data
-      })
-    } else {
-      this.myChart.data = this.data
-      this.myChart.update()
+    if (this.ctx && this.data) {
+      if (this.myChart == null) {
+        this.myChart = new Chart(this.ctx, {
+          type: this.type,
+          options: this.options,
+          data: this.data,
+          plugins: [zoom] // Add zoom plugin here
+        })
+      } else {
+        this.myChart.data = this.data
+        this.myChart.update()
+      }
     }
   }
 }

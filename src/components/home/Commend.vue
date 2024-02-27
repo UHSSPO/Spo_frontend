@@ -168,7 +168,7 @@ export default class Commend extends Vue {
 
   private onClickToDetails(stockInfoSequence: number) {
     this.$router.push({
-      name: 'details',
+      name: 'detail',
       query: {
         stockInfoSequence: stockInfoSequence.toString()
       }

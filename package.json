@@ -36,7 +36,7 @@
     "uuid": "^8.3.2",
     "v-mask": "^2.3.0",
     "vue": "^2.7.10",
-    "vue-chartjs": "^5.3.0",
+    "vue-chartjs": "^3.5.1",
     "vue-class-component": "^7.2.6",
     "vue-fragment": "^1.6.0",
     "vue-property-decorator": "^9.1.2",

@@ -83,5 +83,6 @@ export interface IStockInfo {
   summFinaInfo: ISummFinaInfo
   incoInfo: Array<IIncoInfo>
   priceInfo: IPriceInfo
+  prc15tnMonInfo: Array<IPriceInfo>
   enterpriseCategories: IEnterpriseCategories
 }
