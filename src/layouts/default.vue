@@ -69,7 +69,7 @@
                 로그아웃
               </a>
             </li>
-            <li @click="goToPage">
+            <li @click="goToMypage(userInfo.email)">
               <a class="header_user_color">
                 마이페이지
               </a>
@@ -210,6 +210,15 @@ export default class extends Vue {
 
   private onclickToLogin() {
     this.$router.push('/auth/login')
+  }
+
+  private goToMypage(userInfo:string) {
+    this.$router.push({
+      name: 'mypage',
+      query: {
+        userId: userInfo.toString()
+      }
+    })
   }
 
   private onClickLogout() {
