@@ -112,7 +112,9 @@
               </div>
               <div class="detailsContentItem">
                 <h3>손익</h3>
-                <div class="stickchart" />
+                <div class="stickchart">
+                  <s-profit-chart v-if="profitChart" :options="barOptions" :data="profitChart" type="line" :height="200" />
+                </div>
               </div>
               <div class="detailsContentItem">
                 <h3>재무상태</h3>
@@ -178,10 +180,13 @@ import { IPriceInfo, IStockInfo } from '~/types/details/details'
 import { getDetail } from '~/api/stock'
 import SLineChart from '~/components/common/SLineChart.vue'
 import ChartUtil from '~/util/ChartUtil'
+import BarUtil from '~/util/BarUtil'
+import SProfitChart from '~/components/common/SProfitChart.vue'
 
 @Component({
   layout: 'empty',
   components: {
+    SProfitChart,
     SLineChart
   }
 })
@@ -192,7 +197,9 @@ export default class detail extends Vue {
   private stockInfo = {} as IStockInfo
   private stockInfoSequence = 0
   private options = ChartUtil.getLineCommonOptions()
+  private barOptions = BarUtil.getLineCommonOptions()
   private chartData = {}
+  private profitChart = {}
 
   /********************************************************************************
    * Life Cycle
@@ -208,6 +215,7 @@ export default class detail extends Vue {
     })
     this.stockInfo = await getDetail(this.stockInfoSequence)
     this.chartData = this.setSummedData(this.stockInfo.prc15tnMonInfo)
+    this.profitChart = this.setProfitdData(this.stockInfo.summFinaInfo)
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
@@ -226,6 +234,22 @@ export default class detail extends Vue {
         }
       ],
       labels: _.map(array, 'updateAt') as any
+    }
+  }
+
+  private setProfitdData(array: any) {
+    return {
+      datasets: [
+        {
+          borderColor: 'rgba(255,173,182,0.94)',
+          backgroundColor: 'rgba(250,178,183,0.94)',
+          borderWidth: 2,
+          lineTension: 0,
+          pointRadius: 0,
+          data: _.map(array, 'enpBzopPft') as any
+        }
+      ],
+      labels: _.map(array, 'enpCrtmNpf') as any
     }
   }
 }
