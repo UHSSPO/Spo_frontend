@@ -69,6 +69,22 @@ export interface IEnterpriseCategories {
   moveAverage: string; // 이동평균선
   updateAt: string; // 업데이트 일자 (Format: date-time)
 }
+
+export interface IEnterpriseInfo {
+  enterpriseInfoSequence: number; // 기업 정보 일련번호
+  stockInfoSequence: number; // 주식 상장 정보 일련번호
+  crno: string; // 법인등록번호
+  corpNm: string; // 법인명
+  enpRprFnm: string; // 대표이사 명
+  enpBsadr: string; // 기업기본주소
+  enpHmpgUrl: string; // 기업홉페이지
+  enpTlno: string; // 기업전화번호
+  enpEstbDt: string; // 기업설립일자
+  enpEmpeCnt: number; // 기업종업원수
+  enpMainBizNm: string; // 기업주요사업명
+  updateAt: string; // 업데이트 일자 (Format: date-time)
+}
+
 export interface IStockInfo {
   stockInfoSequence: number; // 주식 상장 정보 일련번호
   basDt: string; // 기준일자
@@ -85,4 +101,5 @@ export interface IStockInfo {
   priceInfo: IPriceInfo
   prc15tnMonInfo: Array<IPriceInfo>
   enterpriseCategories: IEnterpriseCategories
+  enterpriseInfo: IEnterpriseInfo
 }
