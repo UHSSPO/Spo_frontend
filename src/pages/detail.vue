@@ -113,13 +113,13 @@
               <div class="detailsContentItem">
                 <h3>손익</h3>
                 <div class="stickchart">
-                  <s-line-chart v-if="chartData" :options="options" :data="chartData" type="bar" :height="200" />
+                  <s-line-chart v-if="incomeChartData" :options="baroptions" :data="incomeChartData" type="bar" :height="200" />
                 </div>
               </div>
               <div class="detailsContentItem">
                 <h3>재무상태</h3>
                 <div class="stickchart">
-                  <s-line-chart v-if="chartData" :options="options" :data="chartData" type="bar" :height="200" />
+                  <s-line-chart v-if="financialData" :options="baroptions" :data="financialData" type="bar" :height="200" />
                 </div>
               </div>
               <div class="detailsContentItem">
@@ -176,10 +176,11 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import _ from 'lodash'
-import { IEnterpriseInfo, IPriceInfo, IStockInfo } from '~/types/details/details'
+import { IEnterpriseInfo, IPriceInfo, IStockInfo, ISummFinaInfo } from '~/types/details/details'
 import { getDetail } from '~/api/stock'
 import SLineChart from '~/components/common/SLineChart.vue'
 import ChartUtil from '~/util/ChartUtil'
+import BarChartUtil from '~/util/BarChartUtil'
 
 @Component({
   layout: 'empty',
@@ -194,7 +195,10 @@ export default class detail extends Vue {
   private stockInfo = {} as IStockInfo
   private stockInfoSequence = 0
   private options = ChartUtil.getLineCommonOptions()
+  private baroptions = BarChartUtil.getBarCommonOptions()
   private chartData = {}
+  private incomeChartData = {}
+  private financialData = {}
 
   /********************************************************************************
    * Life Cycle
@@ -210,10 +214,80 @@ export default class detail extends Vue {
     })
     this.stockInfo = await getDetail(this.stockInfoSequence)
     this.chartData = this.setSummedData(this.stockInfo.prc15tnMonInfo)
-    console.log(this.stockInfo)
+    this.incomeChartData = this.setIncomeChartData(this.stockInfo.summFinaInfo)
+    this.financialData = this.setFinancialData(this.stockInfo.summFinaInfo)
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
+  }
+
+  private setIncomeChartData(data: ISummFinaInfo) {
+    const operatingProfit = [data.enpBzopPft]
+    const netProfit = [data.enpCrtmNpf]
+    const years = [data.bizYear]
+
+    return {
+      datasets: [
+        {
+          label: '영업이익',
+          backgroundColor: 'rgba(255, 173, 182, 0.94)',
+          borderColor: 'rgba(255, 173, 182, 0.94)',
+          borderWidth: 2,
+          lineTension: 0,
+          pointRadius: 0,
+          data: operatingProfit
+        },
+        {
+          label: '순이익',
+          backgroundColor: 'rgba(0, 123, 255, 0.94)',
+          borderColor: 'rgba(0, 123, 255, 0.94)',
+          borderWidth: 2,
+          lineTension: 0,
+          pointRadius: 0,
+          data: netProfit
+        }
+      ],
+      labels: years
+    }
+  }
+
+  private setFinancialData(data: ISummFinaInfo) {
+    const enpTastAmt = [data.enpTastAmt]
+    const enpTdbtAmt = [data.enpTdbtAmt]
+    const enpTcptAmt = [data.enpTcptAmt]
+
+    return {
+      datasets: [
+        {
+          label: '영업이익',
+          backgroundColor: 'rgba(255, 173, 182, 0.94)',
+          borderColor: 'rgba(255, 173, 182, 0.94)',
+          borderWidth: 2,
+          lineTension: 0,
+          pointRadius: 0,
+          data: enpTastAmt
+        },
+        {
+          label: '순이익',
+          backgroundColor: 'rgba(0, 123, 255, 0.94)',
+          borderColor: 'rgba(0, 123, 255, 0.94)',
+          borderWidth: 2,
+          lineTension: 0,
+          pointRadius: 0,
+          data: enpTdbtAmt
+        },
+        {
+          label: '순이익',
+          backgroundColor: 'rgba(255,255,0,0.94)',
+          borderColor: 'rgba(255,255,0,0.94)',
+          borderWidth: 2,
+          lineTension: 0,
+          pointRadius: 0,
+          data: enpTcptAmt
+        }
+      ],
+      labels: ''
+    }
   }
 
   private setSummedData(array: any) {
