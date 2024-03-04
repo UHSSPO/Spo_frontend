@@ -259,7 +259,7 @@ export default class detail extends Vue {
     return {
       datasets: [
         {
-          label: '영업이익',
+          label: '기업총자산금액',
           backgroundColor: 'rgba(255, 173, 182, 0.94)',
           borderColor: 'rgba(255, 173, 182, 0.94)',
           borderWidth: 2,
@@ -268,7 +268,7 @@ export default class detail extends Vue {
           data: enpTastAmt
         },
         {
-          label: '순이익',
+          label: '기업총부채금액',
           backgroundColor: 'rgba(0, 123, 255, 0.94)',
           borderColor: 'rgba(0, 123, 255, 0.94)',
           borderWidth: 2,
@@ -277,7 +277,7 @@ export default class detail extends Vue {
           data: enpTdbtAmt
         },
         {
-          label: '순이익',
+          label: '기업총자본금액',
           backgroundColor: 'rgba(255,255,0,0.94)',
           borderColor: 'rgba(255,255,0,0.94)',
           borderWidth: 2,
