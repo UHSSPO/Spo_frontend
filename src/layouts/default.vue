@@ -69,7 +69,7 @@
                 로그아웃
               </a>
             </li>
-            <li @click="goToPage">
+            <li @click="onClickMypage(userInfo.userSequence)">
               <a class="header_user_color">
                 마이페이지
               </a>
@@ -225,6 +225,15 @@ export default class extends Vue {
 
   private onClickHome() {
     this.$router.push('/home')
+  }
+
+  private onClickMypage(userInfo: number) {
+    this.$router.push({
+      name: 'mypage',
+      query: {
+        userSequence: userInfo.toString()
+      }
+    })
   }
 }
 </script>

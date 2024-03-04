@@ -460,6 +460,85 @@
       }
     }
   }
+
+  .mypage-main {
+    .profile-section {
+      margin-bottom: 20px;
+      padding: 20px;
+      .profile-info {
+        border: 1px solid $line-color;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        padding: 20px;
+        .profile-item {
+          margin-bottom: 15px;
+          .item-label {
+            font-weight: bold;
+            color: #333;
+          }
+          .item-value {
+            color: #666;
+          }
+        }
+      }
+      &:not(:last-child) {
+        border-bottom: 1px solid #ccc;
+      }
+      h4 {
+        font-size: 20px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+      button {
+        padding: 10px 20px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        &:hover {
+        }
+      }
+      .nickname-button {
+        background-color: #28a745;
+        &:hover {
+          background-color: #218838;
+        }
+      }
+      .password-button {
+        background-color: #007bff;
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+      .withdraw-button {
+        background-color: #dc3545;
+        &:hover {
+          background-color: #c82333;
+        }
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        th,
+        td {
+          padding: 10px;
+          border-bottom: 1px solid #ddd;
+          text-align: center;
+        }
+        th {
+          background-color: #f5f5f5;
+        }
+        tr:hover {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }
+
+
 }
 
 #container-depth{
