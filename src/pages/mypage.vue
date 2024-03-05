@@ -75,14 +75,13 @@
 </template>
 
 <script lang="ts">
-import { namespace, Vue } from 'nuxt-property-decorator'
-import { IStockInfo } from '~/types/details/details'
-import { getDetail } from '~/api/stock'
-import { IUserDetail } from '~/types/auth/auth'
-import { Namespace } from '~/util/Namespace'
+import { Component, namespace, Vue } from 'nuxt-property-decorator'
 
 // const common = namespace(Namespace.COMMON)
-export default class mypage extends Vue {
+@Component({
+  layout: 'empty',
+})
+export default class extends Vue {
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
