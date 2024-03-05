@@ -113,13 +113,13 @@
               <div class="detailsContentItem">
                 <h3>손익</h3>
                 <div class="stickchart">
-                  <s-line-chart v-if="incomeChartData" :options="baroptions" :data="incomeChartData" type="bar" :height="200" />
+                  <s-line-chart v-if="incomeChartData" :options="barOptions" :data="incomeChartData" type="bar" :height="200" />
                 </div>
               </div>
               <div class="detailsContentItem">
                 <h3>재무상태</h3>
                 <div class="stickchart">
-                  <s-line-chart v-if="financialData" :options="baroptions" :data="financialData" type="bar" :height="200" />
+                  <s-line-chart v-if="financialData" :options="barOptions2" :data="financialData" type="bar" :height="200" />
                 </div>
               </div>
               <div class="detailsContentItem">
@@ -176,7 +176,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import _ from 'lodash'
-import { IEnterpriseInfo, IPriceInfo, IStockInfo, ISummFinaInfo } from '~/types/details/details'
+import { IEnterpriseInfo, IIncoInfo, IPriceInfo, IStockInfo, ISummFinaInfo } from '~/types/details/details'
 import { getDetail } from '~/api/stock'
 import SLineChart from '~/components/common/SLineChart.vue'
 import ChartUtil from '~/util/ChartUtil'
@@ -195,7 +195,8 @@ export default class detail extends Vue {
   private stockInfo = {} as IStockInfo
   private stockInfoSequence = 0
   private options = ChartUtil.getLineCommonOptions()
-  private baroptions = BarChartUtil.getBarCommonOptions()
+  private barOptions = BarChartUtil.getBarCommonOptions()
+  private barOptions2 = BarChartUtil.getBarCommonOptions2()
   private chartData = {}
   private incomeChartData = {}
   private financialData = {}
@@ -214,79 +215,73 @@ export default class detail extends Vue {
     })
     this.stockInfo = await getDetail(this.stockInfoSequence)
     this.chartData = this.setSummedData(this.stockInfo.prc15tnMonInfo)
-    this.incomeChartData = this.setIncomeChartData(this.stockInfo.summFinaInfo)
+    this.incomeChartData = this.setIncomeChartData(this.stockInfo.incoInfo)
     this.financialData = this.setFinancialData(this.stockInfo.summFinaInfo)
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
   }
 
-  private setIncomeChartData(data: ISummFinaInfo) {
-    const operatingProfit = [data.enpBzopPft]
-    const netProfit = [data.enpCrtmNpf]
-    const years = [data.bizYear]
+  private setIncomeChartData(data: Array<IIncoInfo>) {
+    const labels = [] as any
+    const datasets = [] as any
+
+    // 각 그룹에 대한 데이터 배열 초기화
+    const crtmAcitAmtData = [] as any
+    const pvtrAcitAmtData = [] as any
+    const bpvtrAcitAmtData = [] as any
+
+    // 데이터를 그룹으로 나누어서 각 그룹에 대한 데이터 배열에 추가
+    data.forEach((item: IIncoInfo) => {
+      labels.push(item.acitNm)
+      crtmAcitAmtData.push(item.crtmAcitAmt)
+      pvtrAcitAmtData.push(item.pvtrAcitAmt)
+      bpvtrAcitAmtData.push(item.bpvtrAcitAmt)
+    })
+
+    // 각 그룹에 대한 데이터셋을 생성하고 datasets에 추가
+    datasets.push({
+      label: data[0].bizYear,
+      backgroundColor: 'rgba(255, 99, 132, 0.7)', // 빨간색
+      data: crtmAcitAmtData
+    })
+    datasets.push({
+      label: '전기',
+      backgroundColor: 'rgba(54, 162, 235, 0.7)', // 파란색
+      data: pvtrAcitAmtData
+    })
+    datasets.push({
+      label: '전전기',
+      backgroundColor: 'rgba(255, 206, 86, 0.7)', // 노란색
+      data: bpvtrAcitAmtData
+    })
 
     return {
-      datasets: [
-        {
-          label: '영업이익',
-          backgroundColor: 'rgba(255, 173, 182, 0.94)',
-          borderColor: 'rgba(255, 173, 182, 0.94)',
-          borderWidth: 2,
-          lineTension: 0,
-          pointRadius: 0,
-          data: operatingProfit
-        },
-        {
-          label: '순이익',
-          backgroundColor: 'rgba(0, 123, 255, 0.94)',
-          borderColor: 'rgba(0, 123, 255, 0.94)',
-          borderWidth: 2,
-          lineTension: 0,
-          pointRadius: 0,
-          data: netProfit
-        }
-      ],
-      labels: years
+      datasets,
+      labels
     }
   }
 
   private setFinancialData(data: ISummFinaInfo) {
-    const enpTastAmt = [data.enpTastAmt]
-    const enpTdbtAmt = [data.enpTdbtAmt]
-    const enpTcptAmt = [data.enpTcptAmt]
+    // 데이터 객체에서 각 항목의 값을 가져옵니다.
+    const enpTastAmtData = data.enpTastAmt
+    const enpTdbtAmtData = data.enpTdbtAmt
+    const enpTcptAmtData = data.enpTcptAmt
+
+    // 레이블과 데이터셋을 초기화합니다.
+    const labels = ['자산', '자본', '부채']
+    const datasets = [] as any
+
+    // 데이터셋을 생성합니다.
+    datasets.push({
+      label: '자산',
+      backgroundColor: ['rgba(255, 99, 132, 0.7)', 'rgba(54, 162, 235, 0.7)', 'rgba(255, 206, 86, 0.7)'],
+      data: [enpTastAmtData, enpTdbtAmtData, enpTcptAmtData]
+    })
 
     return {
-      datasets: [
-        {
-          label: '기업총자산금액',
-          backgroundColor: 'rgba(255, 173, 182, 0.94)',
-          borderColor: 'rgba(255, 173, 182, 0.94)',
-          borderWidth: 2,
-          lineTension: 0,
-          pointRadius: 0,
-          data: enpTastAmt
-        },
-        {
-          label: '기업총부채금액',
-          backgroundColor: 'rgba(0, 123, 255, 0.94)',
-          borderColor: 'rgba(0, 123, 255, 0.94)',
-          borderWidth: 2,
-          lineTension: 0,
-          pointRadius: 0,
-          data: enpTdbtAmt
-        },
-        {
-          label: '기업총자본금액',
-          backgroundColor: 'rgba(255,255,0,0.94)',
-          borderColor: 'rgba(255,255,0,0.94)',
-          borderWidth: 2,
-          lineTension: 0,
-          pointRadius: 0,
-          data: enpTcptAmt
-        }
-      ],
-      labels: ''
+      datasets,
+      labels
     }
   }
 

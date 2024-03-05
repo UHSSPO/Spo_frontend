@@ -4,6 +4,48 @@ export default class BarChartUtil {
   public static getBarCommonOptions(): any {
     return {
       legend: {
+        display: true
+      },
+      responsive: true,
+      cutoutPercentage: 0,
+      maintainAspectRatio: false,
+      tooltips: {
+        mode: 'nearest',
+        intersect: false
+      },
+      scales: {
+        xAxes: [
+          {
+            display: true // x축 라벨과 눈금 표시 활성화
+          }
+        ],
+        yAxes: [
+          {
+            display: true // y축 라벨과 눈금 표시 활성화
+          }
+        ]
+      },
+      plugins: {
+        zoom: {
+          pan: {
+            enabled: true,
+            drag: false,
+            mode: 'x',
+            overScaleMode: 'x',
+            speed: 0.5,
+            threshold: 10
+          },
+          zoom: {
+            enabled: false
+          }
+        }
+      }
+    }
+  }
+
+  public static getBarCommonOptions2(): any {
+    return {
+      legend: {
         display: false
       },
       responsive: true,
@@ -16,12 +58,12 @@ export default class BarChartUtil {
       scales: {
         xAxes: [
           {
-            display: false // x축 라벨과 눈금 표시 활성화
+            display: true // x축 라벨과 눈금 표시 활성화
           }
         ],
         yAxes: [
           {
-            display: false // y축 라벨과 눈금 표시 활성화
+            display: true // y축 라벨과 눈금 표시 활성화
           }
         ]
       },
