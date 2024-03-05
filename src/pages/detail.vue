@@ -22,10 +22,14 @@
               <div class="detailsItem">
                 <span class="ItemCode">{{ stockInfo.srtnCd }} {{ stockInfo.mrktCtg }}</span>
                 <h3 class="ItemName">
-                  {{ stockInfo.itmsNm }}1
+                  {{ stockInfo.itmsNm }}
                 </h3>
                 <h1 class="ItemValue">
-                  {{ stockInfo.priceInfo?.clpr }} <span>원 <span class="plus">3.07%</span></span>
+                  {{ stockInfo.priceInfo?.clpr | setNumberComma }} <span>원
+                    <span v-if="stockInfo.priceInfo?.fltRt === 0" class="zero"><em>{{ stockInfo.priceInfo?.fltRt }}</em></span>
+                    <span v-else :class="{minus: stockInfo.priceInfo?.fltRt < 0, plus: stockInfo.priceInfo?.fltRt > 0}"><em>{{ stockInfo.priceInfo?.fltRt }}</em></span>
+
+                  </span>
                 </h1>
               </div>
               <div class="detailsItem chartWrap">
@@ -36,108 +40,87 @@
             </div>
             <div class="detailsContent">
               <div class="detailsContentItem">
-                <table>
-                  <tr>
-                    <td colspan="8">
-                      상세 보기
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>전일종가</td>
-                    <td>
-                      146,800
-                    </td>
-
-                    <td>시가</td>
-                    <td>
-                      146,200
-                    </td>
-
-                    <td>고가</td>
-                    <td>
-                      153,200
-                    </td>
-
-                    <td>저가</td>
-                    <td>
-                      146,000
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>거래량</td>
-                    <td>
-                      146,800
-                    </td>
-
-                    <td>거래대금</td>
-                    <td>
-                      146,200
-                    </td>
-
-                    <td>시총</td>
-                    <td>
-                      153,200
-                    </td>
-
-                    <td>매출성장률</td>
-                    <td>
-                      146,000
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>per</td>
-                    <td>
-                      146,800
-                    </td>
-
-                    <td>pbr</td>
-                    <td>
-                      146,200
-                    </td>
-
-                    <td>순이익</td>
-                    <td>
-                      153,200
-                    </td>
-
-                    <td>부채비율</td>
-                    <td>
-                      146,000
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>ROE</td>
-                    <td>
-                      146,800
-                    </td>
-
-                    <td>ROA</td>
-                    <td>
-                      146,200
-                    </td>
-
-                    <td>시가총액 기준 </td>
-                    <td>
-                      153,200
-                    </td>
-
-                    <td>거래대금 비율</td>
-                    <td>
-                      146,000
-                    </td>
-                  </tr>
-                </table>
+                <ul class="detail-list">
+                  <li class="detail-item detail-list-title">
+                    상세정보
+                  </li>
+                  <li class="detail-item">
+                    <span class="detail-title">전일종가</span>
+                    <span class="detail-value">{{ stockInfo.priceInfo?.clpr | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item">
+                    <span class="detail-title">시가</span>
+                    <span class="detail-value">{{ stockInfo.priceInfo?.mkp | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item">
+                    <span class="detail-title">고가</span>
+                    <span class="detail-value red--text">{{ stockInfo.priceInfo?.hipr | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item">
+                    <span class="detail-title">저가</span>
+                    <span class="detail-value minus">{{ stockInfo.priceInfo?.lopr | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item">
+                    <span class="detail-title">거래량</span>
+                    <span class="detail-value">{{ stockInfo.priceInfo?.trqu | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item">
+                    <span class="detail-title">거래대금</span>
+                    <span class="detail-value">{{ stockInfo.priceInfo?.trPrc | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item">
+                    <span class="detail-title">시가총액</span>
+                    <span class="detail-value">{{ stockInfo.priceInfo?.mrktTotAmt | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item">
+                    <span class="detail-title">매출성장률</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.salesGrowthRate | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item">
+                    <span class="detail-title">per</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.per | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item">
+                    <span class="detail-title">pbr</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.pbr | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item">
+                    <span class="detail-title">순이익</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.incomeBeforeTaxExpenseDiff | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item">
+                    <span class="detail-title">부채비율</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.financialStatementDebtRatio | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item web-last">
+                    <span class="detail-title">ROE</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.roe | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item web-last">
+                    <span class="detail-title">ROA</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.roa | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item moblie-last">
+                    <span class="detail-title">시가총액 기준</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.volumeRatio | setNumberComma }}</span>
+                  </li>
+                  <li class="detail-item moblie-last">
+                    <span class="detail-title">거래대금 비율</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.volumeRatio | setNumberComma }}</span>
+                  </li>
+                </ul>
               </div>
               <div class="detailsContentItem">
                 <h3>손익</h3>
-                <div class="stickchart" />
+                <div class="stickchart">
+                  <s-line-chart v-if="incomeChartData" :options="barOptions" :data="incomeChartData" type="bar" :height="200" />
+                </div>
               </div>
               <div class="detailsContentItem">
                 <h3>재무상태</h3>
-                <div class="stickchart" />
+                <div class="stickchart">
+                  <s-line-chart v-if="financialData" :options="barOptions2" :data="financialData" type="bar" :height="200" />
+                </div>
               </div>
               <div class="detailsContentItem">
                 <h3>기업 정보</h3>
@@ -147,45 +130,37 @@
                       <p class="detailsInfoTitle">
                         설립일
                       </p>
-                      <p>2014.10.10</p>
+                      <p>{{ stockInfo.enterpriseInfo?.enpEstbDt | setDate }}</p>
                     </li>
                     <li>
                       <p class="detailsInfoTitle">
                         대표자
                       </p>
-                      <p>김병훈</p>
+                      <p>{{ stockInfo.enterpriseInfo?.enpRprFnm }}</p>
                     </li>
                     <li>
                       <p class="detailsInfoTitle">
                         주요산업
                       </p>
-                      <p>화장품 제조업</p>
-                    </li>
-                    <li>
-                      <p class="detailsInfoTitle">
-                        기업형태
-                      </p>
-                      <p>중견기업</p>
+                      <p>{{ stockInfo.enterpriseInfo?.enpMainBizNm }}</p>
                     </li>
                     <li>
                       <p class="detailsInfoTitle">
                         종업원 수
                       </p>
-                      <p>407명</p>
+                      <p>{{ stockInfo.enterpriseInfo?.enpEmpeCnt | setNumberComma }} 명</p>
                     </li>
                     <li>
                       <p class="detailsInfoTitle">
                         홈페이지
                       </p>
-                      <a>http://www.apr-in.com</a>
+                      <a>{{ stockInfo.enterpriseInfo?.enpHmpgUrl }}</a>
                     </li>
                     <li>
                       <p class="detailsInfoTitle">
                         본사주소
                       </p>
-                      <p>
-                        서울 송파구 신천동 29번지 36층
-                      </p>
+                      <p>{{ stockInfo.enterpriseInfo?.enpBsadr }}</p>
                     </li>
                   </ul>
                 </div>
@@ -201,10 +176,11 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import _ from 'lodash'
-import { IPriceInfo, IStockInfo } from '~/types/details/details'
+import { IEnterpriseInfo, IIncoInfo, IPriceInfo, IStockInfo, ISummFinaInfo } from '~/types/details/details'
 import { getDetail } from '~/api/stock'
 import SLineChart from '~/components/common/SLineChart.vue'
 import ChartUtil from '~/util/ChartUtil'
+import BarChartUtil from '~/util/BarChartUtil'
 
 @Component({
   layout: 'empty',
@@ -219,7 +195,11 @@ export default class detail extends Vue {
   private stockInfo = {} as IStockInfo
   private stockInfoSequence = 0
   private options = ChartUtil.getLineCommonOptions()
+  private barOptions = BarChartUtil.getBarCommonOptions()
+  private barOptions2 = BarChartUtil.getBarCommonOptions2()
   private chartData = {}
+  private incomeChartData = {}
+  private financialData = {}
 
   /********************************************************************************
    * Life Cycle
@@ -235,9 +215,74 @@ export default class detail extends Vue {
     })
     this.stockInfo = await getDetail(this.stockInfoSequence)
     this.chartData = this.setSummedData(this.stockInfo.prc15tnMonInfo)
+    this.incomeChartData = this.setIncomeChartData(this.stockInfo.incoInfo)
+    this.financialData = this.setFinancialData(this.stockInfo.summFinaInfo)
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
+  }
+
+  private setIncomeChartData(data: Array<IIncoInfo>) {
+    const labels = [] as any
+    const datasets = [] as any
+
+    // 각 그룹에 대한 데이터 배열 초기화
+    const crtmAcitAmtData = [] as any
+    const pvtrAcitAmtData = [] as any
+    const bpvtrAcitAmtData = [] as any
+
+    // 데이터를 그룹으로 나누어서 각 그룹에 대한 데이터 배열에 추가
+    data.forEach((item: IIncoInfo) => {
+      labels.push(item.acitNm)
+      crtmAcitAmtData.push(item.crtmAcitAmt)
+      pvtrAcitAmtData.push(item.pvtrAcitAmt)
+      bpvtrAcitAmtData.push(item.bpvtrAcitAmt)
+    })
+
+    // 각 그룹에 대한 데이터셋을 생성하고 datasets에 추가
+    datasets.push({
+      label: data[0].bizYear,
+      backgroundColor: 'rgba(255, 99, 132, 0.7)', // 빨간색
+      data: crtmAcitAmtData
+    })
+    datasets.push({
+      label: '전기',
+      backgroundColor: 'rgba(54, 162, 235, 0.7)', // 파란색
+      data: pvtrAcitAmtData
+    })
+    datasets.push({
+      label: '전전기',
+      backgroundColor: 'rgba(255, 206, 86, 0.7)', // 노란색
+      data: bpvtrAcitAmtData
+    })
+
+    return {
+      datasets,
+      labels
+    }
+  }
+
+  private setFinancialData(data: ISummFinaInfo) {
+    // 데이터 객체에서 각 항목의 값을 가져옵니다.
+    const enpTastAmtData = data.enpTastAmt
+    const enpTdbtAmtData = data.enpTdbtAmt
+    const enpTcptAmtData = data.enpTcptAmt
+
+    // 레이블과 데이터셋을 초기화합니다.
+    const labels = ['자산', '자본', '부채']
+    const datasets = [] as any
+
+    // 데이터셋을 생성합니다.
+    datasets.push({
+      label: '자산',
+      backgroundColor: ['rgba(255, 99, 132, 0.7)', 'rgba(54, 162, 235, 0.7)', 'rgba(255, 206, 86, 0.7)'],
+      data: [enpTastAmtData, enpTdbtAmtData, enpTcptAmtData]
+    })
+
+    return {
+      datasets,
+      labels
+    }
   }
 
   private setSummedData(array: any) {
@@ -252,10 +297,8 @@ export default class detail extends Vue {
           data: _.map(array, 'clpr') as any
         }
       ],
-
       labels: _.map(array, 'updateAt') as any
     }
   }
 }
-
 </script>

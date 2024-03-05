@@ -423,6 +423,7 @@
       justify-content: space-between;
       width: 100%;
       padding: 50px 0;
+
       .chartWrap {
         width: 30%;
         .chart {
@@ -437,6 +438,41 @@
         h3{
           font-weight: bold;
         }
+        .detail-list {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          margin: 10px 0;
+          width: 100%;
+          border-top: 1px solid $line-color;
+          border-bottom: 1px solid $line-color;
+          .detail-list-title {
+            width: 100% !important;
+            justify-content: center;
+            font-weight: bold;
+            background: #f8f8f8;;
+          }
+          .detail-item {
+            width: 25%;
+            padding: 30px 0;
+            border-bottom: 1px solid $line-color;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            .detail-title {
+              flex: 1;
+              text-align: center;
+              font-weight: bold;
+            }
+            .detail-value {
+              flex: 1;
+              text-align: center;
+            }
+          }
+          .moblie-last, .web-last {
+            border-bottom: 0;
+          }
+        }
         .detailsInfoWrap {
           margin: 10px 0;
           li {
@@ -449,6 +485,7 @@
             .detailsInfoTitle {
               width: 15%;
             }
+
           }
         }
       }
@@ -872,6 +909,7 @@
 
     .content {
       width: 100%;
+      overflow: hidden;
       .rankWrap {
         display: block;
         padding: 0;
@@ -885,6 +923,15 @@
             }
             h2 {
               font-size: 1.1em
+            }
+          }
+          .detailsWarp {
+            width: 100%;
+            .detail-item {
+              width: 50%;
+          }
+            .web-last {
+              border-bottom: 1px solid $line-color !important;
             }
           }
           width: 100%;
