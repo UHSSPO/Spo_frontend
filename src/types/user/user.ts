@@ -24,3 +24,8 @@ export interface ISelectMyInfoRes {
   dateOfBirth: string; // 생년월일
   interest: Array<IInterest> // 관심 주식
 }
+
+export interface IChangePasswordReqBody {
+  beforePassword: string; // 현재 비밀번호
+  afterPassword: string; // 변경 비밀번호
+}

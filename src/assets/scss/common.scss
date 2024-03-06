@@ -520,6 +520,32 @@
               color: #666;
             }
           }
+        }
+        .profile-grad-wrap {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          .password-wrap {
+            //display: none !important;
+          }
+          .form-wrap {
+            display: flex;
+            align-items: baseline;
+            margin: 20px 0;
+            .v-input__slot {
+              min-height: 36px;
+            }
+            .v-label {
+              height: 36px;
+              top: 0;
+            }
+            label {
+              line-height: 36px;
+            }
+            .v-input__control {
+              max-width: 180px;
+            }
+          }
           .profile-btn-wrap {
             button {
               padding: 10px 20px;
@@ -533,14 +559,12 @@
                 background-color: #EFD898;
               }
             }
-
             .password-button {
               background-color: #ABDEE6;
               &:hover {
                 background-color: #83C9DC;
               }
             }
-
             .withdraw-button {
               background-color: #FCB9AA;
               &:hover {

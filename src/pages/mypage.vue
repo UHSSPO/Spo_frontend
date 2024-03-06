@@ -29,17 +29,48 @@
                     <span id="email" class="item-value">{{ userinfo.email }}</span>
                   </div>
                 </div>
-                <div class="profile-wrap">
+                <div class="profile-wrap profile-grad-wrap">
                   <div class="profile-item profile-btn-wrap">
                     <button class="nickname-button">
                       닉네임 변경
                     </button>
-                    <button class="password-button">
+                    <button class="password-button" @click="passwordShow">
                       비밀번호 변경
                     </button>
                     <button class="withdraw-button">
                       회원탈퇴
                     </button>
+                  </div>
+                  <div class="hide-form">
+                    <div class="field-form">
+                      <div class="password-wrap form-wrap">
+                        <s-text-field
+                          v-model="formData.beforePassword"
+                          label="이전 비밀번호"
+                          :required="true"
+                          type="password"
+                        />
+                        <s-text-field
+                          v-model="formData.afterPassword"
+                          label="변경 할 비밀번호"
+                          :required="true"
+                          type="password"
+                          :rules="[checkPassword]"
+                          @keypress.enter.prevent="onClickChangePassword"
+                        />
+                        <s-text-field
+                          v-model="checkPwd"
+                          label="패스워드 재입력"
+                          :required="true"
+                          :rules="[checkSecondPassword]"
+                          type="password"
+                        />
+                        <s-button class="s-button" @click="onClickChangePassword">
+                          비밀번호 변경하기
+                        </s-button>
+                      </div>
+                    </div>
+                    <div class="password-form" />
                   </div>
                 </div>
               </div>
@@ -75,18 +106,14 @@
 
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
-import { InterestStockItem, ISelectMyInfoRes } from '~/types/user/user'
+import { IChangePasswordReqBody, InterestStockItem, ISelectMyInfoRes } from '~/types/user/user'
 import { getInterestStockItem } from '~/api/stock'
-import StringUtil from '~/util/StringUtil'
-import { IInterest } from '~/types/home/home'
+import STextField from '~/components/common/STextField.vue'
+import SButton from '~/components/common/SButton.vue'
 
 // const common = namespace(Namespace.COMMON)
 @Component({
-  computed: {
-    StringUtil() {
-      return StringUtil
-    }
-  },
+  components: { SButton, STextField },
   layout: 'empty',
 })
 export default class extends Vue {
@@ -95,6 +122,13 @@ export default class extends Vue {
    ********************************************************************************/
   private userinfo = {} as ISelectMyInfoRes
   private userinfoSequence = 0
+  private formData = {
+    beforePassword: '',
+    afterPassword: ''
+  } as IChangePasswordReqBody
+
+  private checkPwd = ''
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
@@ -112,6 +146,23 @@ export default class extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
+  }
+
+  private onClickChangePassword() {
+    console.log('a')
+  }
+
+  private passwordShow() {
+    console.log('a')
+  }
+
+  private checkPassword(value: string): boolean | string {
+    const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
+    return regex.test(value) || '패스워드는 8자리 이상 특수문자 포함(?제외) 영문자 포함하여 입력 해주세요.'
+  }
+
+  private checkSecondPassword(value: string): boolean | string {
+    return this.formData.afterPassword === value || '패스워드와 패스워드 재입력이 불일치 합니다.'
   }
 }
 
