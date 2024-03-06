@@ -3,68 +3,67 @@
     <div class="content dynamic-layout">
       <div class="rankWrap">
         <div class="commendWrap w-100">
-          <div class="commend-main-title">
-            <div class="commend-main-area">
-              <div class="commend-main-txt">
-                프로필을 수정하거나 관심종목을 볼수있는 마이페이지에요. 🙈🙉
-              </div>
-            </div>
-          </div>
           <div class="mypage-main">
-            <!-- 내 정보 섹션 -->
             <div class="profile-section ">
               <h4>내 정보</h4>
               <div class="profile-info">
-                <div class="profile-item">
-                  <span class="item-label">닉네임:</span>
-                  <span id="nickname" class="item-value">한세운</span>
+                <div class="profile-wrap">
+                  <div class="profile-item">
+                    <span class="item-label">닉네임:</span>
+                    <span id="nickname" class="item-value">{{ userinfo.nickName }}</span>
+                  </div>
+                  <div class="profile-item">
+                    <span class="item-label">투자성향:</span>
+                    <span id="investment-preference" class="item-value">{{ userinfo.investPropensity }}</span>
+                  </div>
+                  <div class="profile-item">
+                    <span class="item-label">가입일:</span>
+                    <span id="join-date" class="item-value">{{ userinfo.createdAt | dateTimeString }}</span>
+                  </div>
+                  <div class="profile-item">
+                    <span class="item-label">생년월일:</span>
+                    <span id="birthdate" class="item-value">{{ userinfo.dateOfBirth }}</span>
+                  </div>
+                  <div class="profile-item">
+                    <span class="item-label">이메일:</span>
+                    <span id="email" class="item-value">{{ userinfo.email }}</span>
+                  </div>
                 </div>
-                <div class="profile-item">
-                  <span class="item-label">투자성향:</span>
-                  <span id="investment-preference" class="item-value">공격적 성향</span>
-                </div>
-                <div class="profile-item">
-                  <span class="item-label">가입일:</span>
-                  <span id="join-date" class="item-value">2024-03-05</span>
-                </div>
-                <div class="profile-item">
-                  <span class="item-label">생년월일:</span>
-                  <span id="birthdate" class="item-value">2000-09-14</span>
-                </div>
-                <div class="profile-item">
-                  <span class="item-label">이메일:</span>
-                  <span id="email" class="item-value">test@test.com</span>
-                </div>
-                <div class="profile-item">
-                  <button class="nickname-button">
-                    닉네임 변경
-                  </button>
-                  <button class="password-button">
-                    비밀번호 변경
-                  </button>
-                  <button class="withdraw-button">
-                    회원탈퇴
-                  </button>
+                <div class="profile-wrap">
+                  <div class="profile-item profile-btn-wrap">
+                    <button class="nickname-button">
+                      닉네임 변경
+                    </button>
+                    <button class="password-button">
+                      비밀번호 변경
+                    </button>
+                    <button class="withdraw-button">
+                      회원탈퇴
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <!-- 내 관심종목 섹션 -->
             <div class="profile-section">
               <h4>내 관심종목</h4>
-              <!-- 관심종목을 표시할 테이블 -->
               <table>
-                <thead>
-                  <tr>
-                    <th>종목명</th>
-                    <th>전일종가</th>
-                    <th>등락률</th>
-                    <th>시가총액</th>
-                  </tr>
-                </thead>
-                <tbody>
-                <!-- 동적으로 관심종목을 추가할 부분 -->
-                </tbody>
+                <tr>
+                  <th>종목명</th>
+                  <th>전일종가</th>
+                  <th>등락률</th>
+                  <th>시가총액</th>
+                </tr>
+                <!--                <tr v-for="(item, idx) in userinfo.interest" :key="idx">-->
+                <!--                  <td>{{ item.itmsNm }}</td>-->
+                <!--                  <td>{{ item.clpr | setNumberComma }}</td>-->
+                <!--                  <td v-if="item.fltRt === 0">-->
+                <!--                    {{ item.fltRt }}-->
+                <!--                  </td>-->
+                <!--                  <td v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">-->
+                <!--                    {{ item.fltRt }}-->
+                <!--                  </td>-->
+                <!--                  <td>{{ item.mrktTotAmt | setKoreanNumber }}</td>-->
+                <!--                </tr>-->
               </table>
             </div>
           </div>
@@ -76,34 +75,44 @@
 
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
+import { InterestStockItem, ISelectMyInfoRes } from '~/types/user/user'
+import { getInterestStockItem } from '~/api/stock'
+import StringUtil from '~/util/StringUtil'
+import { IInterest } from '~/types/home/home'
 
 // const common = namespace(Namespace.COMMON)
 @Component({
+  computed: {
+    StringUtil() {
+      return StringUtil
+    }
+  },
   layout: 'empty',
 })
 export default class extends Vue {
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
-  // private userInfoSequence = 0
-  // @common.State private userInfo!: IUserDetail
+  private userinfo = {} as ISelectMyInfoRes
+  private userinfoSequence = 0
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
-  // async created() {
-  //   this.userInfoSequence = Number(this.$route.query.userSequence)
-  //   await this.getDetail()
-  // }
+  async created() {
+    this.userinfoSequence = Number(this.$route.query.userSequence)
+    await this.getInterestStockItem()
+  }
+
   //
-  // private async getDetail() {
-  //   this.$nextTick(() => {
-  //     this.$nuxt.$loading.start()
-  //   })
-  //   this.userInfo = await getDetail(this.userSequence)
-  //   this.$nextTick(() => {
-  //     this.$nuxt.$loading.finish()
-  //   })
-  // }
+  private async getInterestStockItem() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    this.userinfo = await getInterestStockItem(this.userinfoSequence)
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
+  }
 }
 
 </script>

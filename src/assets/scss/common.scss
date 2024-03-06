@@ -507,14 +507,46 @@
         border-radius: 10px;
         background-color: #f9f9f9;
         padding: 20px;
-        .profile-item {
-          margin-bottom: 15px;
-          .item-label {
-            font-weight: bold;
-            color: #333;
+        display: flex;
+        justify-content: space-around;
+        .profile-wrap {
+          .profile-item {
+            margin: 5px;
+            .item-label {
+              font-weight: bold;
+              color: #333;
+            }
+            .item-value {
+              color: #666;
+            }
           }
-          .item-value {
-            color: #666;
+          .profile-btn-wrap {
+            button {
+              padding: 10px 20px;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+            }
+            .nickname-button {
+              background-color: #F6EAC2;
+              &:hover {
+                background-color: #EFD898;
+              }
+            }
+
+            .password-button {
+              background-color: #ABDEE6;
+              &:hover {
+                background-color: #83C9DC;
+              }
+            }
+
+            .withdraw-button {
+              background-color: #FCB9AA;
+              &:hover {
+                background-color: #F78B79;
+              }
+            }
           }
         }
       }
@@ -528,33 +560,8 @@
         margin-bottom: 10px;
         text-transform: uppercase;
       }
-      button {
-        padding: 10px 20px;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        &:hover {
-        }
-      }
-      .nickname-button {
-        background-color: #28a745;
-        &:hover {
-          background-color: #218838;
-        }
-      }
-      .password-button {
-        background-color: #007bff;
-        &:hover {
-          background-color: #0056b3;
-        }
-      }
-      .withdraw-button {
-        background-color: #dc3545;
-        &:hover {
-          background-color: #c82333;
-        }
-      }
+
+
       table {
         width: 100%;
         border-collapse: collapse;
