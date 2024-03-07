@@ -34,47 +34,52 @@
                     <button class="nickname-button">
                       닉네임 변경
                     </button>
-                    <button class="password-button" @click="passwordShow">
-                      비밀번호 변경
-                    </button>
                     <button class="withdraw-button">
                       회원탈퇴
                     </button>
                   </div>
-                  <div class="hide-form">
-                    <div class="field-form">
-                      <div class="password-wrap form-wrap">
-                        <s-text-field
-                          v-model="formData.beforePassword"
-                          label="이전 비밀번호"
-                          :required="true"
-                          type="password"
-                        />
-                        <s-text-field
-                          v-model="formData.afterPassword"
-                          label="변경 할 비밀번호"
-                          :required="true"
-                          type="password"
-                          :rules="[checkPassword]"
-                          @keypress.enter.prevent="onClickChangePassword"
-                        />
-                        <s-text-field
-                          v-model="checkPwd"
-                          label="패스워드 재입력"
-                          :required="true"
-                          :rules="[checkSecondPassword]"
-                          type="password"
-                        />
-                        <s-button class="s-button" @click="onClickChangePassword">
-                          비밀번호 변경하기
-                        </s-button>
-                      </div>
-                    </div>
-                    <div class="password-form" />
-                  </div>
                 </div>
               </div>
             </div>
+
+            <div class="profile-section">
+              <h4>비밀번호 변경</h4>
+              <div class="field-form">
+                <div class="form-wrap">
+                  <div class="password-field">
+                    <s-text-field
+                      v-model="formData.beforePassword"
+                      label="현재 비밀번호"
+                      :required="true"
+                      type="password"
+                      class="current-password"
+                    />
+                    <s-text-field
+                      v-model="formData.afterPassword"
+                      label="변경 할 비밀번호"
+                      :required="true"
+                      type="password"
+                      :rules="[checkPassword]"
+                      class="new-password"
+                      @keypress.enter.prevent="onClickChangePassword"
+                    />
+                    <s-text-field
+                      v-model="checkPwd"
+                      label="패스워드 재입력"
+                      :required="true"
+                      :rules="[checkSecondPassword]"
+                      type="password"
+                      class="confirm-password"
+                    />
+                  </div>
+                  <s-button class="submit-button s-button" @click="onClickChangePassword">
+                    비밀번호 변경하기
+                  </s-button>
+                </div>
+              </div>
+              <div class="password-form" />
+            </div>
+
             <div class="profile-section">
               <h4>내 관심종목</h4>
               <table>
@@ -84,17 +89,12 @@
                   <th>등락률</th>
                   <th>시가총액</th>
                 </tr>
-                <!--                <tr v-for="(item, idx) in userinfo.interest" :key="idx">-->
-                <!--                  <td>{{ item.itmsNm }}</td>-->
-                <!--                  <td>{{ item.clpr | setNumberComma }}</td>-->
-                <!--                  <td v-if="item.fltRt === 0">-->
-                <!--                    {{ item.fltRt }}-->
-                <!--                  </td>-->
-                <!--                  <td v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">-->
-                <!--                    {{ item.fltRt }}-->
-                <!--                  </td>-->
-                <!--                  <td>{{ item.mrktTotAmt | setKoreanNumber }}</td>-->
-                <!--                </tr>-->
+                <tr v-for="(item, idx) in userinfo.interestStock" :key="idx">
+                  <td>{{ item.interestSequence }}</td>
+                  <td>{{ item.stockInfoSequence }}</td>
+                  <td>{{ item.userSequence }}</td>
+                  <td>{{ item.updateAt }}</td>
+                </tr>
               </table>
             </div>
           </div>
@@ -106,7 +106,10 @@
 
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
-import { IChangePasswordReqBody, InterestStockItem, ISelectMyInfoRes } from '~/types/user/user'
+import {
+  IChangePasswordReqBody,
+  ISelectMyInfoRes
+} from '~/types/user/user'
 import { getInterestStockItem } from '~/api/stock'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
@@ -122,6 +125,7 @@ export default class extends Vue {
    ********************************************************************************/
   private userinfo = {} as ISelectMyInfoRes
   private userinfoSequence = 0
+
   private formData = {
     beforePassword: '',
     afterPassword: ''

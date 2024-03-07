@@ -1,11 +1,11 @@
-export interface InterestStockItem {
+export interface IinterestSequence {
   interestSequence: number; // 관심 주식 일련번호
   stockInfoSequence: number; // 주식 상장 정보 일련번호
   userSequence: number; // 유저 일련번호
   updateAt: string; // 업데이트 일자 (날짜 및 시간)
 }
 
-export interface IInterest {
+export interface IHomeStockInfo {
   stockInfoSequence: number // 주식상장정보 일련번호
   itmsNm: string // 주식명
   clpr: number // 종가
@@ -22,7 +22,7 @@ export interface ISelectMyInfoRes {
   userRole: string; // 유저 권한
   nickName: string; // 닉네임
   dateOfBirth: string; // 생년월일
-  interest: Array<IInterest> // 관심 주식
+  interestStock:Array<IinterestSequence>
 }
 
 export interface IChangePasswordReqBody {
