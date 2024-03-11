@@ -14,7 +14,7 @@ export const GetInterest = () => ApiUtil.get('/stock/my/interest', {})
 
 export const getDetail = (stockInfoSequence: number) => ApiUtil.get(`/stock/${stockInfoSequence}`, {})
 
-export const getInterestStockItem = () => ApiUtil.get('/user/my', {})
+export const getInterestStockItem = (userinfoSequence: number) => ApiUtil.get('/user/my', {})
 // 관심주식 등록
 export const UpdateInterestStock = (stockInfoSequence: number) => ApiUtil.post('/stock/interest', { stockInfoSequence })
 
