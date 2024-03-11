@@ -31,6 +31,12 @@
                 </div>
                 <div class="profile-wrap profile-grad-wrap">
                   <div class="profile-item profile-btn-wrap">
+                    <button class="nickname-button" @click="onClickNickname">
+                      닉네임 변경하기
+                    </button>
+                    <button class="password-button" @click="onClickPassword">
+                      비밀번호 변경하기
+                    </button>
                     <button class="withdraw-button">
                       회원탈퇴
                     </button>
@@ -39,7 +45,7 @@
               </div>
             </div>
 
-            <div class="profile-section">
+            <div v-if="onClickNicknameChk === 'true'" class="profile-section change-wrap nickname-change-wrap">
               <div class="field-form">
                 <div class="form-wrap">
                   <div class="nickname-wrap">
@@ -51,13 +57,13 @@
                       class="new-nickname"
                     />
                     <s-button class="submit-button s-button">
-                      닉네임 변경하기
+                      확인
                     </s-button>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="profile-section">
+            <div v-if="onClickPasswordChk === 'true'" class="profile-section change-wrap password-change-wrap">
               <div class="field-form">
                 <div class="form-wrap">
                   <div class="password-wrap">
@@ -89,14 +95,14 @@
                       />
                     </div>
                     <s-button class="submit-button s-button" @click="onClickChangePassword">
-                      비밀번호 변경하기
+                      확인
                     </s-button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="profile-section">
+            <div class="profile-section mypage-item">
               <h4>내 관심종목</h4>
               <table>
                 <tr>
@@ -161,6 +167,8 @@ export default class extends Vue {
 
   private checkPwd = ''
 
+  private onClickPasswordChk = 'false'
+  private onClickNicknameChk = 'false'
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
@@ -180,6 +188,14 @@ export default class extends Vue {
     })
   }
 
+  private onClickPassword() {
+    this.onClickPasswordChk = 'true'
+  }
+
+  private onClickNickname() {
+    this.onClickNicknameChk = 'true'
+  }
+
   private async onClickChangePassword() {
     if (StringUtil.isEmpty(this.formData.beforePassword) && StringUtil.isEmpty(this.formData.afterPassword)) {
       return false
@@ -192,7 +208,7 @@ export default class extends Vue {
       if (response.changePasswordYn === 'Y') {
         commonStore.ADD_DIALOG({
           id: 'CHANGE PASSWORD',
-          text: '비밀번호거 변경됐습니다.',
+          text: '비밀번호가 변경됐습니다.',
           callback: () => {
             this.$router.push('/')
           }

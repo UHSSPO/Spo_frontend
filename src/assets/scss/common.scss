@@ -542,12 +542,19 @@
               border-radius: 5px;
               cursor: pointer;
             }
-            .nickname-button {
+            .password-button {
               background-color: #ABDEE6;
               &:hover {
                 background-color: #83C9DC;
               }
             }
+            .nickname-button {
+              background-color: #FFED73;
+              &:hover {
+                background-color: #FFDB4D;
+              }
+            }
+
             .withdraw-button {
               background-color: #FCB9AA;
               &:hover {
@@ -593,7 +600,7 @@
 
 
       &:not(:last-child) {
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid $line-color;
       }
       h4 {
         font-size: 20px;
@@ -998,12 +1005,24 @@
             .profile-info span {
               font-size: 14px;
             }
+            .profile-btn-wrap {
+              display: flex;
+              flex-direction: column;
+              button {
+                align-self: flex-end;
+                margin: 1px 0;
+              }
+            }
             button{
               width: 100%;
               span {
                 font-size: 14px;
               }
             }
+          }
+
+          .mypage-item {
+            padding: 0;
           }
         }
       }
