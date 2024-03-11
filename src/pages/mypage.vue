@@ -181,6 +181,9 @@ export default class extends Vue {
   }
 
   private async onClickChangePassword() {
+    if (StringUtil.isEmpty(this.formData.beforePassword) && StringUtil.isEmpty(this.formData.afterPassword)) {
+      return false
+    }
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })

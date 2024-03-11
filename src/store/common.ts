@@ -20,6 +20,7 @@ export default class CommonModule extends VuexModule implements ICommonState {
   public dialogs = [] as Array<IDialog>
   public token = ''
   public userInfo = {} as IUserDetail
+  public userPassword = {} as IChangePasswordReqBody
 
   @Mutation
   public ADD_USER_INFO(userInfo: IUserInfo) {
@@ -51,6 +52,7 @@ export default class CommonModule extends VuexModule implements ICommonState {
 
   @Mutation
   public CHANGE_PASSWORD(password: IChangePasswordReqBody) {
-    alert(1)
+    this.userPassword.beforePassword = password.beforePassword
+    this.userPassword.afterPassword = password.afterPassword
   }
 }
