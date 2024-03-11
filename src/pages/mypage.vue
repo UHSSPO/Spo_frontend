@@ -31,9 +31,6 @@
                 </div>
                 <div class="profile-wrap profile-grad-wrap">
                   <div class="profile-item profile-btn-wrap">
-                    <button class="nickname-button">
-                      닉네임 변경
-                    </button>
                     <button class="withdraw-button">
                       회원탈퇴
                     </button>
@@ -43,41 +40,61 @@
             </div>
 
             <div class="profile-section">
-              <h4>비밀번호 변경</h4>
               <div class="field-form">
                 <div class="form-wrap">
-                  <div class="password-field">
+                  <div class="nickname-wrap">
+                    <h4>닉네임 변경</h4>
                     <s-text-field
-                      v-model="formData.beforePassword"
-                      label="현재 비밀번호"
+                      label="변경 할 닉네임"
                       :required="true"
-                      type="password"
-                      class="current-password"
+                      type="text"
+                      class="new-nickname"
                     />
-                    <s-text-field
-                      v-model="formData.afterPassword"
-                      label="변경 할 비밀번호"
-                      :required="true"
-                      type="password"
-                      :rules="[checkPassword]"
-                      class="new-password"
-                      @keypress.enter.prevent="onClickChangePassword"
-                    />
-                    <s-text-field
-                      v-model="checkPwd"
-                      label="패스워드 재입력"
-                      :required="true"
-                      :rules="[checkSecondPassword]"
-                      type="password"
-                      class="confirm-password"
-                    />
+                    <s-button class="submit-button s-button">
+                      닉네임 변경하기
+                    </s-button>
                   </div>
-                  <s-button class="submit-button s-button" @click="onClickChangePassword">
-                    비밀번호 변경하기
-                  </s-button>
                 </div>
               </div>
-              <div class="password-form" />
+            </div>
+            <div class="profile-section">
+              <div class="field-form">
+                <div class="form-wrap">
+                  <div class="password-wrap">
+                    <h4>비밀번호 변경</h4>
+                    <div class="password-field">
+                      <s-text-field
+                        v-model="formData.beforePassword"
+                        label="현재 비밀번호"
+                        :required="true"
+                        type="password"
+                        :rules="[]"
+                        class="current-password"
+                      />
+                      <s-text-field
+                        v-model="formData.afterPassword"
+                        label="패스워드"
+                        :required="true"
+                        type="password"
+                        :rules="[checkPassword]"
+                        class="new-password"
+                      />
+                      <s-text-field
+                        v-model="checkPwd"
+                        label="패스워드 재입력"
+                        :required="true"
+                        :rules="[checkSecondPassword]"
+                        type="password"
+                        class="confirm-password"
+                        @keypress.enter.prevent="onClickChangePassword"
+                      />
+                    </div>
+                    <s-button class="submit-button s-button" @click="onClickChangePassword">
+                      비밀번호 변경하기
+                    </s-button>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="profile-section">
@@ -87,13 +104,20 @@
                   <th>종목명</th>
                   <th>전일종가</th>
                   <th>등락률</th>
+                  <th>거래량</th>
                   <th>시가총액</th>
                 </tr>
                 <tr v-for="(item, idx) in userinfo.interestStock" :key="idx">
-                  <td>{{ item.interestSequence }}</td>
-                  <td>{{ item.stockInfoSequence }}</td>
-                  <td>{{ item.userSequence }}</td>
-                  <td>{{ item.updateAt }}</td>
+                  <th>{{ item.itmsNm }}</th>
+                  <th>{{ item.clpr | setNumberComma }}</th>
+                  <th v-if="item.fltRt === 0">
+                    {{ item.fltRt }}
+                  </th>
+                  <th v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
+                    {{ item.fltRt }}
+                  </th>
+                  <th>{{ item.trqu | setNumberComma }}</th>
+                  <th>{{ item.mrktTotAmt | setKoreanNumber }}</th>
                 </tr>
               </table>
             </div>
@@ -113,6 +137,10 @@ import {
 import { getInterestStockItem } from '~/api/stock'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
+import { IUserInfo } from '~/types/auth/auth'
+import { changePassword, login } from '~/api/auth'
+import StringUtil from '~/util/StringUtil'
+import { commonStore } from '~/util/store-accessor'
 
 // const common = namespace(Namespace.COMMON)
 @Component({
@@ -152,12 +180,18 @@ export default class extends Vue {
     })
   }
 
-  private onClickChangePassword() {
-    console.log('a')
-  }
-
-  private passwordShow() {
-    console.log('a')
+  private async onClickChangePassword() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    const response: IChangePasswordReqBody = await changePassword(this.formData)
+    if (StringUtil.isNotEmpty(response)) {
+      commonStore.CHANGE_PASSWORD(response)
+      await this.$router.push('/')
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
   }
 
   private checkPassword(value: string): boolean | string {

@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { IDialog } from '../types/common'
 import { Namespace } from '../util/Namespace'
 import { IUserDetail, IUserInfo } from '~/types/auth/auth'
+import { IChangePasswordReqBody } from '~/types/user/user'
 
 export interface ICommonState {
   // locales: Array<string>
@@ -49,7 +50,7 @@ export default class CommonModule extends VuexModule implements ICommonState {
   }
 
   @Mutation
-  public CHANGE_PASSWORD() {
+  public CHANGE_PASSWORD(password: IChangePasswordReqBody) {
     alert(1)
   }
 }
