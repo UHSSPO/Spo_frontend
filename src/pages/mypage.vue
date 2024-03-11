@@ -68,7 +68,6 @@
                         label="현재 비밀번호"
                         :required="true"
                         type="password"
-                        :rules="[]"
                         class="current-password"
                       />
                       <s-text-field
@@ -131,7 +130,7 @@
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import {
-  IChangePasswordReqBody,
+  IChangePasswordReqBody, IChangePasswordRes,
   ISelectMyInfoRes
 } from '~/types/user/user'
 import { getInterestStockItem } from '~/api/stock'
@@ -141,8 +140,9 @@ import { IUserInfo } from '~/types/auth/auth'
 import { changePassword, login } from '~/api/auth'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
+import { Namespace } from '~/util/Namespace'
 
-// const common = namespace(Namespace.COMMON)
+const common = namespace(Namespace.COMMON)
 @Component({
   components: { SButton, STextField },
   layout: 'empty',
@@ -165,7 +165,7 @@ export default class extends Vue {
    * Life Cycle
    ********************************************************************************/
   async created() {
-    this.userinfoSequence = Number(this.$route.query.userSequence)
+    this.userinfoSequence = commonStore.userInfo.userSequence
     await this.getInterestStockItem()
   }
 
@@ -187,10 +187,17 @@ export default class extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    const response: IChangePasswordReqBody = await changePassword(this.formData)
+    const response: IChangePasswordRes = await changePassword(this.formData, this.userinfoSequence)
     if (StringUtil.isNotEmpty(response)) {
-      commonStore.CHANGE_PASSWORD(response)
-      await this.$router.push('/')
+      if (response.changePasswordYn === 'Y') {
+        commonStore.ADD_DIALOG({
+          id: 'CHANGE PASSWORD',
+          text: '비밀번호거 변경됐습니다.',
+          callback: () => {
+            this.$router.push('/')
+          }
+        })
+      }
     }
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()

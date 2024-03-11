@@ -8,4 +8,4 @@ export const signUp = (parmas: ISignUp) => ApiUtil.post('/auth/sign-up', parmas)
 
 export const login = (params: ILogin) => ApiUtil.post('/auth/login', params)
 
-export const changePassword = (params: IChangePasswordReqBody) => ApiUtil.put('/user/change-password/{userSequence}', params)
+export const changePassword = (params: IChangePasswordReqBody, userSequence: number) => ApiUtil.put(`/user/change-password/${userSequence}`, params)

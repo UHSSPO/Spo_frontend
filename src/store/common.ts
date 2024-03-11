@@ -49,10 +49,4 @@ export default class CommonModule extends VuexModule implements ICommonState {
   public RESET_DIALOG () {
     this.dialogs = []
   }
-
-  @Mutation
-  public CHANGE_PASSWORD(password: IChangePasswordReqBody) {
-    this.userPassword.beforePassword = password.beforePassword
-    this.userPassword.afterPassword = password.afterPassword
-  }
 }

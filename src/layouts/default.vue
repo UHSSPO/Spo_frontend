@@ -230,9 +230,6 @@ export default class extends Vue {
   private onClickMypage(userInfo: number) {
     this.$router.push({
       name: 'mypage',
-      query: {
-        userSequence: userInfo.toString()
-      }
     })
   }
 }

@@ -22,3 +22,7 @@ export interface IChangePasswordReqBody {
   beforePassword: string; // 현재 비밀번호
   afterPassword: string; // 변경 비밀번호
 }
+
+export interface IChangePasswordRes {
+  changePasswordYn: string // 비밀번호 변 여부
+}
