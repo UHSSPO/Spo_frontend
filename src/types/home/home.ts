@@ -56,3 +56,8 @@ export interface IInterest {
   trqu: number // 거래량
   mrktTotAmt: number // 시가총액
 }
+
+export interface ISearchStockInfo {
+  stockInfoSequence:number // 주식상장정보 일련번호
+  itmsNm:string // 주식명
+}

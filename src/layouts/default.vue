@@ -101,8 +101,21 @@
           </li>
           <li class="menu_search_list">
             <div>
-              <s-text-field placeholder="종목명 검색" />
+              <s-text-field
+                v-model="search"
+                placeholder="종목명 검색"
+                @input="searchStock"
+              />
+              <v-list v-if="search" style="position: absolute;">
+                <v-list-item
+                  v-for="(item, index) in stock"
+                  :key="index"
+                >
+                  <v-list-item-title>{{ item.itmsNm }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
             </div>
+            <div />
           </li>
         </ul>
       </div>
@@ -138,12 +151,15 @@
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import _ from 'lodash'
+import axios from 'axios'
 import { IDialog, IDialogResult } from '~/types/common'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
 import { IUserDetail } from '~/types/auth/auth'
+import { IMarketIndex, ISearchStockInfo } from '~/types/home/home'
+import { MarketIndex, Stock } from '~/api/stock'
 declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
@@ -167,11 +183,18 @@ export default class extends Vue {
   @common.State private dialogs!: Array<any>
   @common.State private token!: string
   @common.State private userInfo!: IUserDetail
+  @common.State private stockList!: Array<ISearchStockInfo>
 
   private appBarOpener = false
+  private search = ''
+  private stock = [] as Array<ISearchStockInfo>
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
+  created(): void {
+    this.initCommend()
+  }
+
   mounted() {
     this.kakaoInit()
   }
@@ -179,9 +202,17 @@ export default class extends Vue {
   /********************************************************************************
    * Method (Event, Business Logic)
    ********************************************************************************/
+
   private async goToPage() {
     await Kakao.Auth.authorize({
       redirectUri: `${window.location.origin}/auth/kakao-login`
+    })
+  }
+
+  private getStock() {
+    Stock().then((response: Array<ISearchStockInfo>) => {
+      commonStore.ADD_STOCK_LIST(response)
+      this.stock = this.stockList
     })
   }
 
@@ -227,6 +258,17 @@ export default class extends Vue {
     this.$router.push('/home')
   }
 
+  private searchStock(eventValue: any) {
+    // const response = await axios.get(`ISearchStockInfo?q=${this.search}`)
+    // const searchData: ISearchStockInfo[] = response.data
+
+    this.stock = _.filter(this.stock, (item: ISearchStockInfo) => {
+      return item.itmsNm.includes(this.search)
+    })
+
+    console.log('검색 결과:', this.stock)
+  }
+
   private onClickMypage(userInfo: number) {
     this.$router.push({
       name: 'mypage',
@@ -234,6 +276,18 @@ export default class extends Vue {
         userSequence: userInfo.toString()
       }
     })
+  }
+
+  private initCommend() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    Promise.all([this.getStock()])
+      .finally(() => {
+        this.$nextTick(() => {
+          this.$nuxt.$loading.finish()
+        })
+      })
   }
 }
 </script>
