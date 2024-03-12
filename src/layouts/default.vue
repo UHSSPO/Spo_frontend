@@ -111,8 +111,9 @@
                   v-for="(item, index) in searchStockValue"
                   :key="index"
                   class="search-list-item"
+                  @click="stockDetail(item.stockInfoSequence)"
                 >
-                  <v-list-item-title @click="stockDetail(item.stockInfoSequence)">
+                  <v-list-item-title>
                     {{ item.itmsNm }}
                   </v-list-item-title>
                 </v-list-item>
@@ -300,6 +301,7 @@ export default class extends Vue {
         text: '로그인이 필요한 서비스입니다!'
       })
     } else {
+      this.search = ''
       this.$router.push({
         name: 'detail',
         query: {
