@@ -174,13 +174,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Watch } from 'nuxt-property-decorator'
 import _ from 'lodash'
 import { IEnterpriseInfo, IIncoInfo, IPriceInfo, IStockInfo, ISummFinaInfo } from '~/types/details/details'
 import { getDetail } from '~/api/stock'
 import SLineChart from '~/components/common/SLineChart.vue'
 import ChartUtil from '~/util/ChartUtil'
 import BarChartUtil from '~/util/BarChartUtil'
+import { commonStore } from '~/util/store-accessor'
 
 @Component({
   layout: 'empty',
@@ -201,10 +202,19 @@ export default class detail extends Vue {
   private incomeChartData = {}
   private financialData = {}
 
+  @Watch('$route')
+  private async watchRoute() {
+    await this.initDetail()
+  }
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
   async created() {
+    await this.initDetail()
+  }
+
+  private async initDetail() {
     this.stockInfoSequence = Number(this.$route.query.stockInfoSequence)
     await this.getDetail()
   }

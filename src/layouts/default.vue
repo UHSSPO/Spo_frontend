@@ -101,8 +101,25 @@
           </li>
           <li class="menu_search_list">
             <div>
-              <s-text-field placeholder="종목명 검색" />
+              <s-text-field
+                v-model="search"
+                placeholder="종목명 검색"
+                @input="searchStock"
+              />
+              <v-list v-if="searchStockValue && StringUtil.isNotEmpty(search)" class="search-list">
+                <v-list-item
+                  v-for="(item, index) in searchStockValue"
+                  :key="index"
+                  class="search-list-item"
+                  @click="stockDetail(item.stockInfoSequence)"
+                >
+                  <v-list-item-title>
+                    {{ item.itmsNm }}
+                  </v-list-item-title>
+                </v-list-item>
+              </v-list>
             </div>
+            <div />
           </li>
         </ul>
       </div>
@@ -138,12 +155,16 @@
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import _ from 'lodash'
+import axios from 'axios'
 import { IDialog, IDialogResult } from '~/types/common'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
 import { IUserDetail } from '~/types/auth/auth'
+import { ISearchStockInfo } from '~/types/home/home'
+import { Stock } from '~/api/stock'
+import StringUtil from '~/util/StringUtil'
 declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
@@ -160,6 +181,7 @@ export default class extends Vue {
     Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
     Kakao.isInitialized()
   }
+
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
@@ -167,11 +189,21 @@ export default class extends Vue {
   @common.State private dialogs!: Array<any>
   @common.State private token!: string
   @common.State private userInfo!: IUserDetail
+  @common.State private stockList!: Array<ISearchStockInfo>
 
   private appBarOpener = false
+  private search = ''
+  private stock = [] as Array<ISearchStockInfo>
+  private searchStockValue = [] as Array<ISearchStockInfo>
+  private currentOrderIndex = 0
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
+  created(): void {
+    this.initCommend()
+  }
+
   mounted() {
     this.kakaoInit()
   }
@@ -179,9 +211,17 @@ export default class extends Vue {
   /********************************************************************************
    * Method (Event, Business Logic)
    ********************************************************************************/
+
   private async goToPage() {
     await Kakao.Auth.authorize({
       redirectUri: `${window.location.origin}/auth/kakao-login`
+    })
+  }
+
+  private getStock() {
+    Stock().then((response: Array<ISearchStockInfo>) => {
+      commonStore.ADD_STOCK_LIST(response)
+      this.stock = this.stockList
     })
   }
 
@@ -204,7 +244,7 @@ export default class extends Vue {
     commonStore.REMOVE_DIALOG(index)
   }
 
-  private appBarLink(href : string) {
+  private appBarLink(href: string) {
     // console.log(href)
   }
 
@@ -227,6 +267,12 @@ export default class extends Vue {
     this.$router.push('/home')
   }
 
+  private searchStock() {
+    this.searchStockValue = _.filter(this.stock, (item: ISearchStockInfo) => {
+      return item.itmsNm.includes(this.search)
+    })
+  }
+
   private onClickMypage(userInfo: number) {
     this.$router.push({
       name: 'mypage',
@@ -234,6 +280,35 @@ export default class extends Vue {
         userSequence: userInfo.toString()
       }
     })
+  }
+
+  private initCommend() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    Promise.all([this.getStock()])
+      .finally(() => {
+        this.$nextTick(() => {
+          this.$nuxt.$loading.finish()
+        })
+      })
+  }
+
+  private stockDetail(stockInfoSequence: number) {
+    if (StringUtil.isEmpty(this.token)) {
+      commonStore.ADD_DIALOG({
+        id: 'ERROR',
+        text: '로그인이 필요한 서비스입니다!'
+      })
+    } else {
+      this.search = ''
+      this.$router.push({
+        name: 'detail',
+        query: {
+          stockInfoSequence: stockInfoSequence.toString()
+        }
+      })
+    }
   }
 }
 </script>
