@@ -106,10 +106,11 @@
                 placeholder="종목명 검색"
                 @input="searchStock"
               />
-              <v-list v-if="search" style="position: absolute;">
+              <v-list v-if="searchStockValue && StringUtil.isNotEmpty(search)" class="search-list">
                 <v-list-item
-                  v-for="(item, index) in stock"
+                  v-for="(item, index) in searchStockValue"
                   :key="index"
+                  class="search-list-item"
                 >
                   <v-list-item-title>{{ item.itmsNm }}</v-list-item-title>
                 </v-list-item>
@@ -188,6 +189,8 @@ export default class extends Vue {
   private appBarOpener = false
   private search = ''
   private stock = [] as Array<ISearchStockInfo>
+  private searchStockValue = [] as Array<ISearchStockInfo>
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
@@ -258,15 +261,10 @@ export default class extends Vue {
     this.$router.push('/home')
   }
 
-  private searchStock(eventValue: any) {
-    // const response = await axios.get(`ISearchStockInfo?q=${this.search}`)
-    // const searchData: ISearchStockInfo[] = response.data
-
-    this.stock = _.filter(this.stock, (item: ISearchStockInfo) => {
+  private searchStock() {
+    this.searchStockValue = _.filter(this.stock, (item: ISearchStockInfo) => {
       return item.itmsNm.includes(this.search)
     })
-
-    console.log('검색 결과:', this.stock)
   }
 
   private onClickMypage(userInfo: number) {
