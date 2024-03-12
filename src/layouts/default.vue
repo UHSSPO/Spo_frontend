@@ -112,7 +112,9 @@
                   :key="index"
                   class="search-list-item"
                 >
-                  <v-list-item-title>{{ item.itmsNm }}</v-list-item-title>
+                  <v-list-item-title @click="stockDetail(item.stockInfoSequence)">
+                    {{ item.itmsNm }}
+                  </v-list-item-title>
                 </v-list-item>
               </v-list>
             </div>
@@ -159,8 +161,9 @@ import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
 import { IUserDetail } from '~/types/auth/auth'
-import { IMarketIndex, ISearchStockInfo } from '~/types/home/home'
-import { MarketIndex, Stock } from '~/api/stock'
+import { ISearchStockInfo } from '~/types/home/home'
+import { Stock } from '~/api/stock'
+import StringUtil from '~/util/StringUtil'
 declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
@@ -177,6 +180,7 @@ export default class extends Vue {
     Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
     Kakao.isInitialized()
   }
+
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
@@ -190,6 +194,7 @@ export default class extends Vue {
   private search = ''
   private stock = [] as Array<ISearchStockInfo>
   private searchStockValue = [] as Array<ISearchStockInfo>
+  private currentOrderIndex = 0
 
   /********************************************************************************
    * Life Cycle
@@ -238,7 +243,7 @@ export default class extends Vue {
     commonStore.REMOVE_DIALOG(index)
   }
 
-  private appBarLink(href : string) {
+  private appBarLink(href: string) {
     // console.log(href)
   }
 
@@ -286,6 +291,22 @@ export default class extends Vue {
           this.$nuxt.$loading.finish()
         })
       })
+  }
+
+  private stockDetail(stockInfoSequence: number) {
+    if (StringUtil.isEmpty(this.token)) {
+      commonStore.ADD_DIALOG({
+        id: 'ERROR',
+        text: '로그인이 필요한 서비스입니다!'
+      })
+    } else {
+      this.$router.push({
+        name: 'detail',
+        query: {
+          stockInfoSequence: stockInfoSequence.toString()
+        }
+      })
+    }
   }
 }
 </script>
