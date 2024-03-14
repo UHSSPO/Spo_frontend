@@ -1,8 +1,8 @@
 <template>
-  <div class="exploreWrap">
-    <div class="exploreItem">
+  <div class="explore-wrap">
+    <div class="explore-item">
       <h3>테마별 탐색</h3>
-      <div class="exploreBtn">
+      <div class="explore-btn">
         <s-button @click="changeOrder('prev')">
           <v-icon>
             mdi-chevron-left
@@ -17,7 +17,7 @@
     </div>
     <ul v-show="currentOrder === 'views'">
       <li>
-        <p class="exploreListTile">
+        <p class="explore-list-title">
           조회수 높은순
         </p>
       </li>
@@ -34,7 +34,7 @@
     </ul>
     <ul v-show="currentOrder === 'asc'">
       <li>
-        <p class="exploreListTile">
+        <p class="explore-list-title">
           등락률 높은순
         </p>
       </li>
@@ -51,7 +51,7 @@
     </ul>
     <ul v-show="currentOrder === 'desc'">
       <li>
-        <p class="exploreListTile">
+        <p class="explore-list-title">
           하락률 높은순
         </p>
       </li>

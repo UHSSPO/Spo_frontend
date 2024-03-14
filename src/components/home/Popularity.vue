@@ -1,5 +1,5 @@
 <template>
-  <div class="popularityWrap">
+  <div class="popularity-wrap">
     <h3>인기 종목</h3>
     <table class="popularityRank popularity">
       <tr>

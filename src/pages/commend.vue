@@ -1,8 +1,8 @@
 <template>
   <div id="container" class="line">
     <div class="content dynamic-layout">
-      <div class="rankWrap">
-        <div class="commendWrap w-100">
+      <div class="rank-wrap">
+        <div class="commend-wrap w-100">
           <div class="commend-main-title">
             <div class="commend-main-area">
               <div class="flex-center">

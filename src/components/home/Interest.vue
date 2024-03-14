@@ -1,5 +1,5 @@
 <template>
-  <div class="interestWrap" :class="{empty : StringUtil.isEmpty(token)}">
+  <div class="interest-wrap" :class="{empty : StringUtil.isEmpty(token)}">
     <h3>나의 관심 종목</h3>
     <table v-if="StringUtil.isEmpty(token)" class="interestList">
       <div class="empty-area">
