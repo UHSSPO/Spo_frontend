@@ -23,3 +23,5 @@ export const ShortInvestmentAll = () => ApiUtil.get('/stock/recommend/short-inve
 
 // 장기추천주식 더보기
 export const LongInvestmentAll = () => ApiUtil.get('/stock/recommend/long-investment-all', {})
+
+export const Stock = () => ApiUtil.get('/stock', {})

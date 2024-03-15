@@ -1,7 +1,7 @@
 import { Globals } from '~/util/Globals'
 
 export default class BarChartUtil {
-  public static getBarCommonOptions(): any {
+  static getBarCommonOptions(): any {
     return {
       legend: {
         display: true
@@ -10,8 +10,17 @@ export default class BarChartUtil {
       cutoutPercentage: 0,
       maintainAspectRatio: false,
       tooltips: {
-        mode: 'nearest',
-        intersect: false
+        enabled: true,
+        mode: 'single',
+        callbacks: {
+          title: function (tooltipItems: any, data: any) {
+            return tooltipItems[0].label.replaceAll(',', '')
+          },
+          label: function (tooltipItem: any, data: any) {
+            const tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+            return parseInt(tooltipValue, 10).toLocaleString()
+          }
+        }
       },
       scales: {
         xAxes: [
@@ -21,7 +30,12 @@ export default class BarChartUtil {
         ],
         yAxes: [
           {
-            display: true // y축 라벨과 눈금 표시 활성화
+            display: true, // y축 라벨과 눈금 표시 활성화
+            ticks: {
+              callback: function (value: any, index: any, values: any) {
+                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+              }
+            }
           }
         ]
       },
@@ -52,8 +66,17 @@ export default class BarChartUtil {
       cutoutPercentage: 0,
       maintainAspectRatio: false,
       tooltips: {
-        mode: 'nearest',
-        intersect: false
+        enabled: true,
+        mode: 'single',
+        callbacks: {
+          title: function (tooltipItems: any, data: any) {
+            return tooltipItems[0].label.replaceAll(',', '')
+          },
+          label: function (tooltipItem: any, data: any) {
+            const tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+            return parseInt(tooltipValue, 10).toLocaleString()
+          }
+        }
       },
       scales: {
         xAxes: [
@@ -63,7 +86,12 @@ export default class BarChartUtil {
         ],
         yAxes: [
           {
-            display: true // y축 라벨과 눈금 표시 활성화
+            display: true, // y축 라벨과 눈금 표시 활성화
+            ticks: {
+              callback: function (value: any, index: any, values: any) {
+                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+              }
+            }
           }
         ]
       },
@@ -82,22 +110,6 @@ export default class BarChartUtil {
           }
         }
       }
-    }
-  }
-
-  public static getBarCommonData(data: any): any {
-    return {
-      datasets: [
-        {
-          borderWidth: 0,
-          backgroundColor: 'rgba(255, 255, 255, 0.1)', // 뒷 배경 색상
-          borderColor: 'rgba(0, 0, 0, 0)', // 라인 색상
-          lineTension: 0,
-          pointRadius: 0,
-          fill: true,
-          data
-        }
-      ]
     }
   }
 }

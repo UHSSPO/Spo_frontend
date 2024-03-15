@@ -4,6 +4,7 @@ import { IDialog } from '../types/common'
 import { Namespace } from '../util/Namespace'
 import { IUserDetail, IUserInfo } from '~/types/auth/auth'
 import { IChangePasswordReqBody } from '~/types/user/user'
+import { ISearchStockInfo } from '~/types/home/home'
 
 export interface ICommonState {
   // locales: Array<string>
@@ -12,6 +13,7 @@ export interface ICommonState {
   // codeMap: ICodeMap
   token: string
   userInfo: IUserDetail
+  stockList: Array<ISearchStockInfo>
   // refresh: boolean
 }
 
@@ -21,11 +23,17 @@ export default class CommonModule extends VuexModule implements ICommonState {
   public token = ''
   public userInfo = {} as IUserDetail
   public userPassword = {} as IChangePasswordReqBody
+  public stockList = [] as Array<ISearchStockInfo>
 
   @Mutation
   public ADD_USER_INFO(userInfo: IUserInfo) {
     this.token = userInfo.accessToken
     this.userInfo = userInfo.user
+  }
+
+  @Mutation
+  public ADD_STOCK_LIST(stockList: Array<ISearchStockInfo>) {
+    this.stockList = stockList
   }
 
   @Mutation
