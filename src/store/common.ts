@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { IDialog } from '../types/common'
 import { Namespace } from '../util/Namespace'
 import { IUserDetail, IUserInfo } from '~/types/auth/auth'
+import { IChangePasswordReqBody } from '~/types/user/user'
 import { ISearchStockInfo } from '~/types/home/home'
 
 export interface ICommonState {
@@ -21,6 +22,7 @@ export default class CommonModule extends VuexModule implements ICommonState {
   public dialogs = [] as Array<IDialog>
   public token = ''
   public userInfo = {} as IUserDetail
+  public userPassword = {} as IChangePasswordReqBody
   public stockList = [] as Array<ISearchStockInfo>
 
   @Mutation
