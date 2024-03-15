@@ -51,12 +51,14 @@
                   <div class="nickname-wrap">
                     <h4>닉네임 변경</h4>
                     <s-text-field
+                      v-model="nicknameData.changeNickName"
                       label="변경 할 닉네임"
                       :required="true"
                       type="text"
                       class="new-nickname"
+                      @keypress.enter.prevent="onClickChangeNickname"
                     />
-                    <s-button class="submit-button s-button">
+                    <s-button class="submit-button s-button" @click="onClickChangeNickname">
                       확인
                     </s-button>
                   </div>
@@ -156,6 +158,8 @@
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import {
+  IChangeNickNameReqBody,
+  IChangeNickNameRes,
   IChangePasswordReqBody, IChangePasswordRes, IinterestSequence,
   ISelectMyInfoRes
 } from '~/types/user/user'
@@ -163,7 +167,7 @@ import { getInterestStockItem } from '~/api/stock'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
 import { IUserInfo } from '~/types/auth/auth'
-import { changePassword, login } from '~/api/auth'
+import { changeNickname, changePassword, login } from '~/api/auth'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
@@ -187,6 +191,10 @@ export default class extends Vue {
     beforePassword: '',
     afterPassword: ''
   } as IChangePasswordReqBody
+
+  private nicknameData = {
+    changeNickName: ''
+  } as IChangeNickNameReqBody
 
   private search = ''
   private checkPwd = ''
@@ -243,6 +251,30 @@ export default class extends Vue {
         commonStore.ADD_DIALOG({
           id: 'CHANGE PASSWORD',
           text: '비밀번호가 변경됐습니다.',
+          callback: () => {
+            this.$router.push('/')
+          }
+        })
+      }
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
+  }
+
+  private async onClickChangeNickname() {
+    if (StringUtil.isEmpty(this.nicknameData.changeNickName)) {
+      return false
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    const response: IChangeNickNameRes = await changeNickname(this.nicknameData, this.userinfoSequence)
+    if (StringUtil.isNotEmpty(response)) {
+      if (response.changeNickNameYn === 'Y') {
+        commonStore.ADD_DIALOG({
+          id: 'CHANGE NICKNAME',
+          text: '닉네임이 변경됐습니다.',
           callback: () => {
             this.$router.push('/')
           }

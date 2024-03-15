@@ -23,6 +23,15 @@ export interface IChangePasswordReqBody {
   afterPassword: string; // 변경 비밀번호
 }
 
+export interface IChangeNickNameReqBody {
+  changeNickName: string; // 변경 닉네임
+}
+
 export interface IChangePasswordRes {
-  changePasswordYn: string // 비밀번호 변 여부
+  changePasswordYn: string // 비밀번호 변경 여부
+}
+
+export interface IChangeNickNameRes {
+  changeNickNameYn: string // 닉네임 변경 여부
+
 }
