@@ -151,35 +151,23 @@ export default class Commend extends Vue {
   }
 
   private onclickToCommend() {
-    if (StringUtil.isEmpty(this.token)) {
-      commonStore.ADD_DIALOG({
-        id: 'ERROR',
-        text: '로그인이 필요한 서비스입니다!'
-      })
-    } else {
-      this.$router.push({
-        name: 'commend',
-        query: {
-          currentOrderIndex: this.currentOrderIndex.toString()
-        }
-      })
-    }
+    commonStore.CHK_LOGIN()
+    this.$router.push({
+      name: 'commend',
+      query: {
+        currentOrderIndex: this.currentOrderIndex.toString()
+      }
+    })
   }
 
   private onClickToDetails(stockInfoSequence: number) {
-    if (StringUtil.isEmpty(this.token)) {
-      commonStore.ADD_DIALOG({
-        id: 'ERROR',
-        text: '로그인이 필요한 서비스입니다!'
-      })
-    } else {
-      this.$router.push({
-        name: 'detail',
-        query: {
-          stockInfoSequence: stockInfoSequence.toString()
-        }
-      })
-    }
+    commonStore.CHK_LOGIN()
+    this.$router.push({
+      name: 'detail',
+      query: {
+        stockInfoSequence: stockInfoSequence.toString()
+      }
+    })
   }
 }
 

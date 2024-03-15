@@ -3,6 +3,8 @@ import _ from 'lodash'
 import { IDialog } from '../types/common'
 import { Namespace } from '../util/Namespace'
 import { IUserDetail, IUserInfo } from '~/types/auth/auth'
+import StringUtil from '~/util/StringUtil'
+import { commonStore } from '~/util/store-accessor'
 
 export interface ICommonState {
   // locales: Array<string>
@@ -46,5 +48,16 @@ export default class CommonModule extends VuexModule implements ICommonState {
   @Mutation
   public RESET_DIALOG () {
     this.dialogs = []
+  }
+
+  @Mutation
+  public CHK_LOGIN () {
+    if (StringUtil.isEmpty(this.token)) {
+      commonStore.ADD_DIALOG({
+        id: 'ERROR',
+        text: '로그인이 필요한 서비스입니다!'
+      })
+      return false
+    }
   }
 }
