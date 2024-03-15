@@ -104,6 +104,26 @@
 
             <div class="profile-section mypage-item">
               <h4>내 관심종목</h4>
+              <s-data-table :headers="headers" :items="interestSequence" :is-search="false" :search="search">
+                <template #clpr="{item}">
+                  {{ item.clpr | setNumberComma }}
+                </template>
+                <template #fltRt="{item}">
+                  <div v-if="item.fltRt === 0">
+                    {{ item.fltRt }}
+                  </div>
+                  <div v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
+                    {{ item.fltRt }}
+                  </div>
+                </template>
+                <template #mrktTotAmt="{item}">
+                  {{ item.trqu | setNumberComma }}
+                </template>
+                <template #mrktTotAmt="{item}">
+                  {{ item.mrktTotAmt | setKoreanNumber }}
+                </template>
+              </s-data-table>
+
               <table>
                 <tr>
                   <th>종목명</th>
@@ -136,7 +156,7 @@
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import {
-  IChangePasswordReqBody, IChangePasswordRes,
+  IChangePasswordReqBody, IChangePasswordRes, IinterestSequence,
   ISelectMyInfoRes
 } from '~/types/user/user'
 import { getInterestStockItem } from '~/api/stock'
@@ -147,10 +167,13 @@ import { changePassword, login } from '~/api/auth'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
+import SDataTable from '~/components/common/SDataTable.vue'
+import { IDataTableHeader } from '~/types/common'
+import { ILongInvestment } from '~/types/home/home'
 
 const common = namespace(Namespace.COMMON)
 @Component({
-  components: { SButton, STextField },
+  components: { SDataTable, SButton, STextField },
   layout: 'empty',
 })
 export default class extends Vue {
@@ -165,10 +188,21 @@ export default class extends Vue {
     afterPassword: ''
   } as IChangePasswordReqBody
 
+  private search = ''
   private checkPwd = ''
 
   private onClickPasswordChk = 'false'
   private onClickNicknameChk = 'false'
+
+  private interestSequence = [] as Array<IinterestSequence>
+  private headers = [
+    { text: '종목명', value: 'itmsNm', align: 'center', width: 200, isSlot: false },
+    { text: '전일종가', value: 'clpr', align: 'center', width: 120, isSlot: true },
+    { text: '등락률', value: 'fltRt', align: 'center', width: 120, isSlot: true },
+    { text: '거래량', value: 'trqu', align: 'center', width: 120, isSlot: true },
+    { text: '시가총액', value: 'mrktTotAmt', align: 'center', width: 150, isSlot: true },
+  ] as Array<IDataTableHeader>
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
