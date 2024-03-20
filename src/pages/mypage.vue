@@ -58,9 +58,14 @@
                       class="new-nickname"
                       @keypress.enter.prevent="onClickChangeNickname"
                     />
-                    <s-button class="submit-button s-button" @click="onClickChangeNickname">
-                      확인
-                    </s-button>
+                    <div class="mypage-btn-wrap">
+                      <s-button class="submit-button s-button" @click="onClickChangePassword">
+                        확인
+                      </s-button>
+                      <s-button class="submit-button c-button" @click="onClickNicknameClose">
+                        취소
+                      </s-button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -96,9 +101,14 @@
                         @keypress.enter.prevent="onClickChangePassword"
                       />
                     </div>
-                    <s-button class="submit-button s-button" @click="onClickChangePassword">
-                      확인
-                    </s-button>
+                    <div class="mypage-btn-wrap">
+                      <s-button class="submit-button s-button" @click="onClickChangePassword">
+                        확인
+                      </s-button>
+                      <s-button class="submit-button c-button" @click="onClickPasswordClose">
+                        취소
+                      </s-button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -216,6 +226,14 @@ export default class myPage extends Vue {
 
   private onClickNickname() {
     this.onClickNicknameChk = 'true'
+  }
+
+  private onClickNicknameClose() {
+    this.onClickNicknameChk = 'false'
+  }
+
+  private onClickPasswordClose() {
+    this.onClickPasswordChk = 'false'
   }
 
   private async onClickChangePassword() {

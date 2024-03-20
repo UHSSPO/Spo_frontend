@@ -595,6 +595,21 @@
             align-self: flex-end;
           }
         }
+        .mypage-btn-wrap {
+          display: flex;
+          justify-content: space-between;
+          align-self: flex-end;
+          button {
+            margin: 0 2px;
+          }
+          .s-button {
+            background-color: #b2d7e6 !important;
+            color: #333333 !important;
+          }
+          .c-button {
+            background-color: #ff6961;
+          }
+        }
       }
 
 
