@@ -32,7 +32,9 @@
         <td>시가총액</td>
       </tr>
       <tr v-for="(item, idx) in interest" :key="idx">
-        <td>{{ item.itmsNm }}</td>
+        <td>
+          <a class="font-black" @click="onClickToDetails(item.stockInfoSequence)">{{ item.itmsNm }}</a>
+        </td>
         <td>{{ item.clpr | setNumberComma }}</td>
         <td v-if="item.fltRt === 0">
           {{ item.fltRt }}
@@ -57,6 +59,8 @@ import { Component, namespace, Prop, Vue } from 'nuxt-property-decorator'
 import { IInterest } from '~/types/home/home'
 import { Namespace } from '~/util/Namespace'
 import SToolTip from '~/components/common/SToolTip.vue'
+import StringUtil from '~/util/StringUtil'
+import { commonStore } from '~/util/store-accessor'
 const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
@@ -72,6 +76,18 @@ export default class Interest extends Vue {
 
   private onClickSignUp() {
     this.$router.push('/auth/sign-up')
+  }
+
+  private onClickToDetails(stockInfoSequence: number) {
+    const isCheckLogin = commonStore.CHECK_LOGIN()
+    if (isCheckLogin) {
+      this.$router.push({
+        name: 'detail',
+        query: {
+          stockInfoSequence: stockInfoSequence.toString()
+        }
+      })
+    }
   }
 }
 

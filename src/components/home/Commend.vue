@@ -151,12 +151,8 @@ export default class Commend extends Vue {
   }
 
   private onclickToCommend() {
-    if (StringUtil.isEmpty(this.token)) {
-      commonStore.ADD_DIALOG({
-        id: 'ERROR',
-        text: '로그인이 필요한 서비스입니다!'
-      })
-    } else {
+    const isCheckLogin = commonStore.CHECK_LOGIN()
+    if (isCheckLogin) {
       this.$router.push({
         name: 'commend',
         query: {
@@ -167,12 +163,8 @@ export default class Commend extends Vue {
   }
 
   private onClickToDetails(stockInfoSequence: number) {
-    if (StringUtil.isEmpty(this.token)) {
-      commonStore.ADD_DIALOG({
-        id: 'ERROR',
-        text: '로그인이 필요한 서비스입니다!'
-      })
-    } else {
+    const isCheckLogin = commonStore.CHECK_LOGIN()
+    if (isCheckLogin) {
       this.$router.push({
         name: 'detail',
         query: {
