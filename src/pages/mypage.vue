@@ -4,29 +4,29 @@
       <div class="rankWrap">
         <div class="commendWrap w-100">
           <div class="mypage-main">
-            <div class="profile-section ">
+            <div class="profile-section">
               <h4>내 정보</h4>
               <div class="profile-info">
                 <div class="profile-wrap">
                   <div class="profile-item">
                     <span class="item-label">닉네임:</span>
-                    <span id="nickname" class="item-value">{{ userinfo.nickName }}</span>
+                    <span id="nickname" class="item-value">{{ userInfo.nickName }}</span>
                   </div>
                   <div class="profile-item">
                     <span class="item-label">투자성향:</span>
-                    <span id="investment-preference" class="item-value">{{ userinfo.investPropensity }}</span>
+                    <span id="investment-preference" class="item-value">{{ userInfo.investPropensity }}</span>
                   </div>
                   <div class="profile-item">
                     <span class="item-label">가입일:</span>
-                    <span id="join-date" class="item-value">{{ userinfo.createdAt | dateTimeString }}</span>
+                    <span id="join-date" class="item-value">{{ userInfo.createdAt | dateTimeString }}</span>
                   </div>
                   <div class="profile-item">
                     <span class="item-label">생년월일:</span>
-                    <span id="birthdate" class="item-value">{{ userinfo.dateOfBirth }}</span>
+                    <span id="birthdate" class="item-value">{{ userInfo.dateOfBirth }}</span>
                   </div>
                   <div class="profile-item">
                     <span class="item-label">이메일:</span>
-                    <span id="email" class="item-value">{{ userinfo.email }}</span>
+                    <span id="email" class="item-value">{{ userInfo.email }}</span>
                   </div>
                 </div>
                 <div class="profile-wrap profile-grad-wrap">
@@ -106,7 +106,7 @@
 
             <div class="profile-section mypage-item">
               <h4>내 관심종목</h4>
-              <s-data-table :headers="headers" :items="interestSequence" :is-search="false" :search="search">
+              <s-data-table v-if="userInfo.interestStock" :headers="headers" :items="userInfo.interestStock" :is-search="false">
                 <template #clpr="{item}">
                   {{ item.clpr | setNumberComma }}
                 </template>
@@ -118,35 +118,13 @@
                     {{ item.fltRt }}
                   </div>
                 </template>
-                <template #mrktTotAmt="{item}">
+                <template #trqu="{item}">
                   {{ item.trqu | setNumberComma }}
                 </template>
                 <template #mrktTotAmt="{item}">
                   {{ item.mrktTotAmt | setKoreanNumber }}
                 </template>
               </s-data-table>
-
-              <table>
-                <tr>
-                  <th>종목명</th>
-                  <th>전일종가</th>
-                  <th>등락률</th>
-                  <th>거래량</th>
-                  <th>시가총액</th>
-                </tr>
-                <tr v-for="(item, idx) in userinfo.interestStock" :key="idx">
-                  <th>{{ item.itmsNm }}</th>
-                  <th>{{ item.clpr | setNumberComma }}</th>
-                  <th v-if="item.fltRt === 0">
-                    {{ item.fltRt }}
-                  </th>
-                  <th v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
-                    {{ item.fltRt }}
-                  </th>
-                  <th>{{ item.trqu | setNumberComma }}</th>
-                  <th>{{ item.mrktTotAmt | setKoreanNumber }}</th>
-                </tr>
-              </table>
             </div>
           </div>
         </div>
@@ -160,32 +138,30 @@ import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import {
   IChangeNickNameReqBody,
   IChangeNickNameRes,
-  IChangePasswordReqBody, IChangePasswordRes, IinterestSequence,
+  IChangePasswordReqBody, IChangePasswordRes,
   ISelectMyInfoRes
 } from '~/types/user/user'
-import { getInterestStockItem } from '~/api/stock'
+import { getMyInfo } from '~/api/user'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
-import { IUserInfo } from '~/types/auth/auth'
-import { changeNickname, changePassword, login } from '~/api/auth'
+import { changeNickname, changePassword } from '~/api/auth'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDataTable from '~/components/common/SDataTable.vue'
 import { IDataTableHeader } from '~/types/common'
-import { ILongInvestment } from '~/types/home/home'
 
 const common = namespace(Namespace.COMMON)
 @Component({
-  components: { SDataTable, SButton, STextField },
   layout: 'empty',
+  components: { SDataTable, SButton, STextField },
 })
-export default class extends Vue {
+export default class myPage extends Vue {
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
-  private userinfo = {} as ISelectMyInfoRes
-  private userinfoSequence = 0
+  private userInfo = {} as ISelectMyInfoRes
+  private userInfoSequence = 0
 
   private formData = {
     beforePassword: '',
@@ -196,13 +172,11 @@ export default class extends Vue {
     changeNickName: ''
   } as IChangeNickNameReqBody
 
-  private search = ''
   private checkPwd = ''
 
   private onClickPasswordChk = 'false'
   private onClickNicknameChk = 'false'
 
-  private interestSequence = [] as Array<IinterestSequence>
   private headers = [
     { text: '종목명', value: 'itmsNm', align: 'center', width: 200, isSlot: false },
     { text: '전일종가', value: 'clpr', align: 'center', width: 120, isSlot: true },
@@ -215,16 +189,22 @@ export default class extends Vue {
    * Life Cycle
    ********************************************************************************/
   async created() {
-    this.userinfoSequence = commonStore.userInfo.userSequence
-    await this.getInterestStockItem()
+    await this.initGetMyInfo()
   }
 
-  //
-  private async getInterestStockItem() {
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
+  private async initGetMyInfo() {
+    this.userInfoSequence = commonStore.userInfo.userSequence
+    await this.getMyInfo()
+  }
+
+  private async getMyInfo() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    this.userinfo = await getInterestStockItem(this.userinfoSequence)
+    this.userInfo = await getMyInfo()
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
@@ -245,7 +225,7 @@ export default class extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    const response: IChangePasswordRes = await changePassword(this.formData, this.userinfoSequence)
+    const response: IChangePasswordRes = await changePassword(this.formData, this.userInfoSequence)
     if (StringUtil.isNotEmpty(response)) {
       if (response.changePasswordYn === 'Y') {
         commonStore.ADD_DIALOG({
@@ -269,7 +249,7 @@ export default class extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    const response: IChangeNickNameRes = await changeNickname(this.nicknameData, this.userinfoSequence)
+    const response: IChangeNickNameRes = await changeNickname(this.nicknameData, this.userInfoSequence)
     if (StringUtil.isNotEmpty(response)) {
       if (response.changeNickNameYn === 'Y') {
         commonStore.ADD_DIALOG({

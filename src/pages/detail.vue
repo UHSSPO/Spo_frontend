@@ -181,7 +181,6 @@ import { getDetail } from '~/api/stock'
 import SLineChart from '~/components/common/SLineChart.vue'
 import ChartUtil from '~/util/ChartUtil'
 import BarChartUtil from '~/util/BarChartUtil'
-import { commonStore } from '~/util/store-accessor'
 
 @Component({
   layout: 'empty',
