@@ -4,29 +4,29 @@
       <div class="rankWrap">
         <div class="commendWrap w-100">
           <div class="mypage-main">
-            <div class="profile-section ">
+            <div class="profile-section">
               <h4>내 정보</h4>
               <div class="profile-info">
                 <div class="profile-wrap">
                   <div class="profile-item">
                     <span class="item-label">닉네임:</span>
-                    <span id="nickname" class="item-value">{{ userinfo.nickName }}</span>
+                    <span id="nickname" class="item-value">{{ userInfo.nickName }}</span>
                   </div>
                   <div class="profile-item">
                     <span class="item-label">투자성향:</span>
-                    <span id="investment-preference" class="item-value">{{ userinfo.investPropensity }}</span>
+                    <span id="investment-preference" class="item-value">{{ userInfo.investPropensity }}</span>
                   </div>
                   <div class="profile-item">
                     <span class="item-label">가입일:</span>
-                    <span id="join-date" class="item-value">{{ userinfo.createdAt | dateTimeString }}</span>
+                    <span id="join-date" class="item-value">{{ userInfo.createdAt | dateTimeString }}</span>
                   </div>
                   <div class="profile-item">
                     <span class="item-label">생년월일:</span>
-                    <span id="birthdate" class="item-value">{{ userinfo.dateOfBirth }}</span>
+                    <span id="birthdate" class="item-value">{{ userInfo.dateOfBirth }}</span>
                   </div>
                   <div class="profile-item">
                     <span class="item-label">이메일:</span>
-                    <span id="email" class="item-value">{{ userinfo.email }}</span>
+                    <span id="email" class="item-value">{{ userInfo.email }}</span>
                   </div>
                 </div>
                 <div class="profile-wrap profile-grad-wrap">
@@ -51,10 +51,12 @@
                   <div class="nickname-wrap">
                     <h4>닉네임 변경</h4>
                     <s-text-field
+                      v-model="nicknameData.changeNickName"
                       label="변경 할 닉네임"
                       :required="true"
                       type="text"
                       class="new-nickname"
+                      @keypress.enter.prevent="onClickChangeNickname"
                     />
                     <div class="mypage-btn-wrap">
                       <s-button class="submit-button s-button" @click="onClickChangePassword">
@@ -114,27 +116,25 @@
 
             <div class="profile-section mypage-item">
               <h4>내 관심종목</h4>
-              <table>
-                <tr>
-                  <th>종목명</th>
-                  <th>전일종가</th>
-                  <th>등락률</th>
-                  <th>거래량</th>
-                  <th>시가총액</th>
-                </tr>
-                <tr v-for="(item, idx) in userinfo.interestStock" :key="idx">
-                  <th>{{ item.itmsNm }}</th>
-                  <th>{{ item.clpr | setNumberComma }}</th>
-                  <th v-if="item.fltRt === 0">
+              <s-data-table v-if="userInfo.interestStock" :headers="headers" :items="userInfo.interestStock" :is-search="false">
+                <template #clpr="{item}">
+                  {{ item.clpr | setNumberComma }}
+                </template>
+                <template #fltRt="{item}">
+                  <div v-if="item.fltRt === 0">
                     {{ item.fltRt }}
-                  </th>
-                  <th v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
+                  </div>
+                  <div v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
                     {{ item.fltRt }}
-                  </th>
-                  <th>{{ item.trqu | setNumberComma }}</th>
-                  <th>{{ item.mrktTotAmt | setKoreanNumber }}</th>
-                </tr>
-              </table>
+                  </div>
+                </template>
+                <template #trqu="{item}">
+                  {{ item.trqu | setNumberComma }}
+                </template>
+                <template #mrktTotAmt="{item}">
+                  {{ item.mrktTotAmt | setKoreanNumber }}
+                </template>
+              </s-data-table>
             </div>
           </div>
         </div>
@@ -146,53 +146,75 @@
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import {
+  IChangeNickNameReqBody,
+  IChangeNickNameRes,
   IChangePasswordReqBody, IChangePasswordRes,
   ISelectMyInfoRes
 } from '~/types/user/user'
-import { getInterestStockItem } from '~/api/stock'
+import { getMyInfo } from '~/api/user'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
-import { IUserInfo } from '~/types/auth/auth'
-import { changePassword, login } from '~/api/auth'
+import { changeNickname, changePassword } from '~/api/auth'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
+import SDataTable from '~/components/common/SDataTable.vue'
+import { IDataTableHeader } from '~/types/common'
 
 const common = namespace(Namespace.COMMON)
 @Component({
-  components: { SButton, STextField },
   layout: 'empty',
+  components: { SDataTable, SButton, STextField },
 })
-export default class extends Vue {
+export default class myPage extends Vue {
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
-  private userinfo = {} as ISelectMyInfoRes
-  private userinfoSequence = 0
+  private userInfo = {} as ISelectMyInfoRes
+  private userInfoSequence = 0
 
   private formData = {
     beforePassword: '',
     afterPassword: ''
   } as IChangePasswordReqBody
 
+  private nicknameData = {
+    changeNickName: ''
+  } as IChangeNickNameReqBody
+
   private checkPwd = ''
 
   private onClickPasswordChk = 'false'
   private onClickNicknameChk = 'false'
+
+  private headers = [
+    { text: '종목명', value: 'itmsNm', align: 'center', width: 200, isSlot: false },
+    { text: '전일종가', value: 'clpr', align: 'center', width: 120, isSlot: true },
+    { text: '등락률', value: 'fltRt', align: 'center', width: 120, isSlot: true },
+    { text: '거래량', value: 'trqu', align: 'center', width: 120, isSlot: true },
+    { text: '시가총액', value: 'mrktTotAmt', align: 'center', width: 150, isSlot: true },
+  ] as Array<IDataTableHeader>
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
   async created() {
-    this.userinfoSequence = commonStore.userInfo.userSequence
-    await this.getInterestStockItem()
+    await this.initGetMyInfo()
   }
 
-  //
-  private async getInterestStockItem() {
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
+  private async initGetMyInfo() {
+    this.userInfoSequence = commonStore.userInfo.userSequence
+    await this.getMyInfo()
+  }
+
+  private async getMyInfo() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    this.userinfo = await getInterestStockItem(this.userinfoSequence)
+    this.userInfo = await getMyInfo()
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
@@ -221,12 +243,36 @@ export default class extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    const response: IChangePasswordRes = await changePassword(this.formData, this.userinfoSequence)
+    const response: IChangePasswordRes = await changePassword(this.formData, this.userInfoSequence)
     if (StringUtil.isNotEmpty(response)) {
       if (response.changePasswordYn === 'Y') {
         commonStore.ADD_DIALOG({
           id: 'CHANGE PASSWORD',
           text: '비밀번호가 변경됐습니다.',
+          callback: () => {
+            this.$router.push('/')
+          }
+        })
+      }
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
+  }
+
+  private async onClickChangeNickname() {
+    if (StringUtil.isEmpty(this.nicknameData.changeNickName)) {
+      return false
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    const response: IChangeNickNameRes = await changeNickname(this.nicknameData, this.userInfoSequence)
+    if (StringUtil.isNotEmpty(response)) {
+      if (response.changeNickNameYn === 'Y') {
+        commonStore.ADD_DIALOG({
+          id: 'CHANGE NICKNAME',
+          text: '닉네임이 변경됐습니다.',
           callback: () => {
             this.$router.push('/')
           }

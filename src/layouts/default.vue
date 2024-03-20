@@ -6,39 +6,58 @@
       <v-navigation-drawer v-model="appBarOpener" absolute temporary>
         <v-list nav dense>
           <v-list-item>
-            <v-list-item-title @click="appBarLink('menuHome')">
+            <v-list-item-title @click="movePage('home')">
               홈
             </v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="appBarLink('menuRecommend')">
+            <v-list-item-title @click="movePage('commend')">
               추천
             </v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="appBarLink('menuAssay')">
+            <v-list-item-title @click="movePage('')">
               성향분석
             </v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="appBarLink('menuSelfRecommend')">
+            <v-list-item-title @click="movePage('')">
               개인추천
             </v-list-item-title>
           </v-list-item>
 
-          <div class="header_mobile_form">
+          <div v-if="StringUtil.isEmpty(token)" class="header_mobile_form">
             <v-list-item>
-              <v-list-item-title @click="appBarLink('menuLogin')">
+              <v-list-item-title @click="onclickToLogin">
                 로그인
               </v-list-item-title>
             </v-list-item>
 
             <v-list-item>
-              <v-list-item-title @click="appBarLink('menuJoin')">
+              <v-list-item-title @click="goToSignUp">
                 회원가입
+              </v-list-item-title>
+            </v-list-item>
+          </div>
+          <div v-else class="header_mobile_form">
+            <v-list-item>
+              <v-list-item-title @click="onClickLogout">
+                로그아웃
+              </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-title @click="onClickMypage(userInfo.userSequence)">
+                마이페이지
+              </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item v-if="userInfo.userRole === 'ADM'">
+              <v-list-item-title @click="goToSignUp">
+                관리자페이지
               </v-list-item-title>
             </v-list-item>
           </div>

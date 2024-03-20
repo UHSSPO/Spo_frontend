@@ -77,11 +77,11 @@
                     <span class="detail-value">{{ stockInfo.enterpriseCategories?.salesGrowthRate | setNumberComma }}</span>
                   </li>
                   <li class="detail-item">
-                    <span class="detail-title">per</span>
+                    <span class="detail-title">PER</span>
                     <span class="detail-value">{{ stockInfo.enterpriseCategories?.per | setNumberComma }}</span>
                   </li>
                   <li class="detail-item">
-                    <span class="detail-title">pbr</span>
+                    <span class="detail-title">PBR</span>
                     <span class="detail-value">{{ stockInfo.enterpriseCategories?.pbr | setNumberComma }}</span>
                   </li>
                   <li class="detail-item">
@@ -101,11 +101,11 @@
                     <span class="detail-value">{{ stockInfo.enterpriseCategories?.roa | setNumberComma }}</span>
                   </li>
                   <li class="detail-item moblie-last">
-                    <span class="detail-title">시가총액 기준</span>
-                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.volumeRatio | setNumberComma }}</span>
+                    <span class="detail-title">시가총액 변화 비율</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.changeMarketGap | setNumberComma }}</span>
                   </li>
                   <li class="detail-item moblie-last">
-                    <span class="detail-title">거래대금 비율</span>
+                    <span class="detail-title">시가총액 기준 거래대금 비율</span>
                     <span class="detail-value">{{ stockInfo.enterpriseCategories?.volumeRatio | setNumberComma }}</span>
                   </li>
                 </ul>
@@ -181,7 +181,6 @@ import { getDetail } from '~/api/stock'
 import SLineChart from '~/components/common/SLineChart.vue'
 import ChartUtil from '~/util/ChartUtil'
 import BarChartUtil from '~/util/BarChartUtil'
-import { commonStore } from '~/util/store-accessor'
 
 @Component({
   layout: 'empty',
