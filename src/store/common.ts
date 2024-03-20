@@ -35,29 +35,30 @@ export default class CommonModule extends VuexModule implements ICommonState {
 
   // 대화상자
   @Mutation
-  public ADD_DIALOG (dialog: IDialog) {
+  public ADD_DIALOG(dialog: IDialog) {
     // 중복 메시지는 제외
     if (!_.find(this.dialogs, (item: any) => item.id === dialog.id)) { this.dialogs.push(dialog) }
   }
 
   @Mutation
-  public REMOVE_DIALOG (index: number) {
+  public REMOVE_DIALOG(index: number) {
     this.dialogs.splice(index, 1)
   }
 
   @Mutation
-  public RESET_DIALOG () {
+  public RESET_DIALOG() {
     this.dialogs = []
   }
 
   @Mutation
-  public CHK_LOGIN () {
+  public CHECK_LOGIN() {
     if (StringUtil.isEmpty(this.token)) {
       commonStore.ADD_DIALOG({
         id: 'ERROR',
         text: '로그인이 필요한 서비스입니다!'
       })
-      return false
+    } else {
+      return true
     }
   }
 }

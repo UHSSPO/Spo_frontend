@@ -151,23 +151,27 @@ export default class Commend extends Vue {
   }
 
   private onclickToCommend() {
-    commonStore.CHK_LOGIN()
-    this.$router.push({
-      name: 'commend',
-      query: {
-        currentOrderIndex: this.currentOrderIndex.toString()
-      }
-    })
+    const isCheckLogin = commonStore.CHECK_LOGIN()
+    if (isCheckLogin) {
+      this.$router.push({
+        name: 'commend',
+        query: {
+          currentOrderIndex: this.currentOrderIndex.toString()
+        }
+      })
+    }
   }
 
   private onClickToDetails(stockInfoSequence: number) {
-    commonStore.CHK_LOGIN()
-    this.$router.push({
-      name: 'detail',
-      query: {
-        stockInfoSequence: stockInfoSequence.toString()
-      }
-    })
+    const isCheckLogin = commonStore.CHECK_LOGIN()
+    if (isCheckLogin) {
+      this.$router.push({
+        name: 'detail',
+        query: {
+          stockInfoSequence: stockInfoSequence.toString()
+        }
+      })
+    }
   }
 }
 

@@ -79,13 +79,15 @@ export default class Interest extends Vue {
   }
 
   private onClickToDetails(stockInfoSequence: number) {
-    commonStore.CHK_LOGIN()
-    this.$router.push({
-      name: 'detail',
-      query: {
-        stockInfoSequence: stockInfoSequence.toString()
-      }
-    })
+    const isCheckLogin = commonStore.CHECK_LOGIN()
+    if (isCheckLogin) {
+      this.$router.push({
+        name: 'detail',
+        query: {
+          stockInfoSequence: stockInfoSequence.toString()
+        }
+      })
+    }
   }
 }
 
