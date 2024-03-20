@@ -45,7 +45,7 @@
               </div>
             </div>
 
-            <div v-if="onClickNicknameChk === 'true'" class="profile-section change-wrap nickname-change-wrap">
+            <div v-if="isNicknameCheck" class="profile-section change-wrap nickname-change-wrap">
               <div class="field-form">
                 <div class="form-wrap">
                   <div class="nickname-wrap">
@@ -59,10 +59,10 @@
                       @keypress.enter.prevent="onClickChangeNickname"
                     />
                     <div class="mypage-btn-wrap">
-                      <s-button class="submit-button s-button" @click="onClickChangePassword">
+                      <s-button class="submit-button s-button" @click="onClickChangeNickname">
                         확인
                       </s-button>
-                      <s-button class="submit-button c-button" @click="onClickNicknameClose">
+                      <s-button class="submit-button c-button" @click="onClickNickname">
                         취소
                       </s-button>
                     </div>
@@ -70,7 +70,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="onClickPasswordChk === 'true'" class="profile-section change-wrap password-change-wrap">
+            <div v-if="isPasswordCheck" class="profile-section change-wrap password-change-wrap">
               <div class="field-form">
                 <div class="form-wrap">
                   <div class="password-wrap">
@@ -105,7 +105,7 @@
                       <s-button class="submit-button s-button" @click="onClickChangePassword">
                         확인
                       </s-button>
-                      <s-button class="submit-button c-button" @click="onClickPasswordClose">
+                      <s-button class="submit-button c-button" @click="onClickPassword">
                         취소
                       </s-button>
                     </div>
@@ -184,8 +184,8 @@ export default class myPage extends Vue {
 
   private checkPwd = ''
 
-  private onClickPasswordChk = 'false'
-  private onClickNicknameChk = 'false'
+  private isPasswordCheck = false
+  private isNicknameCheck = false
 
   private headers = [
     { text: '종목명', value: 'itmsNm', align: 'center', width: 200, isSlot: false },
@@ -221,19 +221,11 @@ export default class myPage extends Vue {
   }
 
   private onClickPassword() {
-    this.onClickPasswordChk = 'true'
+    this.isPasswordCheck = !this.isPasswordCheck
   }
 
   private onClickNickname() {
-    this.onClickNicknameChk = 'true'
-  }
-
-  private onClickNicknameClose() {
-    this.onClickNicknameChk = 'false'
-  }
-
-  private onClickPasswordClose() {
-    this.onClickPasswordChk = 'false'
+    this.isNicknameCheck = !this.isNicknameCheck
   }
 
   private async onClickChangePassword() {

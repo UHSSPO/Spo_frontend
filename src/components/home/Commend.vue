@@ -147,8 +147,8 @@ export default class Commend extends Vue {
   }
 
   private onclickToCommend() {
-    const isCheckLogin = commonStore.CHECK_LOGIN()
-    if (isCheckLogin) {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
       this.$router.push({
         name: 'commend',
         query: {
@@ -159,8 +159,8 @@ export default class Commend extends Vue {
   }
 
   private onClickToDetails(stockInfoSequence: number) {
-    const isCheckLogin = commonStore.CHECK_LOGIN()
-    if (isCheckLogin) {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
       this.$router.push({
         name: 'detail',
         query: {
