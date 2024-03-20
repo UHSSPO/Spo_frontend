@@ -1,4 +1,4 @@
-export interface IinterestSequence {
+export interface IInterestStock {
   stockInfoSequence: number; // 종목 정보 일련번호
   itmsNm: string; // 종목명
   clpr: number; // 종가
@@ -15,7 +15,7 @@ export interface ISelectMyInfoRes {
   userRole: string; // 유저 권한
   nickName: string; // 닉네임
   dateOfBirth: string; // 생년월일
-  interestStock:Array<IinterestSequence>
+  interestStock: Array<IInterestStock>
 }
 
 export interface IChangePasswordReqBody {
@@ -23,6 +23,15 @@ export interface IChangePasswordReqBody {
   afterPassword: string; // 변경 비밀번호
 }
 
+export interface IChangeNickNameReqBody {
+  changeNickName: string; // 변경 닉네임
+}
+
 export interface IChangePasswordRes {
-  changePasswordYn: string // 비밀번호 변 여부
+  changePasswordYn: string // 비밀번호 변경 여부
+}
+
+export interface IChangeNickNameRes {
+  changeNickNameYn: string // 닉네임 변경 여부
+
 }
