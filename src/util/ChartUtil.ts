@@ -11,7 +11,16 @@ export default class ChartUtil {
       maintainAspectRatio: false,
       tooltips: {
         mode: 'nearest',
-        intersect: false
+        intersect: false,
+        callbacks: {
+          label: function(tooltipItem: any, data: any) {
+            let value = tooltipItem.yLabel
+            if (value >= 1000) {
+              value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+            }
+            return value
+          }
+        }
       },
       scales: {
         xAxes: [
