@@ -154,24 +154,24 @@
       justify-content: center;
       align-items: center;
     }
-    .rankWrap {
+    .rank-wrap {
       display: flex;
       justify-content: space-between;
       padding: 20px;
-      .popularityWrap {
+      .popularity-wrap {
         h3 {
           height: 45px;
           padding: 10px;
         }
       }
-      .commendRank {
+      .commend-rank {
         tr:last-child {
           td{
             height: 50px;
           }
         }
       }
-      .commendWrap, .popularityWrap, .interestWrap {
+      .commend-wrap, .popularity-wrap, .interest-wrap {
         .commend-main-title {
           height: 150px;
           display: flex;
@@ -266,7 +266,7 @@
           }
         }
       }
-      .interestWrap {
+      .interest-wrap {
         width: 68%;
         margin: 0 1%;
         .blank{
@@ -314,14 +314,14 @@
       }
     }
   }
-  .exploreWrap {
+  .explore-wrap {
     width: 28%;
     margin: 0 1%;
     overflow: hidden;
-    .exploreItem {
+    .explore-item {
       display: flex;
       justify-content: space-between;
-      .exploreBtn {
+      .explore-btn {
         button {
           border: 1px solid $line-color;
           padding: 2px;
@@ -342,7 +342,7 @@
         p{
           color: #ffffff;
         }
-        .exploreListTile {
+        .explore-list-title {
           font-weight: bold;
           font-size: 1.2em;
         }
@@ -373,19 +373,19 @@
       content: '+'
     }
   }
-  .boardWrap {
+  .board-wrap {
     width: 68%;
     margin: 0 1%;
     padding: 10px 0;
-    .boardListWrap {
+    .board-list-wrap {
       margin: 10px 0;
       width: 100%;
       text-align: center;
       padding: 0;
-      > .boardList {
+      > .board-list {
         border-bottom: 1px solid $line-color;
         border-top: 1px solid $line-color;
-        .boardListWrap {
+        .board-list-wrap {
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -394,7 +394,7 @@
           p {
             margin: 0;
           }
-          .boardListThird {
+          .board-listThird {
             text-align: left;
             width: 310px;
             overflow:hidden;
@@ -402,7 +402,7 @@
             white-space:nowrap;
           }
         }
-        .boardListWrap:last-child {
+        .board-list-wrap:last-child {
           border: 0;
         }
       }
@@ -415,16 +415,16 @@
     }
   }
 
-  .detailsWarp {
+  .details-warp {
     width: 70%;
     margin: 0 auto;
-    .detailsWarpTitle {
+    .details-warp-title {
       display: flex;
       justify-content: space-between;
       width: 100%;
       padding: 50px 0;
 
-      .chartWrap {
+      .chart-wrap {
         width: 30%;
         .chart {
           height: 100px;
@@ -432,8 +432,8 @@
         }
       }
     }
-    .detailsContent {
-      .detailsContentItem {
+    .details-content {
+      .details-content-item {
         margin-bottom: 50px;
         h3{
           font-weight: bold;
@@ -473,7 +473,7 @@
             border-bottom: 0;
           }
         }
-        .detailsInfoWrap {
+        .detail-Info-wrap {
           margin: 10px 0;
           li {
             display: flex;
@@ -482,7 +482,7 @@
             p {
               margin: 0;
             }
-            .detailsInfoTitle {
+            .detail-info-title {
               width: 15%;
             }
 
@@ -981,10 +981,10 @@
     .content {
       width: 100%;
       overflow: hidden;
-      .rankWrap {
+      .rank-wrap {
         display: block;
         padding: 0;
-        .commendWrap, .popularityWrap, .interestWrap, .exploreWrap, .boardWrap{
+        .commend-wrap, .popularity-wrap, .interest-wrap, .explore-wrap, .board-wrap{
           .commend-main-title {
             i {
               font-size: 30px;
@@ -996,7 +996,7 @@
               font-size: 1.1em
             }
           }
-          .detailsWarp {
+          .details-warp {
             width: 100%;
             .detail-item {
               width: 50%;
@@ -1007,7 +1007,7 @@
           }
           width: 100%;
           padding: 20px;
-          .boardListThird {
+          .board-listThird {
             width: 200px !important;
           }
 

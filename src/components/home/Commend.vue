@@ -1,5 +1,5 @@
 <template>
-  <div class="commendWrap">
+  <div class="commend-wrap">
     <div class="commend-wrap-tit">
       <div class="commend-title-wrap">
         <h3>추천 종목</h3>
@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <table v-if="currentOrder === 'short'" class="commendRank">
+    <table v-if="currentOrder === 'short'" class="commend-rank">
       <tr>
         <td />
         <td>종목명</td>
@@ -48,7 +48,7 @@
         </td>
       </tr>
     </table>
-    <table v-else-if="currentOrder === 'long'" class="commendRank">
+    <table v-else-if="currentOrder === 'long'" class="commend-rank">
       <tr>
         <td />
         <td>종목명</td>

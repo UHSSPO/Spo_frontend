@@ -1,8 +1,15 @@
 <template>
   <div id="container" class="line">
     <div class="content dynamic-layout">
-      <div class="rankWrap">
-        <div class="commendWrap w-100">
+      <div class="rank-wrap">
+        <div class="commend-wrap w-100">
+          <div class="commend-main-title">
+            <div class="commend-main-area">
+              <div class="commend-main-txt">
+                프로필을 수정하거나 관심종목을 볼수있는 마이페이지에요. 🙈🙉
+              </div>
+            </div>
+          </div>
           <div class="mypage-main">
             <div class="profile-section">
               <h4>내 정보</h4>
