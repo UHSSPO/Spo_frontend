@@ -4,11 +4,7 @@
     :label="label"
     :rules="localRules"
     :required="required"
-    :disabled="disabled"
-    :single-line="singleLine"
-    :hide-details="hideDetails"
-    :append-icon="appendIcon ? 'mdi-close-circle' : ''"
-    value="This is clearable text."
+    :min-length="minLength"
     @change="onChange"
     @input="onInput"
     @keypress="onkeypress"
@@ -25,12 +21,9 @@ import StringUtil from '../../util/StringUtil'
 export default class STextArea extends Vue {
   @Prop() label?: string
   @Prop({ type: Array, default: () => [] }) rules?: Array<Function>
-  @Prop() value!: string
   @Prop({ default: false }) required?: boolean
   @Prop() maxLength?: number
   @Prop() disabled?: boolean
-  @Prop({ default: false }) singleLine?: boolean
-  @Prop({ default: false }) hideDetails?: boolean
   @Prop({ default: false }) appendIcon?: boolean
   @Prop() placeholder?: string
   @Prop() private readonly counter?: number
@@ -87,6 +80,12 @@ export default class STextArea extends Vue {
           }
         ]
       }
+      // 최대 길이 체크
+      if (this.counter || this.maxLength) {
+        const maxLength = this.counter ? this.counter : (this.maxLength as number)
+        this.localRules.push((value: string) => (value || '').length <= maxLength || maxLength + '자로 입력해 주세요.')
+      }
+
       // 최소 길이 체크
       if (StringUtil.isNotEmpty(this.minLength)) {
         this.localRules.push((value: string) => (value || '').length >= (this.minLength as number) || this.minLength + '자 이상 입력해 주세요')
