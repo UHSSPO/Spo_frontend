@@ -2,9 +2,16 @@
   <v-textarea
     v-model="localValue"
     :label="label"
+    :type="type"
     :rules="localRules"
     :required="required"
-    :min-length="minLength"
+    :maxlength="maxLength"
+    :disabled="disabled"
+    :placeholder="placeholder"
+    :single-line="singleLine"
+    :outlined="!singleLine"
+    :hide-details="hideDetails"
+    :append-icon="appendIcon ? 'mdi-magnify' : ''"
     @change="onChange"
     @input="onInput"
     @keypress="onkeypress"
@@ -20,10 +27,14 @@ import StringUtil from '../../util/StringUtil'
 })
 export default class STextArea extends Vue {
   @Prop() label?: string
+  @Prop({ type: String, default: 'text' }) type?: string
   @Prop({ type: Array, default: () => [] }) rules?: Array<Function>
+  @Prop() value!: string
   @Prop({ default: false }) required?: boolean
   @Prop() maxLength?: number
   @Prop() disabled?: boolean
+  @Prop({ default: false }) singleLine?: boolean
+  @Prop({ default: false }) hideDetails?: boolean
   @Prop({ default: false }) appendIcon?: boolean
   @Prop() placeholder?: string
   @Prop() private readonly counter?: number
