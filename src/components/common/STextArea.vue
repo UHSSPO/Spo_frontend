@@ -2,7 +2,6 @@
   <v-textarea
     v-model="localValue"
     :label="label"
-    :type="type"
     :rules="localRules"
     :required="required"
     :maxlength="maxLength"
@@ -28,7 +27,6 @@ import StringUtil from '../../util/StringUtil'
 export default class STextArea extends Vue {
   @Prop() label?: string
   @Prop({ type: String, default: 'text' }) type?: string
-  @Prop({ type: Array, default: () => [] }) rules?: Array<Function>
   @Prop() value!: string
   @Prop({ default: false }) required?: boolean
   @Prop() maxLength?: number
