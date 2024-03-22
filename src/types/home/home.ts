@@ -19,7 +19,6 @@ export interface IThemeStockInfo {
   itmsNm: string // 주식명
   clpr: number // 종가
   fltRt: number // 등락률
-  trqu: number // 거래량
   mrktTotAmt: number // 시가총액
 }
 export interface ITheme{

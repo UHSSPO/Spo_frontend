@@ -22,7 +22,11 @@
         </p>
       </li>
       <li v-for="(item, index) in theme.highViews" :key="index">
-        <p>{{ item.itmsNm }}</p>
+        <a class="font-black" @click="onClickToDetails(item.stockInfoSequence)">
+          <p>
+            {{ item.itmsNm }}
+          </p>
+        </a>
         <span>{{ item.clpr | setNumberComma }}</span>
         <span v-if="item.fltRt === 0">
           {{ item.fltRt }}
@@ -71,9 +75,13 @@
 
 <script lang="ts">
 
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { Component, namespace, Prop, Vue } from 'nuxt-property-decorator'
 import { IMarketIndex, ITheme, IThemeStockInfo } from '~/types/home/home'
 import SButton from '~/components/common/SButton.vue'
+import StringUtil from '~/util/StringUtil'
+import { commonStore } from '~/util/store-accessor'
+import { Namespace } from '~/util/Namespace'
+const common = namespace(Namespace.COMMON)
 
 @Component({
   layout: 'empty',
@@ -84,7 +92,7 @@ export default class Explore extends Vue {
    * Properties
    ********************************************************************************/
   @Prop() private readonly theme!: ITheme
-
+  @common.State private token!: string
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
@@ -100,6 +108,22 @@ export default class Explore extends Vue {
       this.currentOrderIndex = (this.currentOrderIndex + 1) % this.orders.length
     } else if (direction === 'prev') {
       this.currentOrderIndex = (this.currentOrderIndex - 1 + this.orders.length) % this.orders.length
+    }
+  }
+
+  private onClickToDetails(stockInfoSequence: number) {
+    if (StringUtil.isEmpty(this.token)) {
+      commonStore.ADD_DIALOG({
+        id: 'ERROR',
+        text: '로그인이 필요한 서비스입니다!'
+      })
+    } else {
+      this.$router.push({
+        name: 'detail',
+        query: {
+          stockInfoSequence: stockInfoSequence.toString()
+        }
+      })
     }
   }
 }
