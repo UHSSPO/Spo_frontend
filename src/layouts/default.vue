@@ -253,7 +253,10 @@ export default class extends Vue {
   }
 
   private movePage(page: string) {
-    this.$router.push(`/${page}`)
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.$router.push(`/${page}`)
+    }
   }
 
   private onCloseDialog(value: IDialogResult) {
