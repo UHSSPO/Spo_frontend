@@ -423,7 +423,19 @@
       justify-content: space-between;
       width: 100%;
       padding: 50px 0;
+    .details-warp-invest {
+      font-weight: bold;
 
+      span {
+        .plus {
+          color: red;
+        }
+
+        .minus {
+          color: blue;
+        }
+      }
+    }
       .chart-wrap {
         width: 30%;
         .chart {
