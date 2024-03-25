@@ -287,8 +287,9 @@ export default class extends Vue {
   }
 
   private searchStock() {
+    const lowerCaseSearch = this.search.toLowerCase()
     this.searchStockValue = _.filter(this.stock, (item: ISearchStockInfo) => {
-      return item.itmsNm.includes(this.search)
+      return item.itmsNm.toLowerCase().includes(lowerCaseSearch)
     })
   }
 
