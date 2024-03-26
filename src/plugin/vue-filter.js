@@ -58,3 +58,8 @@ Vue.filter('enterToBr', (value) => {
 Vue.filter('dateTimeString', (value) => {
   return StringUtil.dateTimeString(value)
 })
+
+// // 소수점 둘째자리까지 나타냄
+// Vue.filter('decimal', (value) => {
+//   return StringUtil.parseFloat(value).toFixed(2)
+// })

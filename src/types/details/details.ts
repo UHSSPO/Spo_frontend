@@ -96,6 +96,8 @@ export interface IStockInfo {
   tradeSuspendYn: string; // 거래정지 여부
   badData: string; // 부실 데이터 여부
   updateAt: string; // 업데이트 일자 (Format: date-time)
+  pastLongRate: number; // 장기투자 과거데이터 수익률
+  pastShortRate: number // 단기투자 과거데이터 수익률
   summFinaInfo: ISummFinaInfo
   incoInfo: Array<IIncoInfo>
   priceInfo: IPriceInfo
