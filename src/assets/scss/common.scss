@@ -377,6 +377,11 @@
     width: 68%;
     margin: 0 1%;
     padding: 10px 0;
+    .board-title-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
     .board-list-wrap {
       margin: 10px 0;
       width: 100%;
@@ -646,6 +651,34 @@
     }
   }
 
+  .board-wrap {
+    .board-title {
+      padding: 20px 10px;
+      border-bottom: 1px solid $line-color;
+    }
+    .board-content {
+      padding: 20px;
+      .board-group {
+        margin: 10px 0;
+      }
+      .board-button-wrap {
+        display: flex;
+        justify-content: flex-end;
+        button {
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        .board-button {
+          background-color: #ABDEE6;
+          &:hover {
+            background-color: #83C9DC;
+          }
+        }
+      }
+    }
+  }
 
 }
 
