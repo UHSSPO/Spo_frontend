@@ -4,13 +4,13 @@
     :label="label"
     :rules="localRules"
     :required="required"
+    :counter="counter"
     :maxlength="maxLength"
     :disabled="disabled"
     :placeholder="placeholder"
     :single-line="singleLine"
     :outlined="!singleLine"
     :hide-details="hideDetails"
-    :append-icon="appendIcon ? 'mdi-magnify' : ''"
     @change="onChange"
     @input="onInput"
     @keypress="onkeypress"
@@ -33,7 +33,6 @@ export default class STextArea extends Vue {
   @Prop() disabled?: boolean
   @Prop({ default: false }) singleLine?: boolean
   @Prop({ default: false }) hideDetails?: boolean
-  @Prop({ default: false }) appendIcon?: boolean
   @Prop() placeholder?: string
   @Prop() private readonly counter?: number
   @Prop(Number) private readonly minLength?: number
@@ -90,9 +89,8 @@ export default class STextArea extends Vue {
         ]
       }
       // 최대 길이 체크
-      if (this.counter || this.maxLength) {
-        const maxLength = this.counter ? this.counter : (this.maxLength as number)
-        this.localRules.push((value: string) => (value || '').length <= maxLength || maxLength + '자로 입력해 주세요.')
+      if ((this.maxLength as number) <= this.value.length) {
+        this.localRules.push((value: string) => (value || '').length <= (this.minLength as number) || this.maxLength + '자 이하로 입력해 주세요')
       }
 
       // 최소 길이 체크
@@ -100,9 +98,9 @@ export default class STextArea extends Vue {
         this.localRules.push((value: string) => (value || '').length >= (this.minLength as number) || this.minLength + '자 이상 입력해 주세요')
       }
 
-      if (this.rules) {
-        this.localRules = [...this.localRules, ...this.rules]
-      }
+      // if (this.rules) {
+      //   this.localRules = [...this.localRules, ...this.rules]
+      // }
     }
   }
 }
