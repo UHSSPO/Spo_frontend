@@ -306,7 +306,7 @@ export default class detail extends Vue {
           data: _.map(array, 'clpr') as any
         }
       ],
-      labels: _.map(array, 'updateAt') as any
+      labels: _.map(array, 'basDt') as any
     }
   }
 }
