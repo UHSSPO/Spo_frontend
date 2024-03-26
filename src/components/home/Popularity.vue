@@ -1,5 +1,5 @@
 <template>
-  <div class="popularityWrap">
+  <div class="popularity-wrap">
     <h3>인기 종목</h3>
     <table class="popularityRank popularity">
       <tr>
@@ -70,12 +70,8 @@ export default class Popularity extends Vue {
   }
 
   private onClickToDetails(stockInfoSequence: number) {
-    if (StringUtil.isEmpty(this.token)) {
-      commonStore.ADD_DIALOG({
-        id: 'ERROR',
-        text: '로그인이 필요한 서비스입니다!'
-      })
-    } else {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
       this.$router.push({
         name: 'detail',
         query: {

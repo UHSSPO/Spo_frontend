@@ -1,8 +1,8 @@
 <template>
-  <div class="exploreWrap">
-    <div class="exploreItem">
+  <div class="explore-wrap">
+    <div class="explore-item">
       <h3>테마별 탐색</h3>
-      <div class="exploreBtn">
+      <div class="explore-btn">
         <s-button @click="changeOrder('prev')">
           <v-icon>
             mdi-chevron-left
@@ -17,7 +17,7 @@
     </div>
     <ul v-show="currentOrder === 'views'">
       <li>
-        <p class="exploreListTile">
+        <p class="explore-list-title">
           조회수 높은순
         </p>
       </li>
@@ -38,12 +38,16 @@
     </ul>
     <ul v-show="currentOrder === 'asc'">
       <li>
-        <p class="exploreListTile">
+        <p class="explore-list-title">
           등락률 높은순
         </p>
       </li>
       <li v-for="(item, index) in theme.increaseStock" :key="index">
-        <p>{{ item.itmsNm }}</p>
+        <a class="font-black" @click="onClickToDetails(item.stockInfoSequence)">
+          <p>
+            {{ item.itmsNm }}
+          </p>
+        </a>
         <span>{{ item.clpr | setNumberComma }}</span>
         <span v-if="item.fltRt === 0">
           {{ item.fltRt }}
@@ -55,12 +59,16 @@
     </ul>
     <ul v-show="currentOrder === 'desc'">
       <li>
-        <p class="exploreListTile">
+        <p class="explore-list-title">
           하락률 높은순
         </p>
       </li>
       <li v-for="(item, index) in theme.declineStock" :key="index">
-        <p>{{ item.itmsNm }}</p>
+        <a class="font-black" @click="onClickToDetails(item.stockInfoSequence)">
+          <p>
+            {{ item.itmsNm }}
+          </p>
+        </a>
         <span>{{ item.clpr | setNumberComma }}</span>
         <span v-if="item.fltRt === 0">
           {{ item.fltRt }}
@@ -112,12 +120,8 @@ export default class Explore extends Vue {
   }
 
   private onClickToDetails(stockInfoSequence: number) {
-    if (StringUtil.isEmpty(this.token)) {
-      commonStore.ADD_DIALOG({
-        id: 'ERROR',
-        text: '로그인이 필요한 서비스입니다!'
-      })
-    } else {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
       this.$router.push({
         name: 'detail',
         query: {

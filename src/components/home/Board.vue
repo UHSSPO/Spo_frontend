@@ -1,14 +1,12 @@
 <template>
-  <div class="boardWrap">
-    <div class="board-title-wrap">
-      <h3>게시판</h3>
-      <a @click="onClickToBoard(userInfo.userSequence)">게시물 작성하기</a>
-    </div>
-    <ul class="boardListWrap">
-      <li class="boardList">
-        <div class="boardListWrap">
+  <div class="board-wrap">
+    <h3>게시판</h3>
+    <a @click="onClickToBoard(userInfo.userSequence)">게시물 작성하기</a>
+    <ul class="board-list-wrap">
+      <li class="board-list">
+        <div class="board-list-wrap">
           <div>해우소</div>
-          <div class="boardListThird">
+          <div class="board-listThird">
             <p>준비는끝났다는얘기</p>
             <span>서서히 시작되리라 조심스레 예측합니다...</span>
           </div>
@@ -17,9 +15,9 @@
           </div>
           <div>4시간 전</div>
         </div>
-        <div class="boardListWrap">
+        <div class="board-list-wrap">
           <div>해우소</div>
-          <div class="boardListThird">
+          <div class="board-listThird">
             <p>준비는끝났다는얘기</p>
             <span>서서히 시작되리라 조심스레 예측합니다...</span>
           </div>
@@ -28,9 +26,9 @@
           </div>
           <div>4시간 전</div>
         </div>
-        <div class="boardListWrap">
+        <div class="board-list-wrap">
           <div>해우소</div>
-          <div class="boardListThird">
+          <div class="board-listThird">
             <p>준비는끝났다는얘기</p>
             <span>서서히 시작되리라 조심스레 예측합니다...</span>
           </div>
@@ -39,9 +37,9 @@
           </div>
           <div>4시간 전</div>
         </div>
-        <div class="boardListWrap">
+        <div class="board-list-wrap">
           <div>해우소</div>
-          <div class="boardListThird">
+          <div class="board-listThird">
             <p>준비는끝났다는얘기</p>
             <span>서서히 시작되리라 조심스레 예측합니다...</span>
           </div>

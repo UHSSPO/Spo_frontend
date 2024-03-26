@@ -253,7 +253,10 @@ export default class extends Vue {
   }
 
   private movePage(page: string) {
-    this.$router.push(`/${page}`)
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.$router.push(`/${page}`)
+    }
   }
 
   private onCloseDialog(value: IDialogResult) {
@@ -287,8 +290,9 @@ export default class extends Vue {
   }
 
   private searchStock() {
+    const lowerCaseSearch = this.search.toLowerCase()
     this.searchStockValue = _.filter(this.stock, (item: ISearchStockInfo) => {
-      return item.itmsNm.includes(this.search)
+      return item.itmsNm.toLowerCase().includes(lowerCaseSearch)
     })
   }
 
@@ -311,12 +315,8 @@ export default class extends Vue {
   }
 
   private stockDetail(stockInfoSequence: number) {
-    if (StringUtil.isEmpty(this.token)) {
-      commonStore.ADD_DIALOG({
-        id: 'ERROR',
-        text: '로그인이 필요한 서비스입니다!'
-      })
-    } else {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
       this.search = ''
       this.$router.push({
         name: 'detail',
