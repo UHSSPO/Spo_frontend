@@ -1,12 +1,14 @@
 <template>
-  <v-checkbox
-    v-model="selected"
-    :disabled="disabled"
-    :label="label"
-    false-value="N"
-    true-value="Y"
-    @change="onChange"
-  />
+  <v-container class="px-0" fluid>
+    <v-checkbox
+      v-model="selected"
+      :disabled="disabled"
+      :label="label"
+      false-value="N"
+      true-value="Y"
+      @change="onChange"
+    />
+  </v-container>
 </template>
 <script lang="ts">
 /*
@@ -31,6 +33,7 @@ export default class SCheckbox extends Vue {
    ********************************************************************************/
   @Prop() disabled!: boolean
   @Prop() label!: string
+  @Prop({ default: false }) readonly multiple!: boolean
 
   @Emit('input')
   private onInput() {
@@ -41,6 +44,10 @@ export default class SCheckbox extends Vue {
   private onChange() {
     this.onInput()
     return this.selected
+  }
+
+  private get isMultiple() {
+    return this.multiple
   }
 }
 </script>

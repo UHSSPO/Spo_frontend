@@ -1,17 +1,19 @@
 <template>
-  <v-radio-group
-    v-model="localValue"
-    :row="row"
-    :disabled="disabled"
-    @change="onChange"
-  >
-    <v-radio
-      v-for="item in localItems"
-      :key="item[itemCd]"
-      :label="item[itemCdVal]"
-      :value="item[itemCd]"
-    />
-  </v-radio-group>
+  <v-container class="px-0" fluid>
+    <v-radio-group
+      v-model="localValue"
+      :row="row"
+      :disabled="disabled"
+      @change="onChange"
+    >
+      <v-radio
+        v-for="item in localItems"
+        :key="item[itemCd]"
+        :label="item.label"
+        :value="item.value"
+      />
+    </v-radio-group>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -48,6 +50,7 @@ export default class SRadioGroup extends Vue {
   @Prop({ type: String, default: 'cdVal' }) private readonly itemCdVal!: string
   @Prop() private readonly items?: any
   @Prop() private readonly value?: any
+  @Prop(String) private readonly label!: string
 
   @Emit('change')
   private onChange(eventValue: any) {
@@ -82,7 +85,7 @@ export default class SRadioGroup extends Vue {
    ********************************************************************************/
   private setLocalItems() {
     if (this.items) {
-      this.localItems = _.clone(this.items)
+      this.localItems = _.clone(this.items) as ICodeInfo[]
       this.setValue()
     }
   }
