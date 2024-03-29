@@ -435,6 +435,19 @@
           color: blue;
         }
       }
+      .invest-wrap{
+          font-weight: bold;
+
+          span {
+            .plus {
+              color: red;
+            }
+
+            .minus {
+              color: blue;
+            }
+          }
+      }
     }
       .chart-wrap {
         width: 30%;
