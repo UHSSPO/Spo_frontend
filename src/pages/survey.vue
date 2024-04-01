@@ -180,17 +180,16 @@ export default class Survey extends Vue {
   ]
 
   analyzeInvestmentType() {
-    const totalScore = (
-      this.selectedKnowledge +
-        this.selectedIncomeSource +
-        this.selectedAnnualIncome +
-        this.selectedInvestmentExperience +
-        this.selectedInvestmentAllocation +
-        this.selectedDerivativesExperience +
-        this.selectedRiskTolerance +
-        this.selectedInvestmentPurpose +
-        this.selectedInvestmentPeriod
-    )
+    const totalScore =
+        parseInt(this.selectedKnowledge) +
+        parseInt(this.selectedIncomeSource) +
+        parseInt(this.selectedAnnualIncome) +
+        parseInt(this.selectedInvestmentExperience) +
+        parseInt(this.selectedInvestmentAllocation) +
+        parseInt(this.selectedDerivativesExperience) +
+        parseInt(this.selectedRiskTolerance) +
+        parseInt(this.selectedInvestmentPurpose) +
+        parseInt(this.selectedInvestmentPeriod)
 
     if (totalScore >= 0 && totalScore <= 20) {
       return '안정형'
