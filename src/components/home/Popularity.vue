@@ -1,5 +1,5 @@
 <template>
-  <div class="popularityWrap">
+  <div class="popularity-wrap">
     <h3>인기 종목</h3>
     <table class="popularityRank popularity">
       <tr>
@@ -12,7 +12,9 @@
       </tr>
       <tr v-for="(item, idx) in popularStock" :key="idx">
         <td>{{ idx+1 }}</td>
-        <td>{{ item.itmsNm }}</td>
+        <td>
+          <a class="font-black" @click="onClickToDetails(item.stockInfoSequence)">{{ item.itmsNm }}</a>
+        </td>
         <td>{{ item.clpr | setNumberComma }}</td>
         <td v-if="item.fltRt === 0">
           {{ item.fltRt }}
@@ -32,10 +34,13 @@
 
 <script lang="ts">
 
-import { Component, Emit, Prop, Vue } from 'nuxt-property-decorator'
+import { Component, Emit, namespace, Prop, Vue } from 'nuxt-property-decorator'
 import { IMarketIndex, IPopularStock } from '~/types/home/home'
 import { UpdateInterestStock } from '~/api/stock'
 import StringUtil from '~/util/StringUtil'
+import { commonStore } from '~/util/store-accessor'
+import { Namespace } from '~/util/Namespace'
+const common = namespace(Namespace.COMMON)
 
 @Component({
   layout: 'empty',
@@ -46,6 +51,7 @@ export default class Popularity extends Vue {
    * Properties
    ********************************************************************************/
   @Prop() private readonly popularStock!: Array<IPopularStock>
+  @common.State private token!: string
   @Emit('init')
   private initCommend() {
     return false
@@ -61,6 +67,18 @@ export default class Popularity extends Vue {
       this.initCommend()
     }
     this.$nuxt.$loading.finish()
+  }
+
+  private onClickToDetails(stockInfoSequence: number) {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.$router.push({
+        name: 'detail',
+        query: {
+          stockInfoSequence: stockInfoSequence.toString()
+        }
+      })
+    }
   }
 }
 

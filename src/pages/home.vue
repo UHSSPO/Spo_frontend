@@ -4,15 +4,15 @@
       <div class="index-wrap">
         <index-info v-if="StringUtil.isNotEmpty(marketIndex)" :market-index="marketIndex" />
       </div>
-      <div class="rankWrap">
+      <div class="rank-wrap">
         <commend :short-investment="shortInvestment" :long-investment="longInvestment" @init="initCommend" />
         <popularity :popular-stock="popularStock" @init="initCommend" />
       </div>
-      <div class="rankWrap">
+      <div class="rank-wrap">
         <Interest :interest="interest" />
         <Explore v-if="StringUtil.isNotEmpty(theme)" :theme="theme" />
       </div>
-      <div class="rankWrap">
+      <div class="rank-wrap">
         <div style="width: 28%; margin: 0 1%; " />
         <Board />
       </div>

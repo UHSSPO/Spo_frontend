@@ -1,5 +1,5 @@
 <template>
-  <div class="commendWrap">
+  <div class="commend-wrap">
     <div class="commend-wrap-tit">
       <div class="commend-title-wrap">
         <h3>추천 종목</h3>
@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <table v-if="currentOrder === 'short'" class="commendRank">
+    <table v-if="currentOrder === 'short'" class="commend-rank">
       <tr>
         <td />
         <td>종목명</td>
@@ -48,15 +48,12 @@
         </td>
       </tr>
     </table>
-    <table v-else-if="currentOrder === 'long'" class="commendRank">
+    <table v-else-if="currentOrder === 'long'" class="commend-rank">
       <tr>
         <td />
-        <td>
-          종목명
-        </td>
+        <td>종목명</td>
         <td>전일종가</td>
         <td>등락률</td>
-        <td>주문건</td>
         <td>시가총액</td>
         <td>즐겨찾기</td>
       </tr>
@@ -72,7 +69,6 @@
         <td v-else :class="{minus: item.fltRt < 0, plus: item.fltRt > 0}">
           {{ item.fltRt }}
         </td>
-        <td>{{ item.trqu | setNumberComma }}</td>
         <td>{{ item.mrktTotAmt | setKoreanNumber }}</td>
         <td>
           <img v-if="item.interestStockYn === Globals.NO" src="~/assets/image/star.png" alt="favorites" @click="favoritesList(item.stockInfoSequence)">
@@ -151,12 +147,8 @@ export default class Commend extends Vue {
   }
 
   private onclickToCommend() {
-    if (StringUtil.isEmpty(this.token)) {
-      commonStore.ADD_DIALOG({
-        id: 'ERROR',
-        text: '로그인이 필요한 서비스입니다!'
-      })
-    } else {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
       this.$router.push({
         name: 'commend',
         query: {
@@ -167,12 +159,8 @@ export default class Commend extends Vue {
   }
 
   private onClickToDetails(stockInfoSequence: number) {
-    if (StringUtil.isEmpty(this.token)) {
-      commonStore.ADD_DIALOG({
-        id: 'ERROR',
-        text: '로그인이 필요한 서비스입니다!'
-      })
-    } else {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
       this.$router.push({
         name: 'detail',
         query: {

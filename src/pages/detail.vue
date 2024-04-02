@@ -1,8 +1,8 @@
 <template>
   <div id="container" class="line">
     <div class="content  dynamic-layout">
-      <div class="rankWrap">
-        <div class="commendWrap w-100">
+      <div class="rank-wrap">
+        <div class="commend-wrap w-100">
           <div class="commend-main-title">
             <div class="commend-main-area">
               <div class="flex-center">
@@ -17,8 +17,8 @@
             </div>
           </div>
           <!--          v-if="StockInfo.stockInfoSequence === $route.query.currentOrderIndex"-->
-          <div class="detailsWarp">
-            <div class="detailsWarpTitle">
+          <div class="details-warp">
+            <div class="details-warp-title">
               <div class="detailsItem">
                 <span class="ItemCode">{{ stockInfo.srtnCd }} {{ stockInfo.mrktCtg }}</span>
                 <h3 class="ItemName">
@@ -32,14 +32,14 @@
                   </span>
                 </h1>
               </div>
-              <div class="detailsItem chartWrap">
+              <div class="detailsItem chart-wrap">
                 <div class="chart">
                   <s-line-chart v-if="chartData" :options="options" :data="chartData" type="line" :height="200" />
                 </div>
               </div>
             </div>
-            <div class="detailsContent">
-              <div class="detailsContentItem">
+            <div class="details-content">
+              <div class="details-content-item">
                 <ul class="detail-list">
                   <li class="detail-item detail-list-title">
                     상세정보
@@ -77,11 +77,11 @@
                     <span class="detail-value">{{ stockInfo.enterpriseCategories?.salesGrowthRate | setNumberComma }}</span>
                   </li>
                   <li class="detail-item">
-                    <span class="detail-title">per</span>
+                    <span class="detail-title">PER</span>
                     <span class="detail-value">{{ stockInfo.enterpriseCategories?.per | setNumberComma }}</span>
                   </li>
                   <li class="detail-item">
-                    <span class="detail-title">pbr</span>
+                    <span class="detail-title">PBR</span>
                     <span class="detail-value">{{ stockInfo.enterpriseCategories?.pbr | setNumberComma }}</span>
                   </li>
                   <li class="detail-item">
@@ -101,63 +101,63 @@
                     <span class="detail-value">{{ stockInfo.enterpriseCategories?.roa | setNumberComma }}</span>
                   </li>
                   <li class="detail-item moblie-last">
-                    <span class="detail-title">시가총액 기준</span>
-                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.volumeRatio | setNumberComma }}</span>
+                    <span class="detail-title">시가총액 변화 비율</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.changeMarketGap | setNumberComma }}</span>
                   </li>
                   <li class="detail-item moblie-last">
-                    <span class="detail-title">거래대금 비율</span>
+                    <span class="detail-title">시가총액 기준 거래대금 비율</span>
                     <span class="detail-value">{{ stockInfo.enterpriseCategories?.volumeRatio | setNumberComma }}</span>
                   </li>
                 </ul>
               </div>
-              <div class="detailsContentItem">
+              <div class="details-content-item">
                 <h3>손익</h3>
                 <div class="stickchart">
                   <s-line-chart v-if="incomeChartData" :options="barOptions" :data="incomeChartData" type="bar" :height="200" />
                 </div>
               </div>
-              <div class="detailsContentItem">
+              <div class="details-content-item">
                 <h3>재무상태</h3>
                 <div class="stickchart">
                   <s-line-chart v-if="financialData" :options="barOptions2" :data="financialData" type="bar" :height="200" />
                 </div>
               </div>
-              <div class="detailsContentItem">
+              <div class="details-content-item">
                 <h3>기업 정보</h3>
-                <div class="detailsInfoWrap">
+                <div class="detail-Info-wrap">
                   <ul>
                     <li>
-                      <p class="detailsInfoTitle">
+                      <p class="detail-info-title">
                         설립일
                       </p>
                       <p>{{ stockInfo.enterpriseInfo?.enpEstbDt | setDate }}</p>
                     </li>
                     <li>
-                      <p class="detailsInfoTitle">
+                      <p class="detail-info-title">
                         대표자
                       </p>
                       <p>{{ stockInfo.enterpriseInfo?.enpRprFnm }}</p>
                     </li>
                     <li>
-                      <p class="detailsInfoTitle">
+                      <p class="detail-info-title">
                         주요산업
                       </p>
                       <p>{{ stockInfo.enterpriseInfo?.enpMainBizNm }}</p>
                     </li>
                     <li>
-                      <p class="detailsInfoTitle">
+                      <p class="detail-info-title">
                         종업원 수
                       </p>
                       <p>{{ stockInfo.enterpriseInfo?.enpEmpeCnt | setNumberComma }} 명</p>
                     </li>
                     <li>
-                      <p class="detailsInfoTitle">
+                      <p class="detail-info-title">
                         홈페이지
                       </p>
                       <a>{{ stockInfo.enterpriseInfo?.enpHmpgUrl }}</a>
                     </li>
                     <li>
-                      <p class="detailsInfoTitle">
+                      <p class="detail-info-title">
                         본사주소
                       </p>
                       <p>{{ stockInfo.enterpriseInfo?.enpBsadr }}</p>
@@ -174,7 +174,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Watch } from 'nuxt-property-decorator'
 import _ from 'lodash'
 import { IEnterpriseInfo, IIncoInfo, IPriceInfo, IStockInfo, ISummFinaInfo } from '~/types/details/details'
 import { getDetail } from '~/api/stock'
@@ -201,10 +201,19 @@ export default class detail extends Vue {
   private incomeChartData = {}
   private financialData = {}
 
+  @Watch('$route')
+  private async watchRoute() {
+    await this.initDetail()
+  }
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
   async created() {
+    await this.initDetail()
+  }
+
+  private async initDetail() {
     this.stockInfoSequence = Number(this.$route.query.stockInfoSequence)
     await this.getDetail()
   }

@@ -54,3 +54,7 @@ Vue.filter('toWon', (value, won, decimal) => {
 Vue.filter('enterToBr', (value) => {
   return StringUtil.enterToBr(value)
 })
+
+Vue.filter('dateTimeString', (value) => {
+  return StringUtil.dateTimeString(value)
+})

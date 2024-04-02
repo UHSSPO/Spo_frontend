@@ -6,39 +6,58 @@
       <v-navigation-drawer v-model="appBarOpener" absolute temporary>
         <v-list nav dense>
           <v-list-item>
-            <v-list-item-title @click="appBarLink('menuHome')">
+            <v-list-item-title @click="movePage('home')">
               홈
             </v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="appBarLink('menuRecommend')">
+            <v-list-item-title @click="movePage('commend')">
               추천
             </v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="appBarLink('menuAssay')">
+            <v-list-item-title @click="movePage('')">
               성향분석
             </v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="appBarLink('menuSelfRecommend')">
+            <v-list-item-title @click="movePage('')">
               개인추천
             </v-list-item-title>
           </v-list-item>
 
-          <div class="header_mobile_form">
+          <div v-if="StringUtil.isEmpty(token)" class="header_mobile_form">
             <v-list-item>
-              <v-list-item-title @click="appBarLink('menuLogin')">
+              <v-list-item-title @click="onclickToLogin">
                 로그인
               </v-list-item-title>
             </v-list-item>
 
             <v-list-item>
-              <v-list-item-title @click="appBarLink('menuJoin')">
+              <v-list-item-title @click="goToSignUp">
                 회원가입
+              </v-list-item-title>
+            </v-list-item>
+          </div>
+          <div v-else class="header_mobile_form">
+            <v-list-item>
+              <v-list-item-title @click="onClickLogout">
+                로그아웃
+              </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-title @click="onClickMypage(userInfo.userSequence)">
+                마이페이지
+              </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item v-if="userInfo.userRole === 'ADM'">
+              <v-list-item-title @click="goToSignUp">
+                관리자페이지
               </v-list-item-title>
             </v-list-item>
           </div>
@@ -101,8 +120,25 @@
           </li>
           <li class="menu_search_list">
             <div>
-              <s-text-field placeholder="종목명 검색" />
+              <s-text-field
+                v-model="search"
+                placeholder="종목명 검색"
+                @input="searchStock"
+              />
+              <v-list v-if="searchStockValue && StringUtil.isNotEmpty(search)" class="search-list">
+                <v-list-item
+                  v-for="(item, index) in searchStockValue"
+                  :key="index"
+                  class="search-list-item"
+                  @click="stockDetail(item.stockInfoSequence)"
+                >
+                  <v-list-item-title>
+                    {{ item.itmsNm }}
+                  </v-list-item-title>
+                </v-list-item>
+              </v-list>
             </div>
+            <div />
           </li>
         </ul>
       </div>
@@ -138,12 +174,16 @@
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import _ from 'lodash'
+import axios from 'axios'
 import { IDialog, IDialogResult } from '~/types/common'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDialog from '~/components/common/SDialog.vue'
 import STextField from '~/components/common/STextField.vue'
 import { IUserDetail } from '~/types/auth/auth'
+import { ISearchStockInfo } from '~/types/home/home'
+import { Stock } from '~/api/stock'
+import StringUtil from '~/util/StringUtil'
 declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
@@ -160,6 +200,7 @@ export default class extends Vue {
     Kakao.init('2e79fbfa9c3fe6aad98a3ca66e8e5f6f')// KaKao client key
     Kakao.isInitialized()
   }
+
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
@@ -167,11 +208,21 @@ export default class extends Vue {
   @common.State private dialogs!: Array<any>
   @common.State private token!: string
   @common.State private userInfo!: IUserDetail
+  @common.State private stockList!: Array<ISearchStockInfo>
 
   private appBarOpener = false
+  private search = ''
+  private stock = [] as Array<ISearchStockInfo>
+  private searchStockValue = [] as Array<ISearchStockInfo>
+  private currentOrderIndex = 0
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
+  created(): void {
+    this.initCommend()
+  }
+
   mounted() {
     this.kakaoInit()
   }
@@ -179,9 +230,17 @@ export default class extends Vue {
   /********************************************************************************
    * Method (Event, Business Logic)
    ********************************************************************************/
+
   private async goToPage() {
     await Kakao.Auth.authorize({
       redirectUri: `${window.location.origin}/auth/kakao-login`
+    })
+  }
+
+  private getStock() {
+    Stock().then((response: Array<ISearchStockInfo>) => {
+      commonStore.ADD_STOCK_LIST(response)
+      this.stock = this.stockList
     })
   }
 
@@ -194,7 +253,10 @@ export default class extends Vue {
   }
 
   private movePage(page: string) {
-    this.$router.push(`/${page}`)
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.$router.push(`/${page}`)
+    }
   }
 
   private onCloseDialog(value: IDialogResult) {
@@ -204,7 +266,7 @@ export default class extends Vue {
     commonStore.REMOVE_DIALOG(index)
   }
 
-  private appBarLink(href : string) {
+  private appBarLink(href: string) {
     // console.log(href)
   }
 
@@ -227,13 +289,42 @@ export default class extends Vue {
     this.$router.push('/home')
   }
 
+  private searchStock() {
+    const lowerCaseSearch = this.search.toLowerCase()
+    this.searchStockValue = _.filter(this.stock, (item: ISearchStockInfo) => {
+      return item.itmsNm.toLowerCase().includes(lowerCaseSearch)
+    })
+  }
+
   private onClickMypage(userInfo: number) {
     this.$router.push({
       name: 'mypage',
-      query: {
-        userSequence: userInfo.toString()
-      }
     })
+  }
+
+  private initCommend() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    Promise.all([this.getStock()])
+      .finally(() => {
+        this.$nextTick(() => {
+          this.$nuxt.$loading.finish()
+        })
+      })
+  }
+
+  private stockDetail(stockInfoSequence: number) {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.search = ''
+      this.$router.push({
+        name: 'detail',
+        query: {
+          stockInfoSequence: stockInfoSequence.toString()
+        }
+      })
+    }
   }
 }
 </script>
