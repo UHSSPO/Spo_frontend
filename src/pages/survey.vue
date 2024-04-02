@@ -1,98 +1,104 @@
 <template>
-  <div>
-    <!-- 1번 질문 -->
-    <div>
-      <p>1. 고객님의 금융상품 투자에 대한 지식수준:</p>
-      <s-radio-group
-        v-model="selectedKnowledge"
-        :items="knowledge"
-        label="지식 수준"
-      />
-    </div>
+  <div id="container" class="line">
+    <div class="content  dynamic-layout">
+      <div class="rankWrap">
+        <div>
+          <!-- 1번 질문 -->
+          <div>
+            <p>1. 고객님의 금융상품 투자에 대한 지식수준:</p>
+            <s-radio-group
+              v-model="selectedKnowledge"
+              :items="knowledge"
+              label="지식 수준"
+            />
+          </div>
 
-    <!-- 2번 질문 -->
-    <div>
-      <p>2. 고객님의 수입원:</p>
-      <s-radio-group
-        v-model="selectedIncomeSource"
-        :items="incomeSource"
-        label="수입원"
-      />
-    </div>
+          <!-- 2번 질문 -->
+          <div>
+            <p>2. 고객님의 수입원:</p>
+            <s-radio-group
+              v-model="selectedIncomeSource"
+              :items="incomeSource"
+              label="수입원"
+            />
+          </div>
 
-    <!-- 3번 질문 -->
-    <div>
-      <p>3. 연간 소득:</p>
-      <s-radio-group
-        v-model="selectedAnnualIncome"
-        :items="annualIncome"
-        label="연간 소득"
-      />
-    </div>
+          <!-- 3번 질문 -->
+          <div>
+            <p>3. 연간 소득:</p>
+            <s-radio-group
+              v-model="selectedAnnualIncome"
+              :items="annualIncome"
+              label="연간 소득"
+            />
+          </div>
 
-    <!-- 4번 질문 -->
-    <div>
-      <p>4. 투자경험:</p>
-      <s-radio-group
-        v-model="selectedInvestmentExperience"
-        :items="investmentExperience"
-        label="투자경험"
-      />
-    </div>
+          <!-- 4번 질문 -->
+          <div>
+            <p>4. 투자경험:</p>
+            <s-radio-group
+              v-model="selectedInvestmentExperience"
+              :items="investmentExperience"
+              label="투자경험"
+            />
+          </div>
 
-    <!-- 5번 질문 -->
-    <div>
-      <p>5. 투자상품 비중:</p>
-      <s-radio-group
-        v-model="selectedInvestmentAllocation"
-        :items="investmentAllocation"
-        label="투자상품 비중"
-      />
-    </div>
+          <!-- 5번 질문 -->
+          <div>
+            <p>5. 투자상품 비중:</p>
+            <s-radio-group
+              v-model="selectedInvestmentAllocation"
+              :items="investmentAllocation"
+              label="투자상품 비중"
+            />
+          </div>
 
-    <!-- 6번 질문 -->
-    <div>
-      <p>6. 파생상품 투자 경험:</p>
-      <s-radio-group
-        v-model="selectedDerivativesExperience"
-        :items="derivativesExperience"
-        label="파생상품 투자 경험"
-      />
-    </div>
+          <!-- 6번 질문 -->
+          <div>
+            <p>6. 파생상품 투자 경험:</p>
+            <s-radio-group
+              v-model="selectedDerivativesExperience"
+              :items="derivativesExperience"
+              label="파생상품 투자 경험"
+            />
+          </div>
 
-    <!-- 7번 질문 -->
-    <div>
-      <p>7. 투자기대 수익과 손실 감내 수준:</p>
-      <s-radio-group
-        v-model="selectedRiskTolerance"
-        :items="riskTolerance"
-        label="손실 감내 수준"
-      />
-    </div>
+          <!-- 7번 질문 -->
+          <div>
+            <p>7. 투자기대 수익과 손실 감내 수준:</p>
+            <s-radio-group
+              v-model="selectedRiskTolerance"
+              :items="riskTolerance"
+              label="손실 감내 수준"
+            />
+          </div>
 
-    <!-- 8번 질문 -->
-    <div>
-      <p>8. 금융투자상품 가입 목적:</p>
-      <s-radio-group
-        v-model="selectedInvestmentPurpose"
-        :items="investmentPurpose"
-        label="가입 목적"
-      />
-    </div>
+          <!-- 8번 질문 -->
+          <div>
+            <p>8. 금융투자상품 가입 목적:</p>
+            <s-radio-group
+              v-model="selectedInvestmentPurpose"
+              :items="investmentPurpose"
+              label="가입 목적"
+            />
+          </div>
 
-    <!-- 9번 질문 -->
-    <div>
-      <p>9. 투자기간:</p>
-      <s-radio-group
-        v-model="selectedInvestmentPeriod"
-        :items="investmentPeriod"
-        label="투자 기간"
-      />
-    </div>
+          <!-- 9번 질문 -->
+          <div>
+            <p>9. 투자기간:</p>
+            <s-radio-group
+              v-model="selectedInvestmentPeriod"
+              :items="investmentPeriod"
+              label="투자 기간"
+            />
+          </div>
 
-    <button @click="submitSurvey">
-      제출
-    </button>
+          <button @click="submitSurvey">
+            제출
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -191,19 +197,21 @@ export default class Survey extends Vue {
         parseInt(this.selectedInvestmentPurpose) +
         parseInt(this.selectedInvestmentPeriod)
 
-    if (totalScore >= 0 && totalScore <= 20) {
-      return '안정형'
-    } else if (totalScore >= 21 && totalScore <= 40) {
-      return '안정추구형'
-    } else if (totalScore >= 41 && totalScore <= 60) {
-      return '위험중립형'
-    } else if (totalScore >= 61 && totalScore <= 80) {
-      return '적극투자형'
-    } else if (totalScore >= 81 && totalScore <= 100) {
-      return '공격투자형'
-    } else {
-      return '아직 모든 문항에 답을하지 않으셨습니다.'
-    }
+    // if (totalScore >= 0 && totalScore <= 20) {
+    //   return '안정형'
+    // } else if (totalScore >= 21 && totalScore <= 40) {
+    //   return '안정추구형'
+    // } else if (totalScore >= 41 && totalScore <= 60) {
+    //   return '위험중립형'
+    // } else if (totalScore >= 61 && totalScore <= 80) {
+    //   return '적극투자형'
+    // } else if (totalScore >= 81 && totalScore <= 100) {
+    //   return '공격투자형'
+    // } else {
+    //   return '아직 모든 문항에 답을하지 않으셨습니다.'
+    // }
+
+    return totalScore
   }
 
   submitSurvey() {
