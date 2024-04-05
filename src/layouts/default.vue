@@ -113,7 +113,7 @@
             <a @click="movePage('commend')">추천</a>
           </li>
           <li>
-            <a href="#">성향분석</a>
+            <a @click="movePage('survey')">성향분석</a>
           </li>
           <li>
             <a href="#">개인추천</a>

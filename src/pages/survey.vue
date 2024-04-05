@@ -93,7 +93,7 @@
             />
           </div>
 
-          <button @click="submitSurvey">
+          <button @click="onClickSubmitSurvey">
             제출
           </button>
         </div>
@@ -106,6 +106,10 @@
 
 import { Component, Vue } from 'nuxt-property-decorator'
 import SRadioGroup from '~/components/common/SRadioGroup.vue'
+import StringUtil from '~/util/StringUtil'
+import { IChangePasswordRes, IinvestPropensityRes } from '~/types/user/user'
+import { changePassword, investPropensity } from '~/api/auth'
+import { commonStore } from '~/util/store-accessor'
 
 @Component({
   components: {
@@ -113,6 +117,9 @@ import SRadioGroup from '~/components/common/SRadioGroup.vue'
   },
 })
 export default class Survey extends Vue {
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
   selectedKnowledge = ''
   selectedIncomeSource = ''
   selectedAnnualIncome = ''
@@ -122,6 +129,8 @@ export default class Survey extends Vue {
   selectedRiskTolerance = ''
   selectedInvestmentPurpose = ''
   selectedInvestmentPeriod = ''
+
+  private userInfoSequence = 0
 
   knowledge = [
     { cd: 0, cdVal: '매우 낮은 수준 (0점)' },
@@ -185,38 +194,72 @@ export default class Survey extends Vue {
     { cd: 10, cdVal: '3년 이상 (10점)' }
   ]
 
-  analyzeInvestmentType() {
-    const totalScore =
-        parseInt(this.selectedKnowledge) +
-        parseInt(this.selectedIncomeSource) +
-        parseInt(this.selectedAnnualIncome) +
-        parseInt(this.selectedInvestmentExperience) +
-        parseInt(this.selectedInvestmentAllocation) +
-        parseInt(this.selectedDerivativesExperience) +
-        parseInt(this.selectedRiskTolerance) +
-        parseInt(this.selectedInvestmentPurpose) +
-        parseInt(this.selectedInvestmentPeriod)
-
-    // if (totalScore >= 0 && totalScore <= 20) {
-    //   return '안정형'
-    // } else if (totalScore >= 21 && totalScore <= 40) {
-    //   return '안정추구형'
-    // } else if (totalScore >= 41 && totalScore <= 60) {
-    //   return '위험중립형'
-    // } else if (totalScore >= 61 && totalScore <= 80) {
-    //   return '적극투자형'
-    // } else if (totalScore >= 81 && totalScore <= 100) {
-    //   return '공격투자형'
-    // } else {
-    //   return '아직 모든 문항에 답을하지 않으셨습니다.'
-    // }
-
-    return totalScore
+  /********************************************************************************
+   * Life Cycle
+   ********************************************************************************/
+  async created() {
+    await this.initGetMyInfo()
   }
 
-  submitSurvey() {
-    const investmentType = this.analyzeInvestmentType()
-    alert(`사용자의 투자 유형: ${investmentType}`)
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
+  private initGetMyInfo() {
+    this.userInfoSequence = commonStore.userInfo.userSequence
+  }
+
+  analyzeInvestmentType() {
+    const totalScore =
+      parseInt(this.selectedKnowledge) +
+      parseInt(this.selectedIncomeSource) +
+      parseInt(this.selectedAnnualIncome) +
+      parseInt(this.selectedInvestmentExperience) +
+      parseInt(this.selectedInvestmentAllocation) +
+      parseInt(this.selectedDerivativesExperience) +
+      parseInt(this.selectedRiskTolerance) +
+      parseInt(this.selectedInvestmentPurpose) +
+      parseInt(this.selectedInvestmentPeriod)
+
+    let investScore = ''
+
+    if (totalScore >= 0 && totalScore <= 20) {
+      investScore = '01'
+    } else if (totalScore >= 21 && totalScore <= 40) {
+      investScore = '02'
+    } else if (totalScore >= 41 && totalScore <= 60) {
+      investScore = '03'
+    } else if (totalScore >= 61 && totalScore <= 80) {
+      investScore = '04'
+    } else if (totalScore >= 81 && totalScore <= 100) {
+      investScore = '05'
+    } else {
+      return { totalScore: -1, investScore: '아직 모든 문항에 답을하지 않으셨습니다.' }
+    }
+
+    return { totalScore, investScore }
+  }
+
+  private async onClickSubmitSurvey() {
+    const { totalScore, investScore } = this.analyzeInvestmentType()
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    console.log(totalScore, this.userInfoSequence)
+    const response: IinvestPropensityRes = await investPropensity(Number(totalScore), this.userInfoSequence)
+    if (StringUtil.isNotEmpty(response)) {
+      if (response.investPropensity === investScore) {
+        commonStore.ADD_DIALOG({
+          id: 'INVEST PROPENSITY',
+          text: '투자성향 검사가 완료 되었습니다.',
+          callback: () => {
+            this.$router.push('/')
+          }
+        })
+      }
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
   }
 }
 

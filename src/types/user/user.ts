@@ -35,3 +35,11 @@ export interface IChangeNickNameRes {
   changeNickNameYn: string // 닉네임 변경 여부
 
 }
+
+export interface IinvestPropensityReqBody {
+  totalScore: number // 투자성향 45
+}
+
+export interface IinvestPropensityRes {
+  investPropensity: string // 투자성향 05
+}
