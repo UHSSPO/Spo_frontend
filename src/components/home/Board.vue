@@ -93,7 +93,7 @@ export default class Board extends Vue {
   private onClickToBoardWrite(userSequence: number) {
     commonStore.CHECK_LOGIN()
     if (this.token) {
-      this.$router.push(`/board/boardwrite?userSequence=${userSequence.toString()}`)
+      this.$router.push(`/boardapp/boardwrite?userSequence=${userSequence}`)
     }
   }
 

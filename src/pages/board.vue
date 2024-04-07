@@ -10,7 +10,7 @@
                   준비는끝났다는얘기
                 </h1>
                 <div class="board-detail-button-wrap">
-                  <button class="board-detail-edit-button">
+                  <button class="board-detail-edit-button" @click="onClickToBoardWrite(userInfo.userSequence)">
                     수정
                   </button>
                   <button class="board-detail-delete-button">
@@ -67,6 +67,36 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script lang="ts">
+
+import { Component, namespace, Vue } from 'nuxt-property-decorator'
+import { commonStore } from '~/util/store-accessor'
+import { Namespace } from '~/util/Namespace'
+import { IUserDetail } from '~/types/auth/auth'
 import STextField from '~/components/common/STextField.vue'
+
+const common = namespace(Namespace.COMMON)
+@Component({
+  layout: 'empty',
+  components: { STextField }
+})
+export default class Board extends Vue {
+  /********************************************************************************
+   * Variables (Local, VUEX)
+   ********************************************************************************/
+
+  @common.State private token!: string
+  @common.State private userInfo!: IUserDetail
+
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
+
+  private onClickToBoardWrite(userSequence: number) {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.$router.push(`/boardapp/boardedit?userSequence=${userSequence}`)
+    }
+  }
+}
 </script>
