@@ -12,4 +12,4 @@ export const changePassword = (params: IChangePasswordReqBody, userSequence: num
 
 export const changeNickname = (params: IChangeNickNameReqBody, userSequence: number) => ApiUtil.put(`/user/change-nickName/${userSequence}`, params)
 
-export const investPropensity = (params: number, userSequence: number) => ApiUtil.put(`/user/invest-propensity/${userSequence}`, params)
+export const investPropensity = (params: IinvestPropensityReqBody, userSequence: number) => ApiUtil.put(`/user/invest-propensity/${userSequence}`, params)

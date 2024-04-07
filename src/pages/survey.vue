@@ -2,7 +2,7 @@
   <div id="container" class="line">
     <div class="content  dynamic-layout">
       <div class="rankWrap">
-        <div>
+        <div class="invest-content">
           <!-- 1번 질문 -->
           <div>
             <p>1. 고객님의 금융상품 투자에 대한 지식수준:</p>
@@ -107,7 +107,12 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import SRadioGroup from '~/components/common/SRadioGroup.vue'
 import StringUtil from '~/util/StringUtil'
-import { IChangePasswordRes, IinvestPropensityRes } from '~/types/user/user'
+import {
+  IChangeNickNameReqBody,
+  IChangePasswordRes,
+  IinvestPropensityReqBody,
+  IinvestPropensityRes
+} from '~/types/user/user'
 import { changePassword, investPropensity } from '~/api/auth'
 import { commonStore } from '~/util/store-accessor'
 
@@ -245,7 +250,7 @@ export default class Survey extends Vue {
       this.$nuxt.$loading.start()
     })
     console.log(totalScore, this.userInfoSequence)
-    const response: IinvestPropensityRes = await investPropensity(Number(totalScore), this.userInfoSequence)
+    const response: IinvestPropensityRes = await investPropensity(totalScore, this.userInfoSequence)
     if (StringUtil.isNotEmpty(response)) {
       if (response.investPropensity === investScore) {
         commonStore.ADD_DIALOG({
