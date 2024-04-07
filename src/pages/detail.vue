@@ -38,6 +38,30 @@
                 </div>
               </div>
             </div>
+            <div class="invest-wrap">
+              <div class="details-warp-invest">
+                <span v-if="stockInfo.pastLongRate">
+                  1년전 투자했을경우 수익률은
+                  <span v-if="stockInfo.pastLongRate === 0">
+                    {{ stockInfo.pastLongRate }}
+                  </span>
+                  <span v-else :class="{minus: stockInfo.pastLongRate < 0, plus: stockInfo.pastLongRate > 0}">
+                    {{ stockInfo.pastLongRate }}
+                  </span>
+                  입니다.
+                </span>
+                <span v-else-if="stockInfo.pastShortRate">
+                  15일 전 투자했을 경우 수익률은
+                  <span v-if="stockInfo.pastShortRate === 0">
+                    {{ stockInfo.pastShortRate }}
+                  </span>
+                  <span v-else :class="{minus: stockInfo.pastShortRate < 0, plus: stockInfo.pastShortRate > 0}">
+                    {{ stockInfo.pastShortRate }}
+                  </span>
+                  입니다.
+                </span>
+              </div>
+            </div>
             <div class="details-content">
               <div class="details-content-item">
                 <ul class="detail-list">

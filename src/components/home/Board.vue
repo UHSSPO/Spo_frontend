@@ -1,5 +1,4 @@
 <template>
-  <div class="board-wrap">
     <div class="board-title-wrap">
       <h3>게시판</h3>
       <a @click="onClickToBoardWrite(userInfo.userSequence)">게시물 작성하기</a>
@@ -103,6 +102,6 @@ export default class Board extends Vue {
       this.$router.push('/board')
     }
   }
-}
+
 
 </script>

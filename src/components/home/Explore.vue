@@ -43,7 +43,11 @@
         </p>
       </li>
       <li v-for="(item, index) in theme.increaseStock" :key="index">
-        <p>{{ item.itmsNm }}</p>
+        <a class="font-black" @click="onClickToDetails(item.stockInfoSequence)">
+          <p>
+            {{ item.itmsNm }}
+          </p>
+        </a>
         <span>{{ item.clpr | setNumberComma }}</span>
         <span v-if="item.fltRt === 0">
           {{ item.fltRt }}
@@ -60,7 +64,11 @@
         </p>
       </li>
       <li v-for="(item, index) in theme.declineStock" :key="index">
-        <p>{{ item.itmsNm }}</p>
+        <a class="font-black" @click="onClickToDetails(item.stockInfoSequence)">
+          <p>
+            {{ item.itmsNm }}
+          </p>
+        </a>
         <span>{{ item.clpr | setNumberComma }}</span>
         <span v-if="item.fltRt === 0">
           {{ item.fltRt }}
@@ -112,12 +120,8 @@ export default class Explore extends Vue {
   }
 
   private onClickToDetails(stockInfoSequence: number) {
-    if (StringUtil.isEmpty(this.token)) {
-      commonStore.ADD_DIALOG({
-        id: 'ERROR',
-        text: '로그인이 필요한 서비스입니다!'
-      })
-    } else {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
       this.$router.push({
         name: 'detail',
         query: {

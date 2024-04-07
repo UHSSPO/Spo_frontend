@@ -428,7 +428,32 @@
       justify-content: space-between;
       width: 100%;
       padding: 50px 0;
+    .details-warp-invest {
+      font-weight: bold;
 
+      span {
+        .plus {
+          color: red;
+        }
+
+        .minus {
+          color: blue;
+        }
+      }
+      .invest-wrap{
+          font-weight: bold;
+
+          span {
+            .plus {
+              color: red;
+            }
+
+            .minus {
+              color: blue;
+            }
+          }
+      }
+    }
       .chart-wrap {
         width: 30%;
         .chart {
@@ -719,6 +744,34 @@
       border-bottom: 1px solid $line-color;
     }
 
+  .board-wrap {
+    .board-title {
+      padding: 20px 10px;
+      border-bottom: 1px solid $line-color;
+    }
+    .board-content {
+      padding: 20px;
+      .board-group {
+        margin: 10px 0;
+      }
+      .board-button-wrap {
+        display: flex;
+        justify-content: flex-end;
+        button {
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        .board-button {
+          background-color: #ABDEE6;
+          &:hover {
+            background-color: #83C9DC;
+          }
+        }
+      }
+    }
+  }
     .board-detail-comments-section {
       padding: 15px;
       .board-detail-comments-title {
