@@ -21,7 +21,7 @@
                   </div>
                   <div class="profile-item">
                     <span class="item-label">투자성향:</span>
-                    <span id="investment-preference" class="item-value">{{ userInfo.investPropensity }}</span>
+                    <span id="investment-preference" class="item-value">{{ investType }}</span>
                   </div>
                   <div class="profile-item">
                     <span class="item-label">가입일:</span>
@@ -202,6 +202,7 @@ export default class myPage extends Vue {
     { text: '시가총액', value: 'mrktTotAmt', align: 'center', width: 150, isSlot: true },
   ] as Array<IDataTableHeader>
 
+  private userInvestType = this.userInfo.investPropensity
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
@@ -290,6 +291,22 @@ export default class myPage extends Vue {
 
   private checkSecondPassword(value: string): boolean | string {
     return this.formData.afterPassword === value || '패스워드와 패스워드 재입력이 불일치 합니다.'
+  }
+
+  private get investType(): string {
+    if (this.userInfo.investPropensity === '01') {
+      return '안정형'
+    } else if (this.userInfo.investPropensity === '02') {
+      return '안전추구형'
+    } else if (this.userInfo.investPropensity === '03') {
+      return '위험중립형'
+    } else if (this.userInfo.investPropensity === '04') {
+      return '적극투자형'
+    } else if (this.userInfo.investPropensity === '05') {
+      return '공격투자형'
+    } else {
+      return '아직 투자성향을 진행하지 않으셨습니다.'
+    }
   }
 }
 
