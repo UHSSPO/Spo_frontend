@@ -1,7 +1,7 @@
 <template>
   <div id="container" class="line">
     <div class="content  dynamic-layout">
-      <div class="rankWrap">
+      <div class="rank-wrap">
         <div class="invest-content">
           <!-- 1번 질문 -->
           <div>
@@ -262,7 +262,7 @@ export default class Survey extends Vue {
           id: 'INVEST PROPENSITY',
           text: '투자성향 검사가 완료 되었습니다.',
           callback: () => {
-            this.$router.push('/')
+            this.$router.push('/result')
           }
         })
       }

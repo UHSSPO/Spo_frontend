@@ -682,6 +682,36 @@
   .invest-content {
     padding: 30px;
   }
+
+  .result-position {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    .rank-wrap {
+      justify-content: space-around;
+    }
+    .result-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: 100px;
+      border: 1px solid $line-color;
+      align-items: center;
+      .result-button {
+        width: 100%;
+      }
+      .result-content {
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+        .result-highlight {
+          font-weight: bold;
+          display: inline-block;
+        }
+      }
+    }
+  }
+
 }
 
 #container-depth{
@@ -1074,6 +1104,9 @@
           .mypage-item {
             padding: 0;
           }
+        }
+        .result-wrap {
+          padding: 30px;
         }
       }
     }
