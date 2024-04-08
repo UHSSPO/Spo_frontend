@@ -113,8 +113,9 @@ import {
   IinvestPropensityReqBody,
   IinvestPropensityRes
 } from '~/types/user/user'
-import { changePassword, investPropensity } from '~/api/auth'
+import { investPropensity } from '~/api/auth'
 import { commonStore } from '~/util/store-accessor'
+import { IKakaoCertified } from '~/types/auth/auth'
 
 @Component({
   components: {
@@ -136,6 +137,7 @@ export default class Survey extends Vue {
   selectedInvestmentPeriod = ''
 
   private userInfoSequence = 0
+  private totalScore = {} as IinvestPropensityReqBody
 
   knowledge = [
     { cd: 0, cdVal: '매우 낮은 수준 (0점)' },
@@ -213,7 +215,7 @@ export default class Survey extends Vue {
     this.userInfoSequence = commonStore.userInfo.userSequence
   }
 
-  analyzeInvestmentType() {
+  private investTotalScore() {
     const totalScore =
       parseInt(this.selectedKnowledge) +
       parseInt(this.selectedIncomeSource) +
@@ -245,12 +247,15 @@ export default class Survey extends Vue {
   }
 
   private async onClickSubmitSurvey() {
-    const { totalScore, investScore } = this.analyzeInvestmentType()
+    const { totalScore, investScore } = this.investTotalScore()
+
+    this.totalScore = {
+      totalScore
+    }
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    console.log(totalScore, this.userInfoSequence)
-    const response: IinvestPropensityRes = await investPropensity(totalScore, this.userInfoSequence)
+    const response: IinvestPropensityRes = await investPropensity(this.totalScore, this.userInfoSequence)
     if (StringUtil.isNotEmpty(response)) {
       if (response.investPropensity === investScore) {
         commonStore.ADD_DIALOG({
