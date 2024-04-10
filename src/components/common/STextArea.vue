@@ -88,15 +88,15 @@ export default class STextArea extends Vue {
           }
         ]
       }
-      // 최대 길이 체크
-      if ((this.maxLength as number) <= this.value.length) {
-        this.localRules.push((value: string) => (value || '').length <= (this.minLength as number) || this.maxLength + '자 이하로 입력해 주세요')
-      }
-
-      // 최소 길이 체크
-      if (StringUtil.isNotEmpty(this.minLength)) {
-        this.localRules.push((value: string) => (value || '').length >= (this.minLength as number) || this.minLength + '자 이상 입력해 주세요')
-      }
+      // // 최대 길이 체크
+      // if ((this.maxLength as number) <= this.value.length) {
+      //   this.localRules.push((value: string) => (value || '').length <= (this.minLength as number) || this.maxLength + '자 이하로 입력해 주세요')
+      // }
+      //
+      // // 최소 길이 체크
+      // if (StringUtil.isNotEmpty(this.minLength)) {
+      //   this.localRules.push((value: string) => (value || '').length >= (this.minLength as number) || this.minLength + '자 이상 입력해 주세요')
+      // }
 
       // if (this.rules) {
       //   this.localRules = [...this.localRules, ...this.rules]

@@ -16,7 +16,13 @@
             />
           </div>
           <div class="board-write-group">
-            <textarea id="content" name="content" placeholder="게시글 내용을 입력하세요" required />
+            <s-text-area
+              label="내용"
+              max-length="20"
+              placeholder="게시글 내용을 입력하세요!"
+              :required="true"
+              type="text"
+            />
           </div>
           <div class="board-write-group board-button-wrap">
             <button class="board-write-button">
@@ -34,10 +40,11 @@ import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
 import { Namespace } from '~/util/Namespace'
+import STextArea from '~/components/common/STextArea.vue'
 
 const common = namespace(Namespace.COMMON)
 @Component({
-  components: { STextField, SButton },
+  components: { STextArea, STextField, SButton },
   layout: 'empty',
   name: 'login'
 })

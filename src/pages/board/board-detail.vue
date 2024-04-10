@@ -27,6 +27,41 @@
               </div>
             </div>
             <div class="board-detail-comments-section">
+              <h2 class="board-detail-comments-title">
+                댓글
+              </h2>
+              <div class="board-detail-comment">
+                <ul class="board-detail-comment-content">
+                  <li>서서히 시작되리라 조심스레 예측합니다.</li>
+                  <li>해우소</li>
+                  <li>2024년 3월 23일</li>
+                </ul>
+                <div class="board-detail-comment-board">
+                  <a @click="onClickCommentEdit">수정</a>
+                  <a>삭제</a>
+                </div>
+              </div>
+              <div class="board-detail-comment">
+                <div class="board-detail-comment-content">
+                  <span>서서히 시작되리라 조심스레 예측합니다.</span>
+                  <span>해우소</span>
+                  <span>2024년 3월 23일</span>
+                </div>
+              </div>
+
+              <div v-if="isCommentCheck" class="board-detail-comments-write-wrap">
+                <h2 class="board-detail-comments-write-title">
+                  댓글 수정
+                </h2>
+                <s-text-field
+                  max-length="20"
+                  placeholder="수정할 댓글을 입력해주세요!"
+                  :required="true"
+                  :single-line="true"
+                  type="text"
+                />
+              </div>
+
               <div class="board-detail-comments-write-wrap">
                 <h2 class="board-detail-comments-write-title">
                   댓글 작성
@@ -38,27 +73,6 @@
                   :single-line="true"
                   type="text"
                 />
-              </div>
-              <h2 class="board-detail-comments-title">
-                댓글
-              </h2>
-              <div class="board-detail-comment">
-                <ul class="board-detail-comment-content">
-                  <li>서서히 시작되리라 조심스레 예측합니다.</li>
-                  <li>해우소</li>
-                  <li>2024년 3월 23일</li>
-                </ul>
-                <div class="board-detail-comment-board">
-                  <a>수정</a>
-                  <a>삭제</a>
-                </div>
-              </div>
-              <div class="board-detail-comment">
-                <div class="board-detail-comment-content">
-                  <span>서서히 시작되리라 조심스레 예측합니다.</span>
-                  <span>해우소</span>
-                  <span>2024년 3월 23일</span>
-                </div>
               </div>
             </div>
           </div>
@@ -87,7 +101,7 @@ export default class Board extends Vue {
 
   @common.State private token!: string
   @common.State private userInfo!: IUserDetail
-
+  private isCommentCheck = false
   /********************************************************************************
    * Method (Event, Business Logic)
    ********************************************************************************/
@@ -95,8 +109,12 @@ export default class Board extends Vue {
   private onClickToBoardWrite(userSequence: number) {
     commonStore.CHECK_LOGIN()
     if (this.token) {
-      this.$router.push(`/board/boardedit?userSequence=${userSequence}`)
+      this.$router.push(`/board/board-edit?userSequence=${userSequence}`)
     }
+  }
+
+  private onClickCommentEdit() {
+    this.isCommentCheck = !this.isCommentCheck
   }
 }
 </script>
