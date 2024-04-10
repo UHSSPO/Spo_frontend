@@ -2,7 +2,7 @@
   <div id="container" class="line">
     <div class="content  dynamic-layout result-position">
       <div class="rank-wrap">
-        <div v-if="userInfo.investPropensity === null" class="result-wrap">
+        <div v-if="!userInfo.investPropensity" class="result-wrap">
           <div class="result-content">
             <h3>지금 바로 투자성향 완료하고 개인추천 받아보세요!</h3>
           </div>
@@ -14,14 +14,14 @@
         </div>
         <div v-else class="result-wrap">
           <div class="result-content">
-            <h3>
+            <div>
               <h3 class="result-highlight">
                 {{ userInfo.nickName }}
               </h3> 고객님의 투자성향은
               <h3 class="result-highlight">
                 {{ investType }}
               </h3> 입니다
-            </h3>
+            </div>
           </div>
           <div class="result-content">
             <h2>개인 추천을 확인해보세요!</h2>

@@ -204,8 +204,8 @@ export default class Survey extends Vue {
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
-  async created() {
-    await this.initGetMyInfo()
+  created() {
+    this.initGetMyInfo()
   }
 
   /********************************************************************************
@@ -227,27 +227,11 @@ export default class Survey extends Vue {
       parseInt(this.selectedInvestmentPurpose) +
       parseInt(this.selectedInvestmentPeriod)
 
-    let investScore = ''
-
-    if (totalScore >= 0 && totalScore <= 20) {
-      investScore = '01'
-    } else if (totalScore >= 21 && totalScore <= 40) {
-      investScore = '02'
-    } else if (totalScore >= 41 && totalScore <= 60) {
-      investScore = '03'
-    } else if (totalScore >= 61 && totalScore <= 80) {
-      investScore = '04'
-    } else if (totalScore >= 81 && totalScore <= 100) {
-      investScore = '05'
-    } else {
-      return { totalScore: -1, investScore: '아직 모든 문항에 답을하지 않으셨습니다.' }
-    }
-
-    return { totalScore, investScore }
+    return totalScore
   }
 
   private async onClickSubmitSurvey() {
-    const { totalScore, investScore } = this.investTotalScore()
+    const totalScore = this.investTotalScore()
 
     this.totalScore = {
       totalScore
@@ -256,16 +240,14 @@ export default class Survey extends Vue {
       this.$nuxt.$loading.start()
     })
     const response: IinvestPropensityRes = await investPropensity(this.totalScore, this.userInfoSequence)
-    if (StringUtil.isNotEmpty(response)) {
-      if (response.investPropensity === investScore) {
-        commonStore.ADD_DIALOG({
-          id: 'INVEST PROPENSITY',
-          text: '투자성향 검사가 완료 되었습니다.',
-          callback: () => {
-            this.$router.push('/result')
-          }
-        })
-      }
+    if (StringUtil.isNotEmpty(response.investPropensity)) {
+      commonStore.ADD_DIALOG({
+        id: 'INVEST PROPENSITY',
+        text: '투자성향 검사가 완료 되었습니다.',
+        callback: () => {
+          this.$router.push('/result')
+        }
+      })
     }
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
