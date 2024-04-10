@@ -100,7 +100,7 @@ export default class Board extends Vue {
   private onClickToBoard() {
     commonStore.CHECK_LOGIN()
     if (this.token) {
-      this.$router.push('/board')
+      this.$router.push('/board-detail')
     }
   }
 }
