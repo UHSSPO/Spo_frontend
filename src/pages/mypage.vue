@@ -22,7 +22,7 @@
                   <div class="profile-item">
                     <span class="item-label">투자성향:</span>
                     <span id="investment-preference" class="item-value">{{ investType }}</span>
-                    <a v-if="userInfo.investPropensity === null" id="investment-preference">성향분석 바로가기</a>
+                    <a v-if="!userInfo.investPropensity" id="investment-preference">성향분석 바로가기</a>
                   </div>
                   <div class="profile-item">
                     <span class="item-label">가입일:</span>
