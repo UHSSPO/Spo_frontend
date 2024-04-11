@@ -75,6 +75,7 @@ export default class SRadioGroup extends Vue {
    ********************************************************************************/
   created(): void {
     this.setLocalItems()
+    console.log(this.items)
   }
 
   /********************************************************************************
