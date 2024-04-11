@@ -1,12 +1,12 @@
 <template>
   <div id="container" class="line">
     <div class="content dynamic-layout">
-      <div class="board-wrap">
-        <div class="board-title">
+      <div class="board-write-wrap">
+        <div class="board-write-title">
           <h1>게시글 수정하기</h1>
         </div>
-        <div class="board-content">
-          <div class="board-group">
+        <div class="board-write-content">
+          <div class="board-write-group">
             <s-text-field
               label="제목"
               max-length="20"
@@ -15,12 +15,18 @@
               type="text"
             />
           </div>
-          <div class="board-group">
-            <textarea id="content" name="content" placeholder="게시글 내용을 입력하세요" required />
+          <div class="board-write-group">
+            <s-text-area
+              label="내용"
+              max-length="20"
+              placeholder="게시글 내용을 입력하세요!"
+              :required="true"
+              type="text"
+            />
           </div>
-          <div class="board-group board-button-wrap">
-            <button class="board-button">
-              게시글 작성하기
+          <div class="board-write-group board-button-wrap">
+            <button class="board-write-button">
+              게시글 수정하기
             </button>
           </div>
         </div>
@@ -34,10 +40,11 @@ import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
 import { Namespace } from '~/util/Namespace'
+import STextArea from '~/components/common/STextArea.vue'
 
 const common = namespace(Namespace.COMMON)
 @Component({
-  components: { STextField, SButton },
+  components: { STextArea, STextField, SButton },
   layout: 'empty',
   name: 'login'
 })
