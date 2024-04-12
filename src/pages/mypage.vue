@@ -21,8 +21,22 @@
                   </div>
                   <div class="profile-item">
                     <span class="item-label">투자성향:</span>
-                    <span id="investment-preference" class="item-value">{{ investType }}</span>
-                    <a v-if="!userInfo.investPropensity" id="investment-preference">성향분석 바로가기</a>
+                    <span v-if="userInfo.investPropensity === '01'" class="textGreen ">
+                      안정형
+                    </span>
+                    <span v-else-if="userInfo.investPropensity === '02'" class="textBlue ">
+                      안전추구형
+                    </span>
+                    <span v-else-if="userInfo.investPropensity === '03'" class="textYellow ">
+                      위험중립형
+                    </span>
+                    <span v-else-if="userInfo.investPropensity === '04'" class="textOrange ">
+                      적극투자형
+                    </span>
+                    <span v-else-if="userInfo.investPropensity === '05'" class="textRed">
+                      공격투자형
+                    </span>
+                    <a v-if="!userInfo.investPropensity" v-else id="investment-preference" @click="onClickToSurvey">성향분석 바로가기</a>
                   </div>
                   <div class="profile-item">
                     <span class="item-label">가입일:</span>
@@ -180,6 +194,7 @@ export default class myPage extends Vue {
    ********************************************************************************/
   private userInfo = {} as ISelectMyInfoRes
   private userInfoSequence = 0
+  @common.State private token!: string
 
   private formData = {
     beforePassword: '',
@@ -204,6 +219,7 @@ export default class myPage extends Vue {
   ] as Array<IDataTableHeader>
 
   private userInvestType = this.userInfo.investPropensity
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
@@ -294,19 +310,10 @@ export default class myPage extends Vue {
     return this.formData.afterPassword === value || '패스워드와 패스워드 재입력이 불일치 합니다.'
   }
 
-  private get investType(): string {
-    if (this.userInfo.investPropensity === '01') {
-      return '안정형'
-    } else if (this.userInfo.investPropensity === '02') {
-      return '안전추구형'
-    } else if (this.userInfo.investPropensity === '03') {
-      return '위험중립형'
-    } else if (this.userInfo.investPropensity === '04') {
-      return '적극투자형'
-    } else if (this.userInfo.investPropensity === '05') {
-      return '공격투자형'
-    } else {
-      return ''
+  private onClickToSurvey() {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.$router.push('/survey')
     }
   }
 }
