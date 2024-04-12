@@ -13,7 +13,7 @@
         <Explore v-if="StringUtil.isNotEmpty(theme)" :theme="theme" />
       </div>
       <div class="rank-wrap">
-        <div style="width: 28%; margin: 0 1%; " />
+        <Rank />
         <Board />
       </div>
     </div>
@@ -33,10 +33,11 @@ import { IInterest, ILongInvestment, IMarketIndex, IPopularStock, IShortInvestme
 
 import Explore from '~/components/home/Explore.vue'
 import Board from '~/components/home/Board.vue'
+import Rank from '~/components/home/Rank.vue'
 
 @Component({
   layout: 'empty',
-  components: { IndexInfo, Commend, Popularity, Interest, Explore, Board }
+  components: { IndexInfo, Commend, Popularity, Interest, Explore, Board, Rank }
 })
 export default class home extends Vue {
   /********************************************************************************
