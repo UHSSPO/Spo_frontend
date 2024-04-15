@@ -48,6 +48,7 @@ import StringUtil from '~/util/StringUtil'
 import { UpdateBoard } from '~/api/board'
 import { commonStore } from '~/util/store-accessor'
 import { ISelectMyInfoRes } from '~/types/user/user'
+import { IUserDetail, IUserInfo } from '~/types/auth/auth'
 
 const common = namespace(Namespace.COMMON)
 @Component({
@@ -60,29 +61,37 @@ export default class boardWrite extends Vue {
    * Variables (Local, VUEX)
    ********************************************************************************/
   @common.State private token!: string
-  private userSequence = 0
+  @common.State private userInfo!: IUserDetail
 
   private formData = {
     title: '',
-    detail: ''
+    detail: '',
+    userSequence: 0
   } as IUpdateBoardReq
+
+  private userSequence = 0
+  private boardSequence = 0
+
+  /********************************************************************************
+   * Life Cycle
+   ********************************************************************************/
+  created(): void {
+    this.boardSequence = Number(this.$route.query.boardSequence)
+    console.log(this.boardSequence)
+  }
 
   /********************************************************************************
    * Method (Event, Business Logic)
    ********************************************************************************/
 
-  private async editPost(userSequence:number) {
-    if (!this.userSequence) {
-      console.error('userSequence가 없습니다.')
-      return
-    }
+  private async editPost() {
     if (StringUtil.isEmpty(this.formData.title) && StringUtil.isEmpty(this.formData.detail)) {
       return false
     }
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    const response: IUpdateBoardReq = await UpdateBoard(this.formData, this.userSequence)
+    const response: IUpdateBoardReq = await UpdateBoard(this.formData, this.boardSequence)
     if (StringUtil.isNotEmpty(response)) {
       await this.$router.push('/')
     }

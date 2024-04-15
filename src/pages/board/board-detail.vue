@@ -10,10 +10,10 @@
                   {{ boardInfo.title }}
                 </h1>
                 <div class="board-detail-button-wrap">
-                  <button class="board-detail-edit-button" @click="onClickToBoardWrite(userInfo.userSequence)">
+                  <button class="board-detail-edit-button" @click="onClickToBoardWrite(boardInfo.boardSequence)">
                     수정
                   </button>
-                  <button class="board-detail-delete-button" @click="deleteBoard(userInfo.userSequence)">
+                  <button class="board-detail-delete-button" @click="deleteBoard(boardInfo.boardSequence)">
                     삭제
                   </button>
                 </div>
@@ -43,9 +43,11 @@
               </div>
               <div class="board-detail-comment">
                 <div class="board-detail-comment-content">
-                  <li>{{ boardInfo.boardComment }}</li>
-                  <li>{{ boardInfo.nickName }}</li>
-                  <li>{{ boardInfo.createAt }}</li>
+                  <ul class="board-detail-comment-content">
+                    <li>{{ boardInfo.boardComment }}</li>
+                    <li>{{ boardInfo.nickName }}</li>
+                    <li>{{ boardInfo.createAt }}</li>
+                  </ul>
                 </div>
               </div>
 
@@ -118,10 +120,10 @@ export default class Board extends Vue {
    * Method (Event, Business Logic)
    ********************************************************************************/
 
-  private onClickToBoardWrite(userSequence: number) {
+  private onClickToBoardWrite(boardSequence: number) {
     commonStore.CHECK_LOGIN()
     if (this.token) {
-      this.$router.push(`/board/board-edit?userSequence=${userSequence}`)
+      this.$router.push(`/board/board-edit?boardSequence=${boardSequence}`)
     }
   }
 
@@ -129,9 +131,7 @@ export default class Board extends Vue {
     this.isCommentCheck = !this.isCommentCheck
   }
 
-  private async deleteBoard(userSequence: number) {
-    const boardSequence = 0
-
+  private async deleteBoard(boardSequence: number) {
     // 게시글 삭제 요청
     const response = await DeleteBoard(boardSequence)
     if (StringUtil.isNotEmpty(response)) {
