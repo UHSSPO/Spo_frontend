@@ -56,7 +56,7 @@
             </v-list-item>
 
             <v-list-item v-if="userInfo.userRole === 'ADM'">
-              <v-list-item-title @click="goToSignUp">
+              <v-list-item-title @click="goToAdminPage">
                 관리자페이지
               </v-list-item-title>
             </v-list-item>
@@ -246,6 +246,10 @@ export default class extends Vue {
 
   private goToSignUp() {
     this.$router.push('/auth/sign-up')
+  }
+
+  private goToAdminPage() {
+    this.$router.push('/admin')
   }
 
   private appBarStatus() {
