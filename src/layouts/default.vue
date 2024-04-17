@@ -94,7 +94,7 @@
               </a>
             </li>
             <li v-if="userInfo.userRole === 'ADM'">
-              <a class="header_user_color">
+              <a class="header_user_color" @click="goToAdminPage">
                 관리자페이지
               </a>
             </li>
