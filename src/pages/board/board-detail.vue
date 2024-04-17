@@ -30,59 +30,75 @@
               <h2 class="board-detail-comments-title">
                 댓글
               </h2>
-              <div class="board-detail-comment">
-                <ul class="board-detail-comment-content">
-                  <li>{{ boardInfo.boardComment }}</li>
-                  <li>{{ boardInfo.nickName }}</li>
-                  <li>{{ boardInfo.createAt }}</li>
-                </ul>
-                <div class="board-detail-comment-board">
-                  <a @click="editComment(boardInfo.boardCommentSequence)">수정</a>
-                  <a @click="deleteComment(boardInfo.boardCommentSequence)">삭제</a>
+              <div v-for="(item, index) in boardInfo.boardComment" :key="index" class="board-detail-comment">
+                <div v-if="isCommentCheck && boardCommentSequence === item.boardCommentSequence" class="dis-flex-space">
+                  <s-text-field
+                    v-model="updateCommentData.comment"
+                    max-length="20"
+                    placeholder="수정할 댓글을 입력해주세요!"
+                    :required="true"
+                    :single-line="true"
+                    type="text"
+                    class="mr-3"
+                  />
+                  <button class="board-detail-edit-button mr-3" @click="editComment(boardInfo.boardCommentSequence)">
+                    댓글 수정하기
+                  </button>
+                  <button class="board-detail-edit-button" @click="isCommentCheck = !isCommentCheck">
+                    취소
+                  </button>
                 </div>
-              </div>
-              <div class="board-detail-comment">
-                <div class="board-detail-comment-content">
-                  <ul class="board-detail-comment-content">
-                    <li>{{ boardInfo.boardComment }}</li>
-                    <li>{{ boardInfo.nickName }}</li>
-                    <li>{{ boardInfo.createAt }}</li>
+                <div v-else class="board-detail-comment-content">
+                  <ul class="dis-flex">
+                    <li>
+                      {{ item.comment }}
+                    </li>
+                    <li>
+                      {{ item.nickName }}
+                    </li>
+                    <li>
+                      {{ StringUtil.dateTimeString(item.createAt) }}
+                    </li>
                   </ul>
+                  <div v-if="item.userSequence === userInfo.userSequence" class="board-detail-comment-board">
+                    <a @click="onClickUpdateComment(item)">수정</a>
+                    <a @click="deleteComment(item.boardCommentSequence)">삭제</a>
+                  </div>
                 </div>
               </div>
-              <div v-if="isCommentCheck" class="board-detail-comments-write-wrap">
-                <h2 class="board-detail-comments-write-title">
-                  댓글 수정
-                </h2>
-                <s-text-field
-                  v-model="formData.comment"
-                  max-length="20"
-                  placeholder="수정할 댓글을 입력해주세요!"
-                  :required="true"
-                  :single-line="true"
-                  type="text"
-                />
-                <button class="board-detail-edit-button" @click="editComment(boardInfo.boardCommentSequence)">
-                  댓글 수정하기
-                </button>
-              </div>
+            </div>
+            <div v-if="isCommentCheck" class="board-detail-comments-write-wrap">
+              <h2 class="board-detail-comments-write-title">
+                댓글 수정
+              </h2>
+              <s-text-field
+                v-model="formData.comment"
+                max-length="20"
+                placeholder="수정할 댓글을 입력해주세요!"
+                :required="true"
+                :single-line="true"
+                type="text"
+              />
+              <button class="board-detail-edit-button" @click="editComment()">
+                댓글 수정하기
+              </button>
+            </div>
 
-              <div class="board-detail-comments-write-wrap">
-                <h2 class="board-detail-comments-write-title">
-                  댓글 작성
-                </h2>
-                <s-text-field
-                  v-model="formData.comment"
-                  max-length="20"
-                  placeholder="댓글을 입력해주세요!"
-                  :required="true"
-                  :single-line="true"
-                  type="text"
-                />
-                <button class="board-write-button" @click="submitComment(boardInfo.boardSequence)">
-                  댓글 작성하기
-                </button>
-              </div>
+            <div class="board-detail-comments-write-wrap">
+              <h2 class="board-detail-comments-write-title">
+                댓글 작성
+              </h2>
+              <s-text-field
+                v-model="formData.comment"
+                max-length="20"
+                placeholder="댓글을 입력해주세요!"
+                :required="true"
+                :single-line="true"
+                type="text"
+              />
+              <button class="board-write-button" @click="submitComment(boardInfo.boardSequence)">
+                댓글 작성하기
+              </button>
             </div>
           </div>
         </div>
@@ -98,7 +114,13 @@ import { Namespace } from '~/util/Namespace'
 import { IUserDetail } from '~/types/auth/auth'
 import STextField from '~/components/common/STextField.vue'
 import StringUtil from '~/util/StringUtil'
-import { ICreateComment, IBoardDetail, IUpdateBoardCommentReq } from '~/types/board/board'
+import {
+  ICreateComment,
+  IBoardDetail,
+  IUpdateBoardCommentReq,
+  ISpoBoardComment,
+  IUpdateComment
+} from '~/types/board/board'
 import { boardDetail, CreateComment, DeleteBoard, DeleteBoardComment, UpdateComment } from '~/api/board'
 const common = namespace(Namespace.COMMON)
 @Component({
@@ -122,6 +144,11 @@ export default class Board extends Vue {
     comment: ''
   } as ICreateComment
 
+  private updateCommentData = {
+    comment: '',
+    userSequence: 0
+  } as IUpdateComment
+
   // private formData = {
   //   comment: ''
   // } as ICreateComment,IUpdateBoardCommentReq
@@ -136,7 +163,7 @@ export default class Board extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    this.boardInfo = await boardDetail(this.boardSequence, this.boardCommentSequence)
+    this.boardInfo = await boardDetail(this.boardSequence)
     this.boardAuth = this.userInfo?.userSequence === this.boardInfo?.userSequence
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
@@ -154,24 +181,31 @@ export default class Board extends Vue {
     }
   }
 
-  // private editComment(boardCommentSequence: number) {
-  //   this.isCommentCheck = !this.isCommentCheck
-  //   if (StringUtil.isEmpty(this.formData.comment)) {
-  //     return false
-  //   }
-  //   this.$nextTick(() => {
-  //     this.$nuxt.$loading.start()
-  //   })
-  //   const response: IUpdateBoardCommentReq = await UpdateComment(this.formData, this.boardSequence)
-  //   if (StringUtil.isNotEmpty(response)) {
-  //     if (this.token) {
-  //       this.$router.push('/board/board-detail')
-  //     }
-  //   }
-  //   this.$nextTick(() => {
-  //     this.$nuxt.$loading.finish()
-  //   })
-  // }
+  private async editComment() {
+    if (StringUtil.isEmpty(this.updateCommentData.comment)) {
+      commonStore.ADD_DIALOG({
+        id: 'ERROR_UPDATE',
+        text: '수정 할 댓글을 입력 해 주세요',
+      })
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    const response: IUpdateBoardCommentReq = await UpdateComment(this.updateCommentData, this.boardCommentSequence)
+    if (StringUtil.isNotEmpty(response)) {
+      commonStore.ADD_DIALOG({
+        id: 'SUCCESS_UPDATE',
+        text: '수정이 완료 됐어요',
+        callback: async () => {
+          await this.boardDetail()
+          this.isCommentCheck = !this.isCommentCheck
+        }
+      })
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
+  }
 
   private async deleteComment(boardCommentSequence:number) {
     const response = await DeleteBoardComment(boardCommentSequence)
@@ -241,6 +275,13 @@ export default class Board extends Vue {
         this.$router.push('/')
       }
     })
+  }
+
+  private onClickUpdateComment(boardCommentInfo: ISpoBoardComment) {
+    this.isCommentCheck = !this.isCommentCheck
+    this.boardCommentSequence = boardCommentInfo.boardCommentSequence
+    this.updateCommentData.comment = boardCommentInfo.comment
+    this.updateCommentData.userSequence = boardCommentInfo.userSequence
   }
 }
 </script>

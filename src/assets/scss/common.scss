@@ -818,6 +818,7 @@
         align-items: center;
 
         .board-detail-comment-content {
+          width: 100%;
           display: flex;
           justify-content: space-between;
         }
@@ -1263,6 +1264,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.dis-flex {
+  display: flex;
+}
+
+.dis-flex-space {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .table-start {

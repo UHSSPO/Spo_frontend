@@ -53,8 +53,8 @@ export interface IUpdateBoardReq {
 }
 
 export interface IUpdateBoardCommentReq{
-  comment:string // 댓글
-  userSequence:string // 유저 일련번호
+  comment: string // 댓글
+  userSequence: number // 유저 일련번호
 }
 
 // 게시판 글 생성
@@ -66,4 +66,9 @@ export interface ICreate{
 // 게시판 댓글 등록
 export interface ICreateComment{
   comment:string // 댓글
+}
+
+export interface IUpdateComment {
+  comment:string // 댓글
+  userSequence: number // 유저 일련번호
 }

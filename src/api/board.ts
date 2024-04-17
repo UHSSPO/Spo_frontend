@@ -19,7 +19,7 @@ export const DeleteBoard = (boardSequence:number) => ApiUtil.delete(`/board/${bo
 export const CreateComment = (params : ICreateComment, boardSequence:number) => ApiUtil.post(`/board/comment/${boardSequence}`, params)
 
 // 댓글 수정
-export const UpdateComment = (params: IUpdateBoardCommentReq, boardCommentSequence:number) => ApiUtil.put(`/board/comment${boardCommentSequence}`, params)
+export const UpdateComment = (params: IUpdateBoardCommentReq, boardCommentSequence:number) => ApiUtil.put(`/board/comment/${boardCommentSequence}`, params)
 
 // 댓글 삭제
 export const DeleteBoardComment = (boardCommentSequence:number) => ApiUtil.delete(`/board/comment/${boardCommentSequence}`, {})
