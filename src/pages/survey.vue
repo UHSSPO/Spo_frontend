@@ -93,6 +93,11 @@
             />
           </div>
 
+          <div class="invest-text">
+            고객님의 성실한 답변에 감사드리며, 답변해 주신 본 질문지에 기초해 고객님께 적합한 상품을 제공하도록 노력하겠습니다. 본 질문지에서 수집된 개인정보는 고객님께 적합한 상품을 제공하기 위한 기초자료만으로 활용할 예정이며 SPO에 의하여 기밀로 보호될 것을 약속드립니다. 다음 화면에서 제공되는 투자자성향 분석 결과는 고객님께서 제공하신 정보를 바탕으로 분석되었으며, 거래목적, 계약기간·기대이익·기대손실을 고려한 위험에 대한 태도, 금융상품에 대한 이해도, 재산상황, 투자성상품의 취득·처분 경험, 연령 등에 비추어 적합한 상품을 추천 드립니다.
+            본인은 투자위험에 대한 본인의 성향이 올바르게 선택되어 있음을 확인합니다.
+          </div>
+
           <button @click="onClickSubmitSurvey">
             제출
           </button>
@@ -140,65 +145,65 @@ export default class Survey extends Vue {
   private totalScore = {} as IinvestPropensityReqBody
 
   knowledge = [
-    { cd: 0, cdVal: '매우 낮은 수준 (0점)' },
-    { cd: 3, cdVal: '낮은 수준 (3점)' },
-    { cd: 7, cdVal: '높은 수준 (7점)' },
-    { cd: 10, cdVal: '매우 높은 수준 (10점)' }
+    { cd: 0, cdVal: '매우 낮은 수준' },
+    { cd: 3, cdVal: '낮은 수준' },
+    { cd: 7, cdVal: '높은 수준' },
+    { cd: 10, cdVal: '매우 높은 수준' }
   ]
 
   incomeSource = [
-    { cd: 10, cdVal: '현재 수입 유지 또는 증가 예상 (10점)' },
-    { cd: 7, cdVal: '현재 수입 감소 또는 불안정 예상 (7점)' },
-    { cd: 3, cdVal: '현재 수입 없음, 연금 주 수입 (3점)' }
+    { cd: 10, cdVal: '현재 수입 유지 또는 증가 예상' },
+    { cd: 7, cdVal: '현재 수입 감소 또는 불안정 예상' },
+    { cd: 3, cdVal: '현재 수입 없음, 연금 주 수입' }
   ]
 
   annualIncome = [
-    { cd: 0, cdVal: '2천만원 이하 (0점)' },
-    { cd: 3, cdVal: '5천만원 이하 (3점)' },
-    { cd: 7, cdVal: '1억원 이하 (7점)' },
-    { cd: 10, cdVal: '1억원 초과 (10점)' }
+    { cd: 0, cdVal: '2천만원 이하' },
+    { cd: 3, cdVal: '5천만원 이하' },
+    { cd: 7, cdVal: '1억원 이하' },
+    { cd: 10, cdVal: '1억원 초과' }
   ]
 
   investmentExperience = [
-    { cd: 0, cdVal: '안정형 상품에 투자 경험 (0점)' },
-    { cd: 3, cdVal: '위험 중립형 상품에 투자 경험 (3점)' },
-    { cd: 7, cdVal: '적극투자형 상품에 투자 경험 (7점)' },
-    { cd: 10, cdVal: '공격투자형 상품에 투자 경험 (10점)' }
+    { cd: 0, cdVal: '안정형 상품에 투자 경험' },
+    { cd: 3, cdVal: '위험 중립형 상품에 투자 경험' },
+    { cd: 7, cdVal: '적극투자형 상품에 투자 경험' },
+    { cd: 10, cdVal: '공격투자형 상품에 투자 경험' }
   ]
 
   investmentAllocation = [
-    { cd: 0, cdVal: '10% 이하 (0점)' },
-    { cd: 3, cdVal: '15% 이하 (3점)' },
-    { cd: 7, cdVal: '20% 이하 (7점)' },
-    { cd: 10, cdVal: '25% 초과 (10점)' }
+    { cd: 0, cdVal: '10% 이하' },
+    { cd: 3, cdVal: '15% 이하' },
+    { cd: 7, cdVal: '20% 이하' },
+    { cd: 10, cdVal: '25% 초과' }
   ]
 
   derivativesExperience = [
-    { cd: 0, cdVal: '투자 경험 없음 (0점)' },
-    { cd: 3, cdVal: '1년 이하 (3점)' },
-    { cd: 7, cdVal: '3년 이하 (7점)' },
-    { cd: 10, cdVal: '3년 초과 (10점)' }
+    { cd: 0, cdVal: '투자 경험 없음' },
+    { cd: 3, cdVal: '1년 이하' },
+    { cd: 7, cdVal: '3년 이하' },
+    { cd: 10, cdVal: '3년 초과' }
   ]
 
   riskTolerance = [
-    { cd: 0, cdVal: '투자원금 보존 우선 (0점)' },
-    { cd: 3, cdVal: '10% 미만 손실 감내 (3점)' },
-    { cd: 7, cdVal: '20% 미만 손실 감내 (7점)' },
-    { cd: 10, cdVal: '위험 감수 가능 (10점)' }
+    { cd: 0, cdVal: '투자원금 보존 우선' },
+    { cd: 3, cdVal: '10% 미만 손실 감내' },
+    { cd: 7, cdVal: '20% 미만 손실 감내' },
+    { cd: 10, cdVal: '위험 감수 가능' }
   ]
 
   investmentPurpose = [
-    { cd: 0, cdVal: '사용 예정 자금 운용 (0점)' },
-    { cd: 3, cdVal: '목적 자금 마련 (3점)' },
-    { cd: 7, cdVal: '노후 자금 마련 (7점)' },
-    { cd: 10, cdVal: '자산 증식 우선 (10점)' }
+    { cd: 0, cdVal: '사용 예정 자금 운용' },
+    { cd: 3, cdVal: '목적 자금 마련' },
+    { cd: 7, cdVal: '노후 자금 마련' },
+    { cd: 10, cdVal: '자산 증식 우선' }
   ]
 
   investmentPeriod = [
-    { cd: 0, cdVal: '1년 미만 (0점)' },
-    { cd: 3, cdVal: '1년 이상 (3점)' },
-    { cd: 7, cdVal: '2년 이상 (7점)' },
-    { cd: 10, cdVal: '3년 이상 (10점)' }
+    { cd: 0, cdVal: '1년 미만' },
+    { cd: 3, cdVal: '1년 이상' },
+    { cd: 7, cdVal: '2년 이상' },
+    { cd: 10, cdVal: '3년 이상' }
   ]
 
   /********************************************************************************

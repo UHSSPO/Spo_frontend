@@ -10,6 +10,19 @@
   color: #ee6161;
 }
 
+.textOrange {
+  color: #ffac5e;
+}
+
+.textYellow {
+  color: #fff4b3;
+}
+
+.textGreen {
+  color: #90ee90;
+}
+
+
 .wrap{
   position:relative;
   width:100%;
@@ -734,6 +747,15 @@
       }
     }
   }
+  .invest-content {
+    padding: 30px;
+    .invest-text {
+      margin: 20px 0;
+      word-break: keep-all;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+  }
   .board-detail-wrap {
     .board-detail-wrap-title {
       border-bottom: 1px solid $line-color;
@@ -772,39 +794,6 @@
       margin-bottom: 0;
       border-bottom: 1px solid $line-color;
     }
-  .invest-content {
-    padding: 30px;
-  }
-
-  .result-position {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    .rank-wrap {
-      justify-content: space-around;
-    }
-    .result-wrap {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      padding: 100px;
-      border: 1px solid $line-color;
-      align-items: center;
-      .result-button {
-        width: 100%;
-      }
-      .result-content {
-        display: flex;
-        flex-direction: column;
-        margin: 10px;
-        .result-highlight {
-          font-weight: bold;
-          display: inline-block;
-        }
-      }
-    }
-  }
-
     .board-detail-comments-section {
       padding: 15px;
       .board-detail-comments-title {
@@ -826,6 +815,41 @@
         margin: 10px 0;
         .board-detail-comments-write-title {
           margin-bottom: 10px;
+        }
+      }
+    }
+  }
+  .result-position {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    .rank-wrap {
+      justify-content: space-around;
+    }
+    .result-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: 100px;
+      border: 1px solid $line-color;
+      align-items: center;
+      .result-button {
+        width: 100%;
+      }
+      .result-content {
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+        .result-text {
+          display: flex;
+          align-items: center;
+          h3{
+            margin: 0 10px;
+          }
+          .result-highlight {
+            font-weight: bold;
+            display: inline-block;
+          }
         }
       }
     }
