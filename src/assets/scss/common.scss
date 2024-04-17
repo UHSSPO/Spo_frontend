@@ -751,6 +751,9 @@
     padding: 30px;
     .invest-text {
       margin: 20px 0;
+      word-break: keep-all;
+      white-space: normal;
+      word-wrap: break-word;
     }
   }
   .board-detail-wrap {
