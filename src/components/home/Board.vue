@@ -15,7 +15,7 @@
             <span> {{ item.detail }}</span>
           </div>
           <div>
-            <a @click="onClickToBoard">더보기</a>
+            <a @click="onClickToBoard(item.boardSequence)">더보기</a>
           </div>
           <div>{{ item.createAt }}</div>
         </div>
@@ -31,9 +31,11 @@ import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import { IUserDetail } from '~/types/auth/auth'
 import { ISpoBoard } from '~/types/board/board'
+import { boardDetail } from '~/api/board'
 
 const common = namespace(Namespace.COMMON)
 @Component({
+  methods: { boardDetail },
   layout: 'empty',
   components: {}
 })
@@ -59,7 +61,13 @@ export default class Board extends Vue {
   private onClickToBoard(boardSequence:number) {
     commonStore.CHECK_LOGIN()
     if (this.token) {
-      this.$router.push('/board/board-detail')
+      // this.$router.push(`/board/board-detail/boardSequence=${boardSequence}`)
+      this.$router.push({
+        path: '/board/board-detail',
+        query: {
+          boardSequence: boardSequence.toString()
+        }
+      })
     }
   }
 }

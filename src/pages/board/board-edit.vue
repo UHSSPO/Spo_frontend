@@ -38,17 +38,16 @@
 </template>
 
 <script lang="ts">
-import { Component, namespace, Vue } from 'nuxt-property-decorator'
+import { Component, namespace, Vue, Watch } from 'nuxt-property-decorator'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
 import { Namespace } from '~/util/Namespace'
 import STextArea from '~/components/common/STextArea.vue'
-import { IUpdateBoardReq } from '~/types/board/board'
+import { IBoardDetail, IUpdateBoardReq } from '~/types/board/board'
 import StringUtil from '~/util/StringUtil'
-import { UpdateBoard } from '~/api/board'
+import { boardDetail, UpdateBoard } from '~/api/board'
 import { commonStore } from '~/util/store-accessor'
-import { ISelectMyInfoRes } from '~/types/user/user'
-import { IUserDetail, IUserInfo } from '~/types/auth/auth'
+import { IUserDetail } from '~/types/auth/auth'
 
 const common = namespace(Namespace.COMMON)
 @Component({
@@ -60,24 +59,34 @@ export default class boardWrite extends Vue {
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
-  @common.State private token!: string
   @common.State private userInfo!: IUserDetail
-
+  @common.State private token!: string
+  private boardInfo = {} as IBoardDetail
   private formData = {
     title: '',
     detail: '',
     userSequence: 0
   } as IUpdateBoardReq
 
-  private userSequence = 0
   private boardSequence = 0
 
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
-  created(): void {
+  async created() {
     this.boardSequence = Number(this.$route.query.boardSequence)
-    console.log(this.boardSequence)
+    await this.boardDetail()
+  }
+
+  private async boardDetail() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    this.boardInfo = await boardDetail(this.boardSequence)
+    console.log(this.boardInfo)
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
   }
 
   /********************************************************************************
@@ -93,7 +102,9 @@ export default class boardWrite extends Vue {
     })
     const response: IUpdateBoardReq = await UpdateBoard(this.formData, this.boardSequence)
     if (StringUtil.isNotEmpty(response)) {
-      await this.$router.push('/')
+      if (this.token) {
+        await this.$router.push('/board/board-detail')
+      }
     }
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
@@ -105,6 +116,7 @@ export default class boardWrite extends Vue {
         this.$router.push('/')
       }
     })
+    commonStore.CHECK_LOGIN()
   }
 }
 
