@@ -1,24 +1,30 @@
 <template>
-  <div>
-    <h2>회원 목록</h2>
-    <v-data-table
-      :headers="headers"
-      :items="users"
-      :items-per-page="itemsPerPage"
-      :search="search"
-      :page.sync="page"
-      :total-items="totalUsers"
-      :loading="loading"
-      @input="fetchUserList"
-    />
+  <div id="container" class="line">
+    <div class="content dynamic-layout">
+      <div class="rank-wrap">
+        <div>
+          <h2>회원 목록</h2>
+          <v-data-table
+            :headers="headers"
+            :items="users"
+            :items-per-page="itemsPerPage"
+            :search="search"
+            :page.sync="page"
+            :total-items="totalUsers"
+            :loading="loading"
+            @input="fetchUserList"
+          />
 
-    <v-pagination
-      v-if="totalPages > 1"
-      v-model="page"
-      :length="totalPages"
-      total-visible="7"
-      @input="fetchUserList"
-    />
+          <v-pagination
+            v-if="totalPages > 1"
+            v-model="page"
+            :length="totalPages"
+            total-visible="7"
+            @input="fetchUserList"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
