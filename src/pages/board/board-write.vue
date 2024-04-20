@@ -75,7 +75,7 @@ export default class boardWrite extends Vue {
       this.$nuxt.$loading.start()
     })
     const response: ICreate = await CreateBoard(this.formData)
-    if (StringUtil.isNotEmpty(response)) {
+    if (StringUtil.isNotEmpty(response.createBoard === 'Y')) {
       await this.$router.push('/')
     }
     this.$nextTick(() => {

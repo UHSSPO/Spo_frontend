@@ -41,7 +41,7 @@
                     type="text"
                     class="mr-3"
                   />
-                  <button class="board-detail-edit-button mr-3" @click="editComment(boardInfo.boardCommentSequence)">
+                  <button class="board-detail-edit-button mr-3" @click="editComment()">
                     댓글 수정하기
                   </button>
                   <button class="board-detail-edit-button" @click="isCommentCheck = !isCommentCheck">
@@ -66,22 +66,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div v-if="isCommentCheck" class="board-detail-comments-write-wrap">
-              <h2 class="board-detail-comments-write-title">
-                댓글 수정
-              </h2>
-              <s-text-field
-                v-model="formData.comment"
-                max-length="20"
-                placeholder="수정할 댓글을 입력해주세요!"
-                :required="true"
-                :single-line="true"
-                type="text"
-              />
-              <button class="board-detail-edit-button" @click="editComment()">
-                댓글 수정하기
-              </button>
             </div>
 
             <div class="board-detail-comments-write-wrap">
@@ -119,7 +103,6 @@ import {
   IBoardDetail,
   IUpdateBoardCommentReq,
   ISpoBoardComment,
-  IUpdateComment
 } from '~/types/board/board'
 import { boardDetail, CreateComment, DeleteBoard, DeleteBoardComment, UpdateComment } from '~/api/board'
 const common = namespace(Namespace.COMMON)
@@ -147,15 +130,10 @@ export default class Board extends Vue {
   private updateCommentData = {
     comment: '',
     userSequence: 0
-  } as IUpdateComment
-
-  // private formData = {
-  //   comment: ''
-  // } as ICreateComment,IUpdateBoardCommentReq
+  } as IUpdateBoardCommentReq
 
   async created() {
     this.boardSequence = Number(this.$route.query.boardSequence)
-    this.boardCommentSequence = Number(this.$route.query.boardCommentSequence)
     await this.boardDetail()
   }
 
@@ -164,6 +142,7 @@ export default class Board extends Vue {
       this.$nuxt.$loading.start()
     })
     this.boardInfo = await boardDetail(this.boardSequence)
+    console.log(this.boardInfo)
     this.boardAuth = this.userInfo?.userSequence === this.boardInfo?.userSequence
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
@@ -192,7 +171,7 @@ export default class Board extends Vue {
       this.$nuxt.$loading.start()
     })
     const response: IUpdateBoardCommentReq = await UpdateComment(this.updateCommentData, this.boardCommentSequence)
-    if (StringUtil.isNotEmpty(response)) {
+    if (StringUtil.isNotEmpty(response.updateYn === 'Y')) {
       commonStore.ADD_DIALOG({
         id: 'SUCCESS_UPDATE',
         text: '수정이 완료 됐어요',
@@ -208,50 +187,43 @@ export default class Board extends Vue {
   }
 
   private async deleteComment(boardCommentSequence:number) {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
     const response = await DeleteBoardComment(boardCommentSequence)
-    if (StringUtil.isNotEmpty(response)) {
-      await this.$router.push('/')
+    console.log(response)
+    if (StringUtil.isNotEmpty(response.deleteYn === 'Y')) {
       commonStore.ADD_DIALOG({
-        id: 'DELETE',
+        id: 'DELETE_COMMENT',
         text: '댓글이 삭제되었습니다!',
-        callback: () => {
-          this.$router.push('/')
-        },
-      })
-    } else {
-      console.error('댓글 삭제 실패')
-      commonStore.ADD_DIALOG({
-        id: 'DELETE',
-        text: '댓글 삭제에 실패했습니다.',
-        callback: () => {
-          this.$router.push('/')
-        },
+        callback: async () => {
+          await this.boardDetail()
+        }
       })
     }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
   }
 
   private async deleteBoard(boardSequence: number) {
-    // 게시글 삭제 요청
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
     const response = await DeleteBoard(boardSequence)
-    if (StringUtil.isNotEmpty(response)) {
+    if (StringUtil.isNotEmpty(response.deleteYn === 'Y')) {
       await this.$router.push('/')
       commonStore.ADD_DIALOG({
         id: 'DELETE',
         text: '게시글이 삭제되었습니다!',
-        callback: () => {
-          this.$router.push('/')
-        },
-      })
-    } else {
-      console.error('게시글 삭제 실패')
-      commonStore.ADD_DIALOG({
-        id: 'DELETE',
-        text: '게시글 삭제에 실패했습니다.',
-        callback: () => {
-          this.$router.push('/')
-        },
+        callback: async () => {
+          await this.boardDetail()
+        }
       })
     }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
   }
 
   private async submitComment(boardSequence:number) {
@@ -262,18 +234,18 @@ export default class Board extends Vue {
       this.$nuxt.$loading.start()
     })
     const response: ICreateComment = await CreateComment(this.formData, this.boardSequence)
-    if (StringUtil.isNotEmpty(response)) {
-      await this.$router.push('/')
+    if (StringUtil.isNotEmpty(response.createYn === 'Y')) {
+      this.formData.comment = ''
+      commonStore.ADD_DIALOG({
+        id: 'CREATE',
+        text: '댓글이 생성되었습니다!',
+        callback: async () => {
+          await this.boardDetail()
+        },
+      })
     }
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
-    })
-    commonStore.ADD_DIALOG({
-      id: 'CREATE',
-      text: '댓글이 생성되었습니다!',
-      callback: () => {
-        this.$router.push('/')
-      }
     })
   }
 

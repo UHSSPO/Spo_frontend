@@ -50,25 +50,25 @@ export interface IUpdateBoardReq {
   detail:string // 내용
   title:string // 제목
   userSequence:number // 유저 일련번호
+  updateYn : string // 업데이트 여부
+
 }
 
 export interface IUpdateBoardCommentReq{
   comment: string // 댓글
   userSequence: number // 유저 일련번호
+  updateYn : string // 업데이트 여부
 }
 
 // 게시판 글 생성
 export interface ICreate{
   title:string // 제목
   detail:string // 내용
+  createBoard:string // 등록여부
 }
 
 // 게시판 댓글 등록
 export interface ICreateComment{
   comment:string // 댓글
-}
-
-export interface IUpdateComment {
-  comment:string // 댓글
-  userSequence: number // 유저 일련번호
+  createYn:string // 등록여부
 }

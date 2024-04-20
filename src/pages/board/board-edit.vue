@@ -69,13 +69,14 @@ export default class boardWrite extends Vue {
   } as IUpdateBoardReq
 
   private boardSequence = 0
-
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
   async created() {
     this.boardSequence = Number(this.$route.query.boardSequence)
     await this.boardDetail()
+    this.formData.title = this.boardInfo.title
+    this.formData.detail = this.boardInfo.detail
   }
 
   private async boardDetail() {
@@ -83,7 +84,9 @@ export default class boardWrite extends Vue {
       this.$nuxt.$loading.start()
     })
     this.boardInfo = await boardDetail(this.boardSequence)
+
     console.log(this.boardInfo)
+    console.log(this.boardInfo.userSequence)
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
@@ -93,30 +96,33 @@ export default class boardWrite extends Vue {
    * Method (Event, Business Logic)
    ********************************************************************************/
 
-  private async editPost() {
-    if (StringUtil.isEmpty(this.formData.title) && StringUtil.isEmpty(this.formData.detail)) {
-      return false
+  private async editPost(boardSequence:number) {
+    if (StringUtil.isEmpty(this.formData.title) || StringUtil.isEmpty(this.formData.detail)) {
+      commonStore.ADD_DIALOG({
+        id: 'ERROR_EDIT',
+        text: '수정 할 제목과 내용을 입력 해 주세요',
+      })
     }
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
     const response: IUpdateBoardReq = await UpdateBoard(this.formData, this.boardSequence)
-    if (StringUtil.isNotEmpty(response)) {
-      if (this.token) {
-        await this.$router.push('/board/board-detail')
-      }
+    if (StringUtil.isNotEmpty(response.updateYn === 'Y')) {
+      commonStore.ADD_DIALOG({
+        id: 'UPDATE',
+        text: '게시글이 수정되었습니다!',
+        callback: async () => {
+          if (this.token) {
+            await this.$router.push({
+              path: '/board/board-detail',
+            })
+          }
+        }
+      })
     }
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
-    commonStore.ADD_DIALOG({
-      id: 'UPDATE',
-      text: '게시글이 수정되었습니다!',
-      callback: () => {
-        this.$router.push('/')
-      }
-    })
-    commonStore.CHECK_LOGIN()
   }
 }
 
