@@ -48,7 +48,7 @@
                     취소
                   </button>
                 </div>
-                <div v-else class="board-detail-comment-content">
+                <div v-else-if="item.deleteYn !== 'Y'" class="board-detail-comment-content">
                   <ul class="dis-flex">
                     <li>
                       {{ item.comment }}
@@ -142,7 +142,6 @@ export default class Board extends Vue {
       this.$nuxt.$loading.start()
     })
     this.boardInfo = await boardDetail(this.boardSequence)
-    console.log(this.boardInfo)
     this.boardAuth = this.userInfo?.userSequence === this.boardInfo?.userSequence
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
@@ -191,8 +190,7 @@ export default class Board extends Vue {
       this.$nuxt.$loading.start()
     })
     const response = await DeleteBoardComment(boardCommentSequence)
-    console.log(response)
-    if (StringUtil.isNotEmpty(response.deleteYn === 'Y')) {
+    if (StringUtil.isNotEmpty(response)) {
       commonStore.ADD_DIALOG({
         id: 'DELETE_COMMENT',
         text: '댓글이 삭제되었습니다!',
@@ -210,14 +208,14 @@ export default class Board extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    const response = await DeleteBoard(boardSequence)
+    const response = await DeleteBoard(this.boardSequence)
     if (StringUtil.isNotEmpty(response.deleteYn === 'Y')) {
-      await this.$router.push('/')
       commonStore.ADD_DIALOG({
         id: 'DELETE',
         text: '게시글이 삭제되었습니다!',
         callback: async () => {
           await this.boardDetail()
+          this.$router.push('/')
         }
       })
     }
@@ -254,6 +252,7 @@ export default class Board extends Vue {
     this.boardCommentSequence = boardCommentInfo.boardCommentSequence
     this.updateCommentData.comment = boardCommentInfo.comment
     this.updateCommentData.userSequence = boardCommentInfo.userSequence
+    this.boardSequence = boardCommentInfo.boardSequence
   }
 }
 </script>

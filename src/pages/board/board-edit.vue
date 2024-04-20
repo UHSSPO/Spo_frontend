@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { Component, namespace, Vue, Watch } from 'nuxt-property-decorator'
+import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
 import { Namespace } from '~/util/Namespace'
@@ -115,6 +115,9 @@ export default class boardWrite extends Vue {
           if (this.token) {
             await this.$router.push({
               path: '/board/board-detail',
+              query: {
+                boardSequence: this.boardSequence.toString()
+              }
             })
           }
         }
