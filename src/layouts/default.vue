@@ -18,7 +18,7 @@
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="movePage('')">
+            <v-list-item-title @click="movePage('survey')">
               성향분석
             </v-list-item-title>
           </v-list-item>
@@ -26,6 +26,12 @@
           <v-list-item>
             <v-list-item-title @click="movePage('')">
               개인추천
+            </v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title @click="movePage('')">
+              모의투자
             </v-list-item-title>
           </v-list-item>
 
@@ -117,6 +123,9 @@
           </li>
           <li>
             <a href="#">개인추천</a>
+          </li>
+          <li>
+            <a @click="movePage('')">모의투자</a>
           </li>
           <li class="menu_search_list">
             <div>
