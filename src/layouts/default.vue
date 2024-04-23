@@ -122,7 +122,7 @@
             <a @click="movePage('survey')">성향분석</a>
           </li>
           <li>
-            <a href="#">개인추천</a>
+            <a @click="onClickPicklist(userInfo.userSequence)">개인추천</a>
           </li>
           <li>
             <a @click="movePage('')">모의투자</a>
@@ -333,6 +333,13 @@ export default class extends Vue {
           stockInfoSequence: stockInfoSequence.toString()
         }
       })
+    }
+  }
+
+  private onClickPicklist(userSequence: number) {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.$router.push(`/picklist?userSequence=${userSequence}`)
     }
   }
 }
