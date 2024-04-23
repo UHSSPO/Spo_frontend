@@ -24,7 +24,7 @@
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="movePage('')">
+            <v-list-item-title @click="movePage('picklist')">
               개인추천
             </v-list-item-title>
           </v-list-item>
@@ -122,7 +122,7 @@
             <a @click="movePage('survey')">성향분석</a>
           </li>
           <li>
-            <a @click="onClickPicklist(userInfo.userSequence)">개인추천</a>
+            <a @click="movePage('picklist')">개인추천</a>
           </li>
           <li>
             <a @click="movePage('')">모의투자</a>
@@ -333,13 +333,6 @@ export default class extends Vue {
           stockInfoSequence: stockInfoSequence.toString()
         }
       })
-    }
-  }
-
-  private onClickPicklist(userSequence: number) {
-    commonStore.CHECK_LOGIN()
-    if (this.token) {
-      this.$router.push(`/picklist?userSequence=${userSequence}`)
     }
   }
 }

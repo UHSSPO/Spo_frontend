@@ -16,6 +16,7 @@ export interface ISelectMyInfoRes {
   nickName: string; // 닉네임
   dateOfBirth: string; // 생년월일
   interestStock: Array<IInterestStock>
+  commendPersonalStock: Array<ICommendPersonalStock>
 }
 
 export interface IChangePasswordReqBody {
@@ -42,4 +43,17 @@ export interface IinvestPropensityReqBody {
 
 export interface IinvestPropensityRes {
   investPropensity: string // 투자성향 05
+}
+
+export interface ICommendPersonalStock {
+  stockInfoSequence: number // 주식 상장 정보 일련번호
+  basDt: string // 기준일자 (예: "20231218")
+  crno: string // 법인등록번호 (예: "1101110043870")
+  srtnCd: string // 단축코드 (예: "A00123")
+  corpNm: string // 법인명 (예: "삼성전자")
+  itmsNm: string // 종목명 (예: "삼성전자")
+  mrktCtg: string // 시장구분 (예: "KOSPI")
+  tradeSuspendYn: string // 거래정지 여부 (예: "N")
+  badData: string // 부실 데이터 여부 (예: "N")
+  updateAt: string; // 업데이트 일자 (예: "20231218")
 }
