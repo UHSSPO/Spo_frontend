@@ -4,31 +4,36 @@
       <div class="rank-wrap">
         <div class="picklist-content">
           <h1>주식 추천</h1>
-          <div v-for="(stock, index) in stockInfo" :key="index" class="card">
-            <h2>{{ stock.srtnCd }}</h2>
-            <p>{{ stock.mrktCtg }}</p>
-            <p>{{ stock.itmsNm }}</p>
-          </div>
-          <!--          <div v-if="loading">-->
-          <!--            로딩 중...-->
-          <!--          </div>-->
-          <!--          <div v-else>-->
-          <!--            <div v-if="error" class="error">-->
-          <!--              {{ error }}-->
-          <!--            </div>-->
-          <!--            <div v-else>-->
-          <!--              <div v-if="recommendations.length === 0">-->
-          <!--                추천 로직을 실행 중입니다. 잠시만 기다려주세요...-->
-          <!--              </div>-->
-          <!--              <div v-else>-->
-          <!--                <div v-for="(recommendation, index) in recommendations" :key="index" class="card">-->
-          <!--                  <h2>{{ recommendation.symbol }}</h2>-->
-          <!--                  <p>{{ recommendation.description }}</p>-->
-          <!--                  <p>추천: {{ recommendation.rating }}</p>-->
-          <!--                </div>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
+          <router-link v-for="(stock, index) in stockInfo" :key="index" :to="{ path: '/detail', query: { stockInfoSequence: stock.stockInfoSequence.toString() } }">
+            <div class="card" @click="onClickToDetails(stock.stockInfoSequence)">
+              <h2>{{ stock.srtnCd }}</h2>
+              <p>{{ stock.mrktCtg }}</p>
+              <p>{{ stock.itmsNm }}</p>
+            </div>
+          </router-link>
+          <router-link v-if="!surveyDone" to="/survey">
+            성향 분석 바로 하러가기
+          </router-link>
+          <!--                    <div v-if="loading">-->
+          <!--                      로딩 중...-->
+          <!--                    </div>-->
+          <!--                    <div v-else>-->
+          <!--                      <div v-if="error" class="error">-->
+          <!--                        {{ error }}-->
+          <!--                      </div>-->
+          <!--                      <div v-else>-->
+          <!--                        <div v-if="recommendations.length === 0">-->
+          <!--                          추천 로직을 실행 중입니다. 잠시만 기다려주세요...-->
+          <!--                        </div>-->
+          <!--                        <div v-else>-->
+          <!--                          <div v-for="(recommendation, index) in recommendations" :key="index" class="card">-->
+          <!--                            <h2>{{ recommendation.symbol }}</h2>-->
+          <!--                            <p>{{ recommendation.description }}</p>-->
+          <!--                            <p>추천: {{ recommendation.rating }}</p>-->
+          <!--                          </div>-->
+          <!--                        </div>-->
+          <!--                      </div>-->
+          <!--                    </div>-->
         </div>
       </div>
     </div>
@@ -40,17 +45,17 @@ import { Vue, Component } from 'vue-property-decorator'
 import { getDetail, getPicklist } from '~/api/stock'
 import { IStockInfo } from '~/types/details/details'
 import { ICommendPersonalStock, ISelectMyInfoRes } from '~/types/user/user'
+import { commonStore } from '~/util/store-accessor'
 
 @Component
 export default class Picklist extends Vue {
   /********************************************************************************
      * Variables (Local, VUEX)
      ********************************************************************************/
-  private stockInfo = {} as ICommendPersonalStock
-  loading = true
-  error: string | null = null
-  recommendations: any[] = []
-  stockInfoSequence = 0
+  private stockInfo: ICommendPersonalStock[] = []
+  private loading = true
+  private error = null as string | null
+  private surveyDone = true
 
   /********************************************************************************
    * Life Cycle
@@ -68,18 +73,18 @@ export default class Picklist extends Vue {
       this.$nuxt.$loading.finish()
     })
   }
+
+  private onClickToDetails(stockInfoSequence: number) {
+    if (!this.surveyDone) {
+      this.$router.push('/survey')
+    } else {
+      this.$router.push({
+        name: 'detail',
+        query: {
+          stockInfoSequence: stockInfoSequence.toString()
+        }
+      })
+    }
+  }
 }
 </script>
-
-<style scoped>
-.card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.error {
-    color: red;
-}
-</style>
