@@ -14,7 +14,7 @@
       </div>
       <div class="rank-wrap">
         <Rank />
-        <Board />
+        <Board :spo-board="spoBoard" />
       </div>
     </div>
   </div>
@@ -122,7 +122,7 @@ export default class home extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    Promise.all([this.getMarketIndex(), this.getPopularStock(), this.getTheme(), this.getShortInvestment(), this.getLongInvestment(), this.getInterest()])
+    Promise.all([this.getMarketIndex(), this.getPopularStock(), this.getTheme(), this.getShortInvestment(), this.getLongInvestment(), this.getInterest(), this.getSpoBoard()])
       .finally(() => {
         this.$nextTick(() => {
           this.$nuxt.$loading.finish()
