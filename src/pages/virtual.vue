@@ -40,17 +40,19 @@
                 </div>
               </div>
             </div>
-            {{ virtualInfo.spoUserInvestmentStock }}
+            <h1 v-for="(stock, index) in virtualInfo.spoUserInvestmentStock" :key="index">
+              {{ stock.userInvestmentStockSequence }}
+            </h1>
             <s-data-table v-if="virtualInfo.spoUserInvestmentStock" :headers="headers" :items="virtualInfo.spoUserInvestmentStock">
-              <!--              <template #quantity="{item}">-->
-              <!--                {{ item.quantity }}-->
-              <!--              </template>-->
-              <!--              <template #itemValueAmount="{item}">-->
-              <!--                {{ item.itemValueAmount }}-->
-              <!--              </template>-->
-              <!--              <template #itemProfit="{item}">-->
-              <!--                {{ item.itemProfit }}-->
-              <!--              </template>-->
+              <template #quantity="{item}">
+                {{ item.quantity }}
+              </template>
+              <template #itemValueAmount="{item}">
+                {{ item.itemValueAmount }}
+              </template>
+              <template #itemProfit="{item}">
+                {{ item.itemProfit }}
+              </template>
             </s-data-table>
           </div>
         </div>
@@ -80,6 +82,7 @@ export default class Virtual extends Vue {
    * Variables (Local, VUEX)
    ********************************************************************************/
   private virtualInfo = {} as ISpoUserInvestment
+  private virtualInfoYn = {} as ISelectUserInvestmentStart
   private startInvestmentYn = {} as ISelectUserInvestmentStart
   private userInfoSequence = 0
   private isInitialized = false
@@ -99,20 +102,19 @@ export default class Virtual extends Vue {
    * Life Cycle
    ********************************************************************************/
   async created() {
-    if (!this.isInitialized) {
-      const response: ISelectUserInvestmentStart = await startInvestmentYn()
-      if (StringUtil.isNotEmpty(response)) {
-        if (response.startInvestmentYn === 'Y') {
-          commonStore.ADD_DIALOG({
-            id: 'START VIRTUAL',
-            text: '가상 투자금액 1,000,000원이 입금됐어요.'
-          })
-        } else {
-          const startVirtualYn = await startVirtual({ startInvestmentYn: 'N' })
+    const response: ISelectUserInvestmentStart = await startInvestmentYn()
+    if (StringUtil.isNotEmpty(response)) {
+      if (response.startInvestmentYn === 'Y') {
+        commonStore.ADD_DIALOG({
+          id: 'START VIRTUAL',
+          text: '가상 투자금액 1,000,000원이 입금됐어요.'
+        })
+        if (!this.isInitialized) {
+          await startVirtual({ startInvestmentYn: 'N' })
+          this.isInitialized = true
         }
       }
       await this.initVirtual()
-      this.isInitialized = true
     }
   }
 
