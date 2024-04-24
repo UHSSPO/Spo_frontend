@@ -465,6 +465,9 @@
       > .board-list {
         border-bottom: 1px solid $line-color;
         border-top: 1px solid $line-color;
+        .board-title-nickname {
+          width: 10%
+        }
         .board-list-wrap {
           display: flex;
           justify-content: space-between;
@@ -474,7 +477,7 @@
           p {
             margin: 0;
           }
-          .board-listThird {
+          .board-list-third {
             text-align: left;
             width: 310px;
             overflow:hidden;
@@ -869,6 +872,7 @@
         align-items: center;
 
         .board-detail-comment-content {
+          width: 100%;
           display: flex;
           justify-content: space-between;
         }
@@ -1276,7 +1280,7 @@
           }
           width: 100%;
           padding: 20px;
-          .board-listThird {
+          .board-list-third {
             width: 200px !important;
           }
 
@@ -1349,6 +1353,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.dis-flex {
+  display: flex;
+}
+
+.dis-flex-space {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .table-start {

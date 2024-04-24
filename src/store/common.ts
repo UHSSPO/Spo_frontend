@@ -68,7 +68,6 @@ export default class CommonModule extends VuexModule implements ICommonState {
         text: '로그인이 필요한 서비스입니다!'
       })
     } else {
-      console.log('@@')
       return true
     }
   }

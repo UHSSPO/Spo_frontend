@@ -6,60 +6,18 @@
     </div>
     <ul class="board-list-wrap">
       <li class="board-list">
-        <div class="board-list-wrap">
-          <div>해우소</div>
-          <div class="board-listThird">
-            <p>준비는끝났다는얘기</p>
-            <span>서서히 시작되리라 조심스레 예측합니다...</span>
+        <div v-for="(item, idx) in spoBoard.slice(0,5)" :key="idx" class="board-list-wrap">
+          <div class="board-title-nickname">{{ item.nickName }}</div>
+          <div class="board-list-third">
+            <p>
+              {{ item.title }}
+            </p>
+            <span> {{ item.detail }}</span>
           </div>
           <div>
-            <a @click="onClickToBoard">더보기</a>
+            <a @click="onClickToBoard(item.boardSequence)">더보기</a>
           </div>
-          <div>4시간 전</div>
-        </div>
-        <div class="board-list-wrap">
-          <div>해우소</div>
-          <div class="board-listThird">
-            <p>준비는끝났다는얘기</p>
-            <span>서서히 시작되리라 조심스레 예측합니다...</span>
-          </div>
-          <div>
-            <a @click="onClickToBoard">더보기</a>
-          </div>
-          <div>4시간 전</div>
-        </div>
-        <div class="board-list-wrap">
-          <div>해우소</div>
-          <div class="board-listThird">
-            <p>준비는끝났다는얘기</p>
-            <span>서서히 시작되리라 조심스레 예측합니다...</span>
-          </div>
-          <div>
-            <a @click="onClickToBoard">더보기</a>
-          </div>
-          <div>4시간 전</div>
-        </div>
-        <div class="board-list-wrap">
-          <div>해우소</div>
-          <div class="board-listThird">
-            <p>준비는끝났다는얘기</p>
-            <span>서서히 시작되리라 조심스레 예측합니다...</span>
-          </div>
-          <div>
-            <a @click="onClickToBoard">더보기</a>
-          </div>
-          <div>4시간 전</div>
-        </div>
-        <div class="board-list-wrap">
-          <div>해우소</div>
-          <div class="board-listThird">
-            <p>준비는끝났다는얘기</p>
-            <span>서서히 시작되리라 조심스레 예측합니다...</span>
-          </div>
-          <div>
-            <a @click="onClickToBoard">더보기</a>
-          </div>
-          <div>4시간 전</div>
+          <div>{{ StringUtil.dateTimeString(item.createAt) }}</div>
         </div>
       </li>
     </ul>
@@ -68,13 +26,16 @@
 
 <script lang="ts">
 
-import { Component, namespace, Vue } from 'nuxt-property-decorator'
+import { Component, namespace, Prop, Vue } from 'nuxt-property-decorator'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import { IUserDetail } from '~/types/auth/auth'
+import { ISpoBoard } from '~/types/board/board'
+import { boardDetail } from '~/api/board'
 
 const common = namespace(Namespace.COMMON)
 @Component({
+  methods: { boardDetail },
   layout: 'empty',
   components: {}
 })
@@ -82,7 +43,7 @@ export default class Board extends Vue {
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
-
+  @Prop() private readonly spoBoard!: Array<ISpoBoard>
   @common.State private token!: string
   @common.State private userInfo!: IUserDetail
 
@@ -97,10 +58,16 @@ export default class Board extends Vue {
     }
   }
 
-  private onClickToBoard() {
+  private onClickToBoard(boardSequence:number) {
     commonStore.CHECK_LOGIN()
     if (this.token) {
-      this.$router.push('/board/board-detail')
+      // this.$router.push(`/board/board-detail/boardSequence=${boardSequence}`)
+      this.$router.push({
+        path: '/board/board-detail',
+        query: {
+          boardSequence: boardSequence.toString()
+        }
+      })
     }
   }
 }
