@@ -30,7 +30,7 @@
               <h2 class="board-detail-comments-title">
                 댓글
               </h2>
-              <div v-for="(item, index) in boardInfo.boardComment" :key="index" class="board-detail-comment">
+              <div v-for="(item, index) in boardInfo.boardComment" v-if="item.deleteYn !== 'Y'" :key="index" class="board-detail-comment">
                 <div v-if="isCommentCheck && boardCommentSequence === item.boardCommentSequence" class="dis-flex-space">
                   <s-text-field
                     v-model="updateCommentData.comment"
@@ -48,7 +48,7 @@
                     취소
                   </button>
                 </div>
-                <div v-else-if="item.deleteYn !== 'Y'" class="board-detail-comment-content">
+                <div class="board-detail-comment-content">
                   <ul class="dis-flex">
                     <li>
                       {{ item.comment }}

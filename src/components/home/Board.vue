@@ -7,8 +7,8 @@
     <ul class="board-list-wrap">
       <li class="board-list">
         <div v-for="(item, idx) in spoBoard.slice(0,5)" :key="idx" class="board-list-wrap">
-          <div>{{ item.nickName }}</div>
-          <div class="board-listThird">
+          <div class="board-title-nickname">{{ item.nickName }}</div>
+          <div class="board-list-third">
             <p>
               {{ item.title }}
             </p>
@@ -17,7 +17,7 @@
           <div>
             <a @click="onClickToBoard(item.boardSequence)">더보기</a>
           </div>
-          <div>{{ item.createAt }}</div>
+          <div>{{ StringUtil.dateTimeString(item.createAt) }}</div>
         </div>
       </li>
     </ul>
