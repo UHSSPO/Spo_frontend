@@ -40,10 +40,35 @@
                 </div>
               </div>
             </div>
-            <h1 v-for="(stock, index) in virtualInfo.spoUserInvestmentStock" :key="index">
+            <h1 v-for="(stock, index) in userInvestmentStock" :key="index">
               {{ stock.userInvestmentStockSequence }}
             </h1>
-            <s-data-table v-if="virtualInfo.spoUserInvestmentStock" :headers="headers" :items="virtualInfo.spoUserInvestmentStock">
+            <s-text-field
+              v-model="search"
+              placeholder="종목명 검색"
+              class="table-input"
+              :single-line="true"
+              :hide-details="true"
+              :append-icon="true"
+            />
+            <!--            <s-text-field-->
+            <!--              v-model="search"-->
+            <!--              placeholder="종목명 검색"-->
+            <!--              @input="searchStock"-->
+            <!--            />-->
+            <!--            <v-list v-if="searchStockValue && StringUtil.isNotEmpty(search)" class="search-list">-->
+            <!--              <v-list-item-->
+            <!--                v-for="(item, index) in searchStockValue"-->
+            <!--                :key="index"-->
+            <!--                class="search-list-item"-->
+            <!--                @click="stockDetail(item.stockInfoSequence)"-->
+            <!--              >-->
+            <!--                <v-list-item-title>-->
+            <!--                  {{ item.itmsNm }}-->
+            <!--                </v-list-item-title>-->
+            <!--              </v-list-item>-->
+            <!--            </v-list>-->
+            <s-data-table v-if="userInvestmentStock" :headers="headers" :items="userInvestmentStock" :is-search="false" :search="search">
               <template #quantity="{item}">
                 {{ item.quantity }}
               </template>
@@ -63,6 +88,7 @@
 
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
+import _ from 'lodash'
 import { Namespace } from '~/util/Namespace'
 import SDataTable from '~/components/common/SDataTable.vue'
 import { ISelectUserInvestmentStart, ISpoUserInvestment, ISpoUserInvestmentStock } from '~/types/virtual/virtual'
@@ -71,21 +97,27 @@ import { commonStore } from '~/util/store-accessor'
 import { getVirtualUser, startInvestmentYn, startVirtual } from '~/api/virtual'
 import { IDataTableHeader } from '~/types/common'
 import { ISelectMyInfoRes } from '~/types/user/user'
+import STextField from '~/components/common/STextField.vue'
+import { ISearchStockInfo } from '~/types/home/home'
+import { Stock } from '~/api/stock'
 
 const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
-  components: { SDataTable },
+  components: { STextField, SDataTable },
 })
 export default class Virtual extends Vue {
   /********************************************************************************
    * Variables (Local, VUEX)
    ********************************************************************************/
   private virtualInfo = {} as ISpoUserInvestment
-  private virtualInfoYn = {} as ISelectUserInvestmentStart
+  private userInvestmentStock = [] as Array<ISpoUserInvestmentStock>
   private startInvestmentYn = {} as ISelectUserInvestmentStart
+  private searchStockValue = [] as Array<ISearchStockInfo>
   private userInfoSequence = 0
   private isInitialized = false
+  private search = ''
+  @common.State private stockList!: Array<ISearchStockInfo>
 
   @common.State private token!: string
 
@@ -116,7 +148,13 @@ export default class Virtual extends Vue {
       }
       await this.initVirtual()
     }
+
+    this.initCommend()
   }
+
+  /********************************************************************************
+   * Method (Event, Business Logic)
+   ********************************************************************************/
 
   private async initVirtual() {
     this.userInfoSequence = Number(this.$route.query.userSequence)
@@ -131,6 +169,45 @@ export default class Virtual extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
+  }
+
+  private initCommend() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    Promise.all([this.getStock()])
+      .finally(() => {
+        this.$nextTick(() => {
+          this.$nuxt.$loading.finish()
+        })
+      })
+  }
+
+  private getStock() {
+    Stock().then((response: Array<ISearchStockInfo>) => {
+      commonStore.ADD_STOCK_LIST(response)
+      this.searchStockValue = this.stockList
+    })
+  }
+
+  private searchStock() {
+    const lowerCaseSearch = this.search.toLowerCase()
+    this.searchStockValue = _.filter(this.searchStockValue, (item: ISearchStockInfo) => {
+      return item.itmsNm.toLowerCase().includes(lowerCaseSearch)
+    })
+  }
+
+  private stockDetail(stockInfoSequence: number) {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.search = ''
+      this.$router.push({
+        name: 'detail',
+        query: {
+          stockInfoSequence: stockInfoSequence.toString()
+        }
+      })
+    }
   }
 }
 
