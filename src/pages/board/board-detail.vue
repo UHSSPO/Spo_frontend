@@ -77,7 +77,6 @@
               </h2>
               <s-text-field
                 v-model="formData.comment"
-                max-length="20"
                 placeholder="댓글을 입력해주세요!"
                 :required="true"
                 :single-line="true"
