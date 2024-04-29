@@ -34,32 +34,35 @@
                 <div v-if="isCommentCheck && boardCommentSequence === item.boardCommentSequence" class="dis-flex-space">
                   <s-text-field
                     v-model="updateCommentData.comment"
-                    max-length="20"
                     placeholder="수정할 댓글을 입력해주세요!"
                     :required="true"
                     :single-line="true"
                     type="text"
                     class="mr-3"
                   />
-                  <button class="board-detail-edit-button mr-3" @click="editComment()">
-                    댓글 수정하기
-                  </button>
-                  <button class="board-detail-edit-button" @click="isCommentCheck = !isCommentCheck">
-                    취소
-                  </button>
+                  <div class="flex-center">
+                    <s-button class="s-button mr-3" @click="editComment()">
+                      댓글 수정하기
+                    </s-button>
+                    <s-button @click="isCommentCheck = !isCommentCheck">
+                      취소
+                    </s-button>
+                  </div>
                 </div>
-                <div class="board-detail-comment-content">
-                  <ul class="dis-flex">
-                    <li>
+                <div class="board-detail-comment-content" v-else>
+                  <div class="dis-flex-space wd-95">
+                    <div>
                       {{ item.comment }}
-                    </li>
-                    <li>
-                      {{ item.nickName }}
-                    </li>
-                    <li>
-                      {{ StringUtil.dateTimeString(item.createAt) }}
-                    </li>
-                  </ul>
+                    </div>
+                    <div class="mr-6 dis-flex">
+                      <div class="mr-2">
+                        {{ item.nickName }}
+                      </div>
+                      <div>
+                        {{ StringUtil.dateTimeString(item.createAt) }}
+                      </div>
+                    </div>
+                  </div>
                   <div v-if="item.userSequence === userInfo.userSequence" class="board-detail-comment-board">
                     <a @click="onClickUpdateComment(item)">수정</a>
                     <a @click="deleteComment(item.boardCommentSequence)">삭제</a>
@@ -97,6 +100,7 @@ import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import { IUserDetail } from '~/types/auth/auth'
 import STextField from '~/components/common/STextField.vue'
+import SButton from '~/components/common/SButton.vue'
 import StringUtil from '~/util/StringUtil'
 import {
   ICreateComment,
@@ -108,7 +112,7 @@ import { boardDetail, CreateComment, DeleteBoard, DeleteBoardComment, UpdateComm
 const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
-  components: { STextField },
+  components: { STextField, SButton },
   name: 'createComment'
 })
 export default class Board extends Vue {
