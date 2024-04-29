@@ -7,8 +7,24 @@
           <div v-if="loading" class="loading">
             로딩 중...
           </div>
-          <router-link v-for="(stock, index) in stockInfo" :key="index" :to="{ path: '/detail', query: { stockInfoSequence: stock.stockInfoSequence.toString() } }">
-            <div class="card" @click="onClickToDetails(stock.stockInfoSequence)">
+          <!--          <router-link v-for="(stock, index) in stockInfo" :key="index" :to="{ path: '/detail', query: { stockInfoSequence: stock.stockInfoSequence.toString() } }" class="picklist-item">-->
+          <!--            <div class="card" @click="onClickToDetails(stock.stockInfoSequence)">-->
+          <!--              <h2>{{ stock.itmsNm }}</h2>-->
+          <!--              <p>{{ stock.mrktCtg }}</p>-->
+          <!--              <h1 class="ItemValue">-->
+          <!--                {{ stockInfo2?.priceInfo?.clpr | setNumberComma }} <span>원-->
+          <!--                  <span v-if="stockInfo2?.priceInfo?.fltRt === 0" class="zero"><em>{{ stockInfo2?.priceInfo?.fltRt }}</em></span>-->
+          <!--                  <span v-else :class="{minus: stockInfo2?.priceInfo?.fltRt < 0, plus: stockInfo2?.priceInfo?.fltRt > 0}"><em>{{ stockInfo2?.priceInfo?.fltRt }}</em></span>-->
+          <!--                </span>-->
+          <!--              </h1>-->
+          <!--            </div>-->
+          <!--          </router-link>-->
+          <!--          <router-link v-if="!surveyDone" to="/survey">-->
+          <!--            성향 분석 바로 하러가기-->
+          <!--          </router-link>-->
+
+          <div class="picklist-item">
+            <div v-for="(stock, index) in stockInfo" :key="index" class="card" @click="onClickToDetails(stock.stockInfoSequence)">
               <h2>{{ stock.itmsNm }}</h2>
               <p>{{ stock.mrktCtg }}</p>
               <h1 class="ItemValue">
@@ -18,13 +34,14 @@
                 </span>
               </h1>
             </div>
-          </router-link>
-          <router-link v-if="!surveyDone" to="/survey">
+          </div>
+          <div v-if="!surveyDone" to="/survey">
             성향 분석 바로 하러가기
-          </router-link>
+          </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
