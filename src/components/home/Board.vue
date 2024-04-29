@@ -2,8 +2,12 @@
   <div class="board-wrap">
     <div class="board-title-wrap">
       <h3>게시판</h3>
-      <a @click="onClickToBoardList(boardInfo.boardSequence)">전체 게시판 </a>>
-      <a @click="onClickToBoardWrite(userInfo.userSequence)">게시물 작성하기</a>
+      <div class="board-title-tab">
+        <a class="board-all-tab" @click="onClickToBoardList(boardInfo.boardSequence)">전체 게시판 <v-icon>
+          mdi-chevron-right
+        </v-icon></a>
+        <a @click="onClickToBoardWrite(userInfo.userSequence)">게시물 작성하기</a>
+      </div>
     </div>
     <ul class="board-list-wrap">
       <li class="board-list">
@@ -76,7 +80,10 @@ export default class Board extends Vue {
   }
 
   private onClickToBoardList(boardSequence: number) {
-    this.$router.push('/board/board-list')
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.$router.push('/board/board-list')
+    }
   }
 }
 

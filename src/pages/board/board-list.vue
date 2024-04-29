@@ -1,31 +1,35 @@
 <template>
   <div id="container" class="line">
-    <div class="board-all">
-      <div class="board-title-all">
-        <h3>게시판</h3>
-        <a @click="onClickToBoardWrite(userInfo.userSequence)">게시물 작성하기</a>
-      </div>
-      <ul class="board-list-all">
-        <li class="board-array">
-          <div v-for="(item, index) in board" :key="index" class="board-list-wrap">
-            <div class="board-title-name">
-              {{ item.nickName }}
+    <div class="content dynamic-layout">
+      <div class="rank-wrap">
+        <div class="commend-wrap w-100">
+          <div class="board-wrap board-all">
+            <div class="board-title-all">
+              <h3>게시판</h3>
+              <a @click="onClickToBoardWrite(userInfo.userSequence)">게시물 작성하기</a>
             </div>
-            <div class="board-list-detail">
-              {{ item.title }}
-            </div>
-            <div>
-              {{ item.detail }}
-            </div>
-            <div>
-              <a @click="onClickToBoard(item.boardSequence)">더보기</a>
-            </div>
-            <div>
-              <div>{{ StringUtil.dateTimeString(item.createAt) }}</div>
-            </div>
+            <ul class="board-list-wrap">
+              <li class="board-list">
+                <div v-for="(item, index) in board" :key="index" class="board-list-wrap">
+                  <div class="board-title-nickname">
+                    {{ item.nickName }}
+                  </div>
+                  <div class="board-list-third">
+                    <p>
+                      {{ item.title }}
+                    </p>
+                    <span> {{ item.detail }}</span>
+                  </div>
+                  <div>
+                    <a @click="onClickToBoard(item.boardSequence)">더보기</a>
+                  </div>
+                  <div>{{ StringUtil.dateTimeString(item.createAt) }}</div>
+                </div>
+              </li>
+            </ul>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
