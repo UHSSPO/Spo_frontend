@@ -1,11 +1,15 @@
 <template>
   <div class="board-wrap">
     <div class="board-title-wrap">
-      <h3>게시판</h3>
+      <div>
+        <div class="flex-center">
+          <h3>게시판</h3>
+          <a class="board-all-tab" @click="onClickToBoardList(boardInfo.boardSequence)"><v-icon>
+            mdi-chevron-right
+          </v-icon></a>
+        </div>
+      </div>
       <div class="board-title-tab">
-        <a class="board-all-tab" @click="onClickToBoardList(boardInfo.boardSequence)">전체 게시판 <v-icon>
-          mdi-chevron-right
-        </v-icon></a>
         <a @click="onClickToBoardWrite(userInfo.userSequence)">게시물 작성하기</a>
       </div>
     </div>
