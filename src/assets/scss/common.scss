@@ -446,8 +446,6 @@
       }
     }
   }
-
-
   .board-wrap {
     width: 68%;
     margin: 0 1%;
@@ -456,17 +454,29 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      .board-title-tab {
+        display: flex;
+        //width: 90%;
+        justify-content: space-between;
+      }
+      .board-all-tab {
+        display: flex;
+        align-items: center;
+        position: relative;
+        bottom: 1px;
+      }
     }
     .board-list-wrap {
       margin: 10px 0;
       width: 100%;
       text-align: center;
       padding: 0;
+      border-bottom:  1px solid $line-color;;
       > .board-list {
         border-bottom: 1px solid $line-color;
         border-top: 1px solid $line-color;
         .board-title-nickname {
-          width: 10%
+          width: 20%
         }
         .board-list-wrap {
           display: flex;
@@ -496,6 +506,55 @@
         background: #f8f8f8;
       }
     }
+  }
+
+  .board-all {
+    width: 100%;
+    .board-title-all {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .board-list-wrap{border: 0}
+    //.board-title-all {
+    //  display: flex;
+    //  align-items: center;
+    //  justify-content: space-between;
+    //  padding-bottom: 10px;
+    //  border-bottom: 1px solid $line-color;
+    //}
+    //.board-list-all {
+    //  margin: 10px 0;
+    //  width: 100%;
+    //  text-align: center;
+    //  padding: 0;
+    //  > .board-array {
+    //    border-bottom: 1px solid $line-color;
+    //    .board-title-name {
+    //      width: 10%
+    //    }
+    //    .board-list-all {
+    //      display: flex;
+    //      justify-content: space-between;
+    //      align-items: center;
+    //      padding: 10px;
+    //      border-bottom: 1px solid $line-color;
+    //      p {
+    //        margin: 0;
+    //      }
+    //      .board-list-detail {
+    //        text-align: left;
+    //        width: 310px;
+    //        overflow:hidden;
+    //        text-overflow:ellipsis;
+    //        white-space:nowrap;
+    //      }
+    //    }
+    //    .board-list-all:last-child {
+    //      border: 0;
+    //    }
+    //  }
+    //}
   }
 
   .details-warp {
@@ -1285,7 +1344,7 @@
           }
 
 
-          td, p, span, a{
+          td, p, span, a, div{
             font-size: 0.9em
           }
 
@@ -1311,6 +1370,10 @@
 
           .mypage-item {
             padding: 0;
+          }
+
+          .board-title-tab {
+            width: 80%;
           }
         }
         .result-wrap {

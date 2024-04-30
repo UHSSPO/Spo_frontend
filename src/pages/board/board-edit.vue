@@ -84,9 +84,6 @@ export default class boardWrite extends Vue {
       this.$nuxt.$loading.start()
     })
     this.boardInfo = await boardDetail(this.boardSequence)
-
-    console.log(this.boardInfo)
-    console.log(this.boardInfo.userSequence)
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
