@@ -10,7 +10,6 @@
             <s-text-field
               v-model="formData.title"
               label="제목"
-              max-length="20"
               placeholder="제목을 입력해주세요!"
               :required="true"
               type="text"
@@ -20,14 +19,13 @@
             <s-text-area
               v-model="formData.detail"
               label="내용"
-              max-length="20"
               placeholder="게시글 내용을 입력하세요!"
               :required="true"
               type="text"
             />
           </div>
           <div class="board-write-group board-button-wrap">
-            <button class="board-write-button" @click="editPost()">
+            <button class="board-write-button" @click="editPost">
               게시글 수정하기
             </button>
           </div>
