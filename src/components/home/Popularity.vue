@@ -35,7 +35,7 @@
 <script lang="ts">
 
 import { Component, Emit, namespace, Prop, Vue } from 'nuxt-property-decorator'
-import { IMarketIndex, IPopularStock } from '~/types/home/home'
+import { IPopularStock } from '~/types/home/home'
 import { UpdateInterestStock } from '~/api/stock'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'

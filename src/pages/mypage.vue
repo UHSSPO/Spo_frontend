@@ -291,6 +291,13 @@ export default class myPage extends Vue {
           id: 'CHANGE NICKNAME',
           text: '닉네임이 변경됐습니다.',
           callback: () => {
+            this.$nextTick(() => {
+              this.$nuxt.$loading.start()
+            })
+            commonStore.UPDATE_USER()
+            this.$nextTick(() => {
+              this.$nuxt.$loading.finish()
+            })
             this.$router.push('/')
           }
         })
