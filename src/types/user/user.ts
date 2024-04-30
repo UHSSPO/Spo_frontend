@@ -56,4 +56,8 @@ export interface ICommendPersonalStock {
   tradeSuspendYn: string // 거래정지 여부 (예: "N")
   badData: string // 부실 데이터 여부 (예: "N")
   updateAt: string; // 업데이트 일자 (예: "20231218")
+  clpr: number,
+  fltRt: number,
+  trqu: number,
+  mrktTotAmt: number
 }
