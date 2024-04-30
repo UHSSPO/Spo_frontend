@@ -217,8 +217,7 @@ export default class Board extends Vue {
         id: 'DELETE',
         text: '게시글이 삭제되었습니다!',
         callback: async () => {
-          await this.boardDetail()
-          this.$router.push('/')
+          this.$router.push('/board/board-list')
         }
       })
     }
