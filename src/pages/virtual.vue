@@ -47,27 +47,23 @@
               v-model="search"
               placeholder="종목명 검색"
               class="table-input"
+              @input="searchStock"
               :single-line="true"
               :hide-details="true"
               :append-icon="true"
             />
-            <!--            <s-text-field-->
-            <!--              v-model="search"-->
-            <!--              placeholder="종목명 검색"-->
-            <!--              @input="searchStock"-->
-            <!--            />-->
-            <!--            <v-list v-if="searchStockValue && StringUtil.isNotEmpty(search)" class="search-list">-->
-            <!--              <v-list-item-->
-            <!--                v-for="(item, index) in searchStockValue"-->
-            <!--                :key="index"-->
-            <!--                class="search-list-item"-->
-            <!--                @click="stockDetail(item.stockInfoSequence)"-->
-            <!--              >-->
-            <!--                <v-list-item-title>-->
-            <!--                  {{ item.itmsNm }}-->
-            <!--                </v-list-item-title>-->
-            <!--              </v-list-item>-->
-            <!--            </v-list>-->
+              <v-list v-if="searchStockValue && StringUtil.isNotEmpty(search)" class="search-list">
+                <v-list-item
+                  v-for="(item, index) in searchStockValue"
+                  :key="index"
+                  class="search-list-item"
+                  @click="stockDetail(item.stockInfoSequence)"
+                >
+                  <v-list-item-title>
+                    {{ item.itmsNm }}
+                  </v-list-item-title>
+                </v-list-item>
+              </v-list>
             <s-data-table v-if="userInvestmentStock" :headers="headers" :items="userInvestmentStock" :is-search="false" :search="search">
               <template #quantity="{item}">
                 {{ item.quantity }}
@@ -149,7 +145,7 @@ export default class Virtual extends Vue {
       await this.initVirtual()
     }
 
-    this.initCommend()
+    // this.initCommend()
   }
 
   /********************************************************************************
@@ -171,28 +167,17 @@ export default class Virtual extends Vue {
     })
   }
 
-  private initCommend() {
-    this.$nextTick(() => {
-      this.$nuxt.$loading.start()
-    })
-    Promise.all([this.getStock()])
-      .finally(() => {
-        this.$nextTick(() => {
-          this.$nuxt.$loading.finish()
-        })
-      })
-  }
+  private initCommend() {}
 
   private getStock() {
     Stock().then((response: Array<ISearchStockInfo>) => {
       commonStore.ADD_STOCK_LIST(response)
-      this.searchStockValue = this.stockList
     })
   }
 
   private searchStock() {
     const lowerCaseSearch = this.search.toLowerCase()
-    this.searchStockValue = _.filter(this.searchStockValue, (item: ISearchStockInfo) => {
+    this.searchStockValue = _.filter(this.stockList, (item: ISearchStockInfo) => {
       return item.itmsNm.toLowerCase().includes(lowerCaseSearch)
     })
   }
