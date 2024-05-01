@@ -46,7 +46,7 @@
       </tr>
       <tr>
         <td colspan="6">
-          <span href="#">더보기</span>
+          <a class="black--text" @click="onClickMypage(userInfo.userSequence)">더보기</a>
         </td>
       </tr>
     </table>
@@ -61,6 +61,7 @@ import { Namespace } from '~/util/Namespace'
 import SToolTip from '~/components/common/SToolTip.vue'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
+import { IUserDetail } from '~/types/auth/auth'
 const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
@@ -73,6 +74,7 @@ export default class Interest extends Vue {
    ********************************************************************************/
   @Prop() private readonly interest!: Array<IInterest>
   @common.State private token!: string
+  @common.State private userInfo!: IUserDetail
 
   private onClickSignUp() {
     this.$router.push('/auth/sign-up')
@@ -86,6 +88,15 @@ export default class Interest extends Vue {
         query: {
           stockInfoSequence: stockInfoSequence.toString()
         }
+      })
+    }
+  }
+
+  private onClickMypage(userInfo: number) {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.$router.push({
+        name: 'mypage',
       })
     }
   }
