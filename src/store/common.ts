@@ -1,12 +1,13 @@
-import { Module, Mutation, VuexModule } from 'vuex-module-decorators'
+import { Module, Mutation, VuexModule, Action } from 'vuex-module-decorators'
 import _ from 'lodash'
 import { IDialog } from '../types/common'
 import { Namespace } from '../util/Namespace'
 import { IUserDetail, IUserInfo } from '~/types/auth/auth'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
-import { IChangePasswordReqBody } from '~/types/user/user'
+import { IChangePasswordReqBody, ISelectMyInfoRes } from '~/types/user/user'
 import { ISearchStockInfo } from '~/types/home/home'
+import { getMyInfo } from '~/api/user'
 
 export interface ICommonState {
   // locales: Array<string>
@@ -27,10 +28,21 @@ export default class CommonModule extends VuexModule implements ICommonState {
   public userPassword = {} as IChangePasswordReqBody
   public stockList = [] as Array<ISearchStockInfo>
 
+  @Action
+  public async UPDATE_USER() {
+    const response = await getMyInfo()
+    this.UPDATE_USER_INFO(response)
+  }
+
   @Mutation
   public ADD_USER_INFO(userInfo: IUserInfo) {
     this.token = userInfo.accessToken
     this.userInfo = userInfo.user
+  }
+
+  @Mutation
+  public UPDATE_USER_INFO(userInfo: IUserDetail) {
+    this.userInfo = userInfo
   }
 
   @Mutation
@@ -68,7 +80,6 @@ export default class CommonModule extends VuexModule implements ICommonState {
         text: '로그인이 필요한 서비스입니다!'
       })
     } else {
-      console.log('@@')
       return true
     }
   }

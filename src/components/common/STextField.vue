@@ -106,3 +106,10 @@ export default class STextField extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.v-messages__message {
+  color: red;
+  margin: 4px 4px;
+}
+</style>
