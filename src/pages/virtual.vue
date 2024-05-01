@@ -43,15 +43,26 @@
             <h1 v-for="(stock, index) in userInvestmentStock" :key="index">
               {{ stock.userInvestmentStockSequence }}
             </h1>
-            <s-text-field
-              v-model="search"
-              placeholder="종목명 검색"
-              class="table-input"
-              @input="searchStock"
-              :single-line="true"
-              :hide-details="true"
-              :append-icon="true"
-            />
+            <div class="virtual-wrap-tit">
+              <div class="virtual-title-wrap">
+                <h3>매수 종목</h3>
+                <s-tool-tip class="virtual-wrap-tit-tool" detail="고객님께서 매수하신 종목이에요." />
+              </div>
+              <div class="virtual-search-wrap">
+                <div class="mr-2 table-field">
+                  <s-text-field
+                    v-model="search"
+                    placeholder="종목명 검색"
+                    class="virtual-search"
+                    :single-line="true"
+                    :hide-details="true"
+                    :append-icon="true"
+                    @input="searchStock"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="search-list-wrap">
               <v-list v-if="searchStockValue && StringUtil.isNotEmpty(search)" class="search-list">
                 <v-list-item
                   v-for="(item, index) in searchStockValue"
@@ -64,6 +75,7 @@
                   </v-list-item-title>
                 </v-list-item>
               </v-list>
+            </div>
             <s-data-table v-if="userInvestmentStock" :headers="headers" :items="userInvestmentStock" :is-search="false" :search="search">
               <template #quantity="{item}">
                 {{ item.quantity }}
@@ -96,11 +108,12 @@ import { ISelectMyInfoRes } from '~/types/user/user'
 import STextField from '~/components/common/STextField.vue'
 import { ISearchStockInfo } from '~/types/home/home'
 import { Stock } from '~/api/stock'
+import SToolTip from '~/components/common/SToolTip.vue'
 
 const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
-  components: { STextField, SDataTable },
+  components: { SToolTip, STextField, SDataTable },
 })
 export default class Virtual extends Vue {
   /********************************************************************************
@@ -123,7 +136,8 @@ export default class Virtual extends Vue {
     { text: '매수금액', value: 'itemBuyAmount', align: 'center', width: 120, isSlot: true },
     { text: '손익', value: 'itemProfit', align: 'center', width: 120, isSlot: true },
     { text: '수익률', value: 'itemFltRt', align: 'center', width: 150, isSlot: true },
-    { text: '평균단가', value: 'averageAmount', align: 'center', width: 100, isSlot: true }
+    { text: '평균단가', value: 'averageAmount', align: 'center', width: 100, isSlot: true },
+    { text: '매수 / 매도', value: '<h1>ddd</h1>', align: 'center', width: 100, isSlot: true }
   ] as Array<IDataTableHeader>
 
   /********************************************************************************
