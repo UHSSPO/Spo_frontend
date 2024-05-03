@@ -43,6 +43,15 @@
             <h1 v-for="(stock, index) in userInvestmentStock" :key="index">
               {{ stock.userInvestmentStockSequence }}
             </h1>
+            <s-popup
+              v-if="virtualPopup"
+              close-btn
+              persistent
+              :title="'매수 / 매도'"
+              @close="virtualPopup = false"
+            >
+              <Popup />
+            </s-popup>
             <div class="virtual-wrap-tit">
               <div class="virtual-title-wrap">
                 <h3>매수 종목</h3>
@@ -68,7 +77,7 @@
                   v-for="(item, index) in searchStockValue"
                   :key="index"
                   class="search-list-item"
-                  @click="stockDetail(item.stockInfoSequence)"
+                  @click="virtualPopup = true"
                 >
                   <v-list-item-title>
                     {{ item.itmsNm }}
@@ -109,11 +118,14 @@ import STextField from '~/components/common/STextField.vue'
 import { ISearchStockInfo } from '~/types/home/home'
 import { Stock } from '~/api/stock'
 import SToolTip from '~/components/common/SToolTip.vue'
+import SPopup from '~/components/common/SPopup.vue'
+import Rank from '~/components/home/Rank.vue'
+import Popup from '~/components/virtual/virtual.vue'
 
 const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
-  components: { SToolTip, STextField, SDataTable },
+  components: { Rank, SToolTip, STextField, SDataTable, SPopup, Popup },
 })
 export default class Virtual extends Vue {
   /********************************************************************************
@@ -125,6 +137,7 @@ export default class Virtual extends Vue {
   private searchStockValue = [] as Array<ISearchStockInfo>
   private userInfoSequence = 0
   private isInitialized = false
+  private virtualPopup = false
   private search = ''
   @common.State private stockList!: Array<ISearchStockInfo>
 

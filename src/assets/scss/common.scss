@@ -22,6 +22,20 @@
   color: #90ee90;
 }
 
+.bgBlue {
+  background-color: #007AFF !important;
+  &:hover {
+    background-color: #016ddf !important;
+  }
+}
+
+.bgRed {
+  background-color: #ee6161 !important;
+  &:hover {
+    background-color: #c75252 !important;
+  }
+}
+
 
 .wrap{
   position:relative;
@@ -1033,14 +1047,57 @@
       display: flex;
       justify-content: flex-end;
       .search-list {
-        z-index: 999;
+        z-index: 99;
         width: 191px;
       }
     }
   }
-
-
 }
+
+.popup-wrap {
+  width: 100%;
+  .popup-title {
+    width: 100%;
+    padding: 10px;
+  }
+  .popup-list-wrap {
+    display: flex;
+    justify-content: space-around;
+    .popup-tab-list {
+      width: calc(100% / 2);
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid $line-color;
+      margin-bottom: 10px;
+    }
+  }
+  .popup-field-wrap {
+    padding: 10px;
+    input {text-align: right}
+    .virtual-popup-count {
+      .v-text-field__slot::after {
+        content: '주';
+        display: inline-block;
+      }
+    }
+
+    .virtual-popup-count {
+      .v-text-field__slot::after {
+        content: '주';
+        display: inline-block;
+      }
+    }
+    .virtual-popup-won {
+      .v-text-field__slot::after {
+        content: '원';
+        display: inline-block;
+      }
+    }
+  }
+}
+
+
 
 #container-depth{
   width:100%;
