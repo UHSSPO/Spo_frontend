@@ -50,7 +50,9 @@
               :title="'매수 / 매도'"
               @close="virtualPopup = false"
             >
-              <Popup />
+              <Popup
+                :stock-info-sequence="stockInfoSequence"
+              />
             </s-popup>
             <div class="virtual-wrap-tit">
               <div class="virtual-title-wrap">
@@ -77,7 +79,8 @@
                   v-for="(item, index) in searchStockValue"
                   :key="index"
                   class="search-list-item"
-                  @click="virtualPopup = true"
+                  :virtual-popup="virtualPopup"
+                  @click="virtualOnclick(item.stockInfoSequence)"
                 >
                   <v-list-item-title>
                     {{ item.itmsNm }}
@@ -104,7 +107,7 @@
 </template>
 
 <script lang="ts">
-import { Component, namespace, Vue } from 'nuxt-property-decorator'
+import { Component, namespace, Prop, Vue } from 'nuxt-property-decorator'
 import _ from 'lodash'
 import { Namespace } from '~/util/Namespace'
 import SDataTable from '~/components/common/SDataTable.vue'
@@ -139,8 +142,8 @@ export default class Virtual extends Vue {
   private isInitialized = false
   private virtualPopup = false
   private search = ''
+  private stockInfoSequence = 0
   @common.State private stockList!: Array<ISearchStockInfo>
-
   @common.State private token!: string
 
   private headers = [
@@ -220,6 +223,11 @@ export default class Virtual extends Vue {
         }
       })
     }
+  }
+
+  private virtualOnclick(stockInfoSequence:number) {
+    this.stockInfoSequence = stockInfoSequence
+    this.virtualPopup = true
   }
 }
 
