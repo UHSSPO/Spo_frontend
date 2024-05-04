@@ -3,55 +3,88 @@
     <div class="popup-title">
       <h1>{{ stockInfo.itmsNm }}</h1>
     </div>
-    <ul v-if="tradeType === 'buy'" class="popup-list-wrap">
-      <li class="popup-tab-list bgRed" @click="tradeType='buy'">
-        매수
-      </li>
-      <li class="popup-tab-list" @click="tradeType='sell'">
-        매도
-      </li>
-    </ul>
-    <ul v-if="tradeType === 'sell'" class="popup-list-wrap">
-      <li class="popup-tab-list" @click="tradeType='buy'">
-        매수
-      </li>
-      <li class="popup-tab-list bgBlue" @click="tradeType='sell'">
-        매도
-      </li>
-    </ul>
-    <div class="popup-field-wrap">
-      <s-text-field
-        v-model.number="quantity"
-        label="주문수량"
-        placeholder="몇 주를 구매하실지 입력해주세요!"
-        value="1"
-        class="virtual-popup-count"
-        type="number"
-        :required="true"
-        @input="updateQuantity"
-      />
-      <s-text-field
-        label="금액"
-        :disabled="true"
-        :value="stockInfo.priceInfo?.clpr"
-        class="virtual-popup-won"
-        type="number"
-        :required="true"
-      />
-      <s-text-field
-        label="주문 총액"
-        :disabled="true"
-        :value="totalAmountValue"
-        class="virtual-popup-won"
-        type="number"
-        :required="true"
-      />
-      <s-button v-if="tradeType === 'buy'" class="kbtn-line-solid v-btn--right w-100 bgRed">
-        매수
-      </s-button>
-      <s-button v-if="tradeType === 'sell'" class="kbtn-line-solid v-btn--right w-100 bgBlue">
-        매도
-      </s-button>
+    <div v-if="tradeType === 'buy'" class="popup-content">
+      <ul class="popup-list-wrap">
+        <li class="popup-tab-list bgRed" @click="tradeType='buy'">
+          매수
+        </li>
+        <li class="popup-tab-list" @click="tradeType='sell'">
+          매도
+        </li>
+      </ul>
+      <div class="popup-field-wrap">
+        <s-text-field
+          v-model="quantity"
+          label="주문수량"
+          placeholder="몇 주를 구매하실지 입력해주세요!"
+          value="1"
+          class="virtual-popup-count"
+          type="number"
+          :required="true"
+          @input="updateQuantity"
+        />
+        <s-text-field
+          v-model="priceInfoClpr"
+          label="금액"
+          :disabled="true"
+          class="virtual-popup-won"
+          type="number"
+          :required="true"
+        />
+        <s-text-field
+          v-model="totalAmountValue"
+          label="매수 총액"
+          :disabled="true"
+          class="virtual-popup-won"
+          type="number"
+          :required="true"
+        />
+        <s-button class="kbtn-line-solid v-btn--right w-100 bgRed">
+          매수
+        </s-button>
+      </div>
+    </div>
+    <div v-if="tradeType === 'sell'" class="popup-content">
+      <ul class="popup-list-wrap">
+        <li class="popup-tab-list" @click="tradeType='buy'">
+          매수
+        </li>
+        <li class="popup-tab-list bgBlue" @click="tradeType='sell'">
+          매도
+        </li>
+      </ul>
+
+      <div class="popup-field-wrap">
+        <s-text-field
+          v-model="quantity"
+          label="주문수량"
+          placeholder="몇 주를 판매하실지 입력해주세요!"
+          value="1"
+          class="virtual-popup-count"
+          type="number"
+          :required="true"
+          @input="updateQuantity"
+        />
+        <s-text-field
+          v-model="priceInfoClpr"
+          label="금액"
+          :disabled="true"
+          class="virtual-popup-won"
+          type="number"
+          :required="true"
+        />
+        <s-text-field
+          v-model="totalAmountValue"
+          label="매도 총액"
+          :disabled="true"
+          class="virtual-popup-won"
+          type="number"
+          :required="true"
+        />
+        <s-button class="kbtn-line-solid v-btn--right w-100 bgBlue">
+          매도
+        </s-button>
+      </div>
     </div>
   </div>
 </template>
@@ -77,6 +110,7 @@ export default class Popup extends Vue {
   private stockInfo = {} as IStockInfo
   @Prop() private readonly stockInfoSequence!: number
   private quantity = 1
+  private priceInfoClpr = 0
   private totalAmountValue = 0
 
   created() {
@@ -90,6 +124,7 @@ export default class Popup extends Vue {
     })
     this.stockInfo = await getDetail(this.stockInfoSequence)
     this.totalAmountValue = this.stockInfo.priceInfo?.clpr
+    this.priceInfoClpr = this.stockInfo.priceInfo?.clpr
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
