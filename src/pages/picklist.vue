@@ -2,25 +2,44 @@
   <div id="container" class="line">
     <div class="content dynamic-layout">
       <div class="rank-wrap">
-        <div class="picklist-content">
-          <h1>주식 추천</h1>
-          <div v-if="loading" class="loading">
-            로딩 중...
-          </div>
-          <div class="picklist-item">
-            <div v-for="(stock, index) in stockInfo" :key="index" class="card" @click="onClickToDetails(stock.stockInfoSequence)">
-              <h2>{{ stock.itmsNm }}</h2>
-              <p>{{ stock.mrktCtg }}</p>
-              <h1 class="ItemValue">
-                {{ stock.clpr | setNumberComma }} <span>원
-                  <span v-if="stock.fltRt === 0" class="zero"><em>{{ stock.fltRt }}</em></span>
-                  <span v-else :class="{minus: stock.fltRt < 0, plus: stock.fltRt > 0}"><em>{{ stock.fltRt }}</em></span>
-                </span>
-              </h1>
+        <div class="commend-wrap w-100">
+          <div class="commend-main-title">
+            <div class="commend-main-area">
+              <div class="flex-center">
+                <v-icon>
+                  mdi-finance
+                </v-icon>
+                <h3>SPO에서 직접 기업을 평가하여 추천해주고 있는 </h3><h2>개인추천목록</h2>
+              </div>
+              <div class="commend-main-txt">
+                전년도 재무제표와 손익계산서, 최근 주가현황 등 분석해서 평가 받은 종목들이에요 🙈🙉
+              </div>
             </div>
           </div>
-          <div v-if="!surveyDone" to="/survey">
-            성향 분석 바로 하러가기
+          <div class="picklist-content">
+            <h1>개인 추천</h1>
+            <div v-if="loading" class="loading">
+              <div class="droplet_spinner">
+                <div class="droplet" />
+                <div class="droplet" />
+                <div class="droplet" />
+              </div>
+            </div>
+            <div class="picklist-item">
+              <div v-for="(stock, index) in stockInfo" :key="index" class="card" @click="onClickToDetails(stock.stockInfoSequence)">
+                <h2>{{ stock.itmsNm }}</h2>
+                <p>{{ stock.mrktCtg }}</p>
+                <h1 class="ItemValue">
+                  {{ stock.clpr | setNumberComma }} <span>원
+                    <span v-if="stock.fltRt === 0" class="zero"><em>{{ stock.fltRt }}</em></span>
+                    <span v-else :class="{minus: stock.fltRt < 0, plus: stock.fltRt > 0}"><em>{{ stock.fltRt }}</em></span>
+                  </span>
+                </h1>
+              </div>
+            </div>
+            <div v-if="!surveyDone" to="/survey">
+              성향 분석 바로 하러가기
+            </div>
           </div>
         </div>
       </div>
