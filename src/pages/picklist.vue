@@ -24,6 +24,9 @@
                 <div class="droplet" />
                 <div class="droplet" />
               </div>
+              <h5>LOADING...</h5>
+              <h3>개인추천 페이지가 로딩중입니다.</h3>
+              <h3>잠시만 기다려주세요.</h3>
             </div>
             <div class="picklist-item">
               <div v-for="(stock, index) in stockInfo" :key="index" class="card" @click="onClickToDetails(stock.stockInfoSequence)">
@@ -67,7 +70,7 @@ export default class Picklist extends Vue {
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
-  async created() {
+  created() {
     setTimeout(async () => {
       await this.getPicklist()
     }, 4000)

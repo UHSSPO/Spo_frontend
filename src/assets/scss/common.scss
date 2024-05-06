@@ -1486,6 +1486,14 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+    flex-direction: column;
+    margin: 50px;
+    h5 {
+      margin-bottom:20px;
+    }
+    h3{
+      margin: 5px;
+    }
   }
 
   .droplet_spinner {
