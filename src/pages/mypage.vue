@@ -36,7 +36,7 @@
                     <span v-else-if="userInfo.investPropensity === '05'" class="textRed">
                       공격투자형
                     </span>
-                    <a v-if="!userInfo.investPropensity" v-else id="investment-preference" @click="onClickToSurvey">성향분석 바로가기</a>
+                    <a v-if="!userInfo.investPropensity" id="investment-preference" @click="onClickToSurvey">성향분석 바로가기</a>
                   </div>
                   <div class="profile-item">
                     <span class="item-label">가입일:</span>
