@@ -22,6 +22,20 @@
   color: #90ee90;
 }
 
+.bgBlue {
+  background-color: #007AFF !important;
+  &:hover {
+    background-color: #016ddf !important;
+  }
+}
+
+.bgRed {
+  background-color: #ee6161 !important;
+  &:hover {
+    background-color: #c75252 !important;
+  }
+}
+
 
 .wrap{
   position:relative;
@@ -446,6 +460,8 @@
       }
     }
   }
+
+
   .board-wrap {
     width: 68%;
     margin: 0 1%;
@@ -983,7 +999,109 @@
       }
     }
   }
+  .virtual-main {
+    .virtual-info {
+      .virtual-wrap {
+        background-color: #f8f8f8;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 10px;
+        .virtual-item-wrap {
+          width: 30%;
+          .virtual-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            .item-label {
+              font-weight: bold;
+              color: #333;
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+    }
+    .virtual-wrap-tit {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .virtual-title-wrap {
+        display: flex;
+        align-items: center;
+      }
+      &-tool {
+        margin-left: 4px;
+      }
+      .virtual-search-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        .table-field {
+          position: relative;
+          bottom: 8px;
+        }
+      }
+    }
+    .search-list-wrap {
+      display: flex;
+      justify-content: flex-end;
+      .search-list {
+        z-index: 99;
+        width: 191px;
+      }
+    }
+  }
 }
+
+.popup-wrap {
+  width: 100%;
+  .popup-title {
+    width: 100%;
+    padding: 10px;
+  }
+  .popup-list-wrap {
+    display: flex;
+    justify-content: space-around;
+    .popup-tab-list {
+      width: calc(100% / 2);
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid $line-color;
+      margin-bottom: 10px;
+    }
+  }
+  .popup-field-wrap {
+    padding: 10px;
+    input {text-align: right}
+    .virtual-popup-count {
+      .v-text-field__slot::after {
+        content: '주';
+        display: inline-block;
+      }
+    }
+
+    .virtual-popup-count {
+      .v-text-field__slot::after {
+        content: '주';
+        display: inline-block;
+      }
+    }
+    .virtual-popup-won {
+      .v-text-field__slot::after {
+        content: '원';
+        display: inline-block;
+      }
+    }
+  }
+}
+
+
 
 #container-depth{
   width:100%;
@@ -1375,7 +1493,13 @@
           .mypage-item {
             padding: 0;
           }
-
+          .virtual-wrap {
+            flex-direction: column;
+            align-items: stretch;
+            .virtual-item-wrap {
+              width: auto;
+            }
+          }
         }
         .result-wrap {
           padding: 30px;

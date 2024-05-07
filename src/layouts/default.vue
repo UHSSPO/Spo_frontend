@@ -30,8 +30,8 @@
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="movePage('')">
-              모의투자
+            <v-list-item-title @click="onClickToVirtual(userInfo.userSequence)">
+              가상투자
             </v-list-item-title>
           </v-list-item>
 
@@ -125,7 +125,7 @@
             <a href="#">개인추천</a>
           </li>
           <li>
-            <a @click="movePage('')">모의투자</a>
+            <a @click="onClickToVirtual(userInfo.userSequence)">가상투자</a>
           </li>
           <li class="menu_search_list">
             <div>
@@ -333,6 +333,13 @@ export default class extends Vue {
           stockInfoSequence: stockInfoSequence.toString()
         }
       })
+    }
+  }
+
+  private onClickToVirtual(userSequence: number) {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.$router.push(`/virtual?userSequence=${userSequence}`)
     }
   }
 }
