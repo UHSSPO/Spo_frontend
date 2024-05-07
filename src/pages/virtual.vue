@@ -40,9 +40,6 @@
                 </div>
               </div>
             </div>
-            <h1 v-for="(stock, index) in userInvestmentStock" :key="index">
-              {{ stock.userInvestmentStockSequence }}
-            </h1>
             <s-popup
               v-if="virtualPopup"
               close-btn
@@ -52,6 +49,7 @@
             >
               <Popup
                 :stock-info-sequence="stockInfoSequence"
+                @close="initVirtual()"
               />
             </s-popup>
             <div class="virtual-wrap-tit">
@@ -88,15 +86,33 @@
                 </v-list-item>
               </v-list>
             </div>
-            <s-data-table v-if="userInvestmentStock" :headers="headers" :items="userInvestmentStock" :is-search="false" :search="search">
+            <s-data-table v-if="userInvestmentStock" :headers="headers" :items="userInvestmentStock" :is-search="false">
+              <template #itmsNm="{item}">
+                {{ item.itmsNm }}
+              </template>
+              // 보유수량
               <template #quantity="{item}">
                 {{ item.quantity }}
               </template>
+              // 평가금액
               <template #itemValueAmount="{item}">
                 {{ item.itemValueAmount }}
               </template>
+              // 매수금액
+              <template #itemBuyAmount="{item}">
+                {{ item.itemBuyAmount }}
+              </template>
+              // 손익
               <template #itemProfit="{item}">
                 {{ item.itemProfit }}
+              </template>
+              // 수익률
+              <template #itemFltRt="{item}">
+                {{ item.itemFltRt }}
+              </template>
+              // 평균단가
+              <template #averageAmount="{item}">
+                {{ item.averageAmount }}
               </template>
             </s-data-table>
           </div>
@@ -114,9 +130,8 @@ import SDataTable from '~/components/common/SDataTable.vue'
 import { ISelectUserInvestmentStart, ISpoUserInvestment, ISpoUserInvestmentStock } from '~/types/virtual/virtual'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
-import { getVirtualUser, startInvestmentYn, startVirtual } from '~/api/virtual'
+import { getVirtualUser, startInvestmentYn, startVirtual, UserInvestmentInfo } from '~/api/virtual'
 import { IDataTableHeader } from '~/types/common'
-import { ISelectMyInfoRes } from '~/types/user/user'
 import STextField from '~/components/common/STextField.vue'
 import { ISearchStockInfo } from '~/types/home/home'
 import { Stock } from '~/api/stock'
@@ -143,17 +158,19 @@ export default class Virtual extends Vue {
   private virtualPopup = false
   private search = ''
   private stockInfoSequence = 0
+  private userSequence = 0
   @common.State private stockList!: Array<ISearchStockInfo>
   @common.State private token!: string
 
   private headers = [
-    { text: '보유수량', value: 'quantity', align: 'center', width: 100, isSlot: false },
+    { text: '종목명', value: 'itmsNm', align: 'center', width: 100, isSlot: false },
+    { text: '보유수량', value: 'quantity', align: 'center', width: 110, isSlot: false },
     { text: '평가금액', value: 'itemValueAmount', align: 'center', width: 200, isSlot: false },
     { text: '매수금액', value: 'itemBuyAmount', align: 'center', width: 120, isSlot: true },
     { text: '손익', value: 'itemProfit', align: 'center', width: 120, isSlot: true },
     { text: '수익률', value: 'itemFltRt', align: 'center', width: 150, isSlot: true },
-    { text: '평균단가', value: 'averageAmount', align: 'center', width: 100, isSlot: true },
-    { text: '매수 / 매도', value: '<h1>ddd</h1>', align: 'center', width: 100, isSlot: true }
+    { text: '평균단가', value: 'averageAmount', align: 'center', width: 110, isSlot: true },
+    { text: '매수 / 매도', value: '<h1>ddd</h1>', align: 'center', width: 130, isSlot: true }
   ] as Array<IDataTableHeader>
 
   /********************************************************************************
@@ -184,14 +201,19 @@ export default class Virtual extends Vue {
 
   private async initVirtual() {
     this.userInfoSequence = Number(this.$route.query.userSequence)
+    this.userSequence = Number(this.$route.query.userSequence)
     await this.getVirtual()
+    this.virtualPopup = false
   }
 
   private async getVirtual() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    this.virtualInfo = await getVirtualUser(this.userInfoSequence)
+    this.virtualInfo = await UserInvestmentInfo(this.userInfoSequence)
+    this.userInvestmentStock = await getVirtualUser(this.userSequence)
+    console.log(this.userInvestmentStock)
+
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })

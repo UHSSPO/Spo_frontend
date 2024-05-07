@@ -49,7 +49,7 @@
                     </s-button>
                   </div>
                 </div>
-                <div class="board-detail-comment-content" v-else>
+                <div v-else class="board-detail-comment-content">
                   <div class="dis-flex-space wd-95">
                     <div>
                       {{ item.comment }}
@@ -216,7 +216,7 @@ export default class Board extends Vue {
       commonStore.ADD_DIALOG({
         id: 'DELETE',
         text: '게시글이 삭제되었습니다!',
-        callback: async () => {
+        callback: () => {
           this.$router.push('/board/board-list')
         }
       })
