@@ -1,7 +1,7 @@
 <template>
   <div class="popup-wrap">
     <div class="popup-title">
-      <h1>{{ stockInfo.itmsNm }}</h1>
+      <h1>{{ virtualStockInfo.itmsNm }}</h1>
     </div>
     <div v-if="tradeType === 'buy'" class="popup-content">
       <ul class="popup-list-wrap">
@@ -17,7 +17,6 @@
           v-model="quantity"
           label="주문수량"
           placeholder="몇 주를 구매하실지 입력해주세요!"
-          value="1"
           class="virtual-popup-count"
           type="number"
           :required="true"
@@ -39,7 +38,7 @@
           type="number"
           :required="true"
         />
-        <s-button class="kbtn-line-solid v-btn--right w-100 bgRed">
+        <s-button class="kbtn-line-solid v-btn--right w-100 bgRed" @click="buyStock(userSequence)">
           매수
         </s-button>
       </div>
@@ -59,7 +58,6 @@
           v-model="quantity"
           label="주문수량"
           placeholder="몇 주를 판매하실지 입력해주세요!"
-          value="1"
           class="virtual-popup-count"
           type="number"
           :required="true"
@@ -81,7 +79,7 @@
           type="number"
           :required="true"
         />
-        <s-button class="kbtn-line-solid v-btn--right w-100 bgBlue">
+        <s-button class="kbtn-line-solid v-btn--right w-100 bgBlue" @click="sellStock(userSequence)">
           매도
         </s-button>
       </div>
@@ -90,16 +88,19 @@
 </template>
 
 <script lang="ts">
-import { Component, namespace, Prop, Vue } from 'nuxt-property-decorator'
-import { commonStore } from '~/util/store-accessor'
+import { Component, Emit, namespace, Prop, Vue } from 'nuxt-property-decorator'
 import { Namespace } from '~/util/Namespace'
-import { IUserDetail } from '~/types/auth/auth'
-import { getDetail } from '~/api/stock'
-import STextArea from '~/components/common/STextArea.vue'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
-import { ISpoBoard } from '~/types/board/board'
-import { IStockInfo } from '~/types/details/details'
+import StringUtil from '~/util/StringUtil'
+import { buyVirtual, getVirtualDetail, getVirtualUser, sellVirtual } from '~/api/virtual'
+import {
+  IBuyStockInvestmentReq,
+  ISellStockInvestmentReq,
+  ISpoUserInvestmentStock,
+  IVirtualStockDetail
+} from '~/types/virtual/virtual'
+import { commonStore } from '~/util/store-accessor'
 
 const common = namespace(Namespace.COMMON)
 @Component({
@@ -107,36 +108,96 @@ const common = namespace(Namespace.COMMON)
   components: { SButton, STextField }
 })
 export default class Popup extends Vue {
-  private stockInfo = {} as IStockInfo
+  private virtualStockInfo = {} as IVirtualStockDetail
+  private userInvestmentStock = [] as Array<ISpoUserInvestmentStock>
   @Prop() private readonly stockInfoSequence!: number
-  private quantity = 1
+  @Emit('close')
+  private onClose() {
+    return this.getDetail()
+  }
+
   private priceInfoClpr = 0
   private totalAmountValue = 0
+  private quantity = '1'
+  private userSequence = 0
+
+  private formData = {
+    stockInfoSequence: this.stockInfoSequence,
+    quantity: 0
+  } as IBuyStockInvestmentReq
 
   created() {
     this.getDetail()
+    this.userSequence = Number(this.$route.query.userSequence)
   }
 
   private tradeType = 'buy'
+
   private async getDetail() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    this.stockInfo = await getDetail(this.stockInfoSequence)
-    this.totalAmountValue = this.stockInfo.priceInfo?.clpr
-    this.priceInfoClpr = this.stockInfo.priceInfo?.clpr
+    this.virtualStockInfo = await getVirtualDetail(this.stockInfoSequence)
+    this.totalAmountValue = this.virtualStockInfo.clpr
+    this.priceInfoClpr = this.virtualStockInfo.clpr
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
   }
 
   private totalAmount() {
-    const amount = this.quantity * (this.stockInfo.priceInfo?.clpr || 0)
-    return amount
+    return parseInt(this.quantity) * (this.virtualStockInfo.clpr || 0)
   }
 
   private updateQuantity() {
     this.totalAmountValue = this.totalAmount()
+  }
+
+  private async buyStock(userSequence:number) {
+    if (StringUtil.isEmpty(this.formData.quantity)) {
+      return false
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    this.formData.quantity = parseInt(this.quantity)
+    const response: IBuyStockInvestmentReq = await buyVirtual(this.formData)
+
+    if (StringUtil.isNotEmpty(response)) {
+      commonStore.ADD_DIALOG({
+        id: 'BUY',
+        text: '매수되었습니다!',
+        callback: async () => {
+          await this.onClose()
+        }
+      })
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
+  }
+
+  private async sellStock(userSequence:number) {
+    if (StringUtil.isEmpty(this.formData.quantity)) {
+      return false
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    this.formData.quantity = parseInt(this.quantity)
+    const response: ISellStockInvestmentReq = await sellVirtual(this.formData)
+    if (StringUtil.isNotEmpty(response)) {
+      commonStore.ADD_DIALOG({
+        id: 'SELL',
+        text: '매도되었습니다!',
+        callback: async () => {
+          await this.$router.push(`/virtual/virtual?userSequence=${userSequence}`)
+        }
+      })
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
   }
 }
 </script>
