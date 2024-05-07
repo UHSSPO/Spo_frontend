@@ -160,9 +160,9 @@
         <div class="footer_info_wrap">
           <ul>
             <li><a href="#">이용약관</a></li>
-            <li><a href="#">서비스 운영정책</a></li>
+            <!--            <li><a href="#">서비스 운영정책</a></li>-->
             <li><a href="#">개인정보처리방침</a></li>
-            <li><a href="#">투자 유의 안내</a></li>
+            <!--            <li><a href="#">투자 유의 안내</a></li>-->
           </ul>
           <ul>
             <li>경기도 화성시 봉담읍 최루백로 72 이공관 802호</li>
