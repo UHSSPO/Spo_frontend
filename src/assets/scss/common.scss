@@ -932,6 +932,7 @@
       min-height: 500px;
       padding: 20px 0;
       margin-bottom: 0;
+      word-wrap: break-word;
       border-bottom: 1px solid $line-color;
     }
     .board-detail-comments-section {
@@ -950,6 +951,9 @@
           width: 100%;
           display: flex;
           justify-content: space-between;
+          .board-detail-comment-board {
+            display: flex;
+          }
         }
       }
       .board-detail-comments-write-wrap {
@@ -1463,7 +1467,7 @@
 
 
           td, p, span, a, div{
-            font-size: 0.9em
+            font-size:.8rem
           }
 
           .profile-section {
@@ -1489,7 +1493,6 @@
           .mypage-item {
             padding: 0;
           }
-
           .virtual-wrap {
             flex-direction: column;
             align-items: stretch;
