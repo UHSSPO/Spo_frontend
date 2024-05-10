@@ -1464,19 +1464,25 @@
 }
 .picklist-content {
   width: 100%;
-  .picklist-item {display: flex;
-    justify-content: space-around;
-    align-items: center;
+
+  .picklist-item {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
     margin-top: 10px;
+
     .card {
       background-color: #fff;
       border-radius: 8px;
       box-shadow: -1px 2px 10px 2px rgba(0, 0, 0, 0.1);
       padding: 20px;
-      width: 20%;
+      width: calc(33% - 20px);
+      margin-bottom: 20px;
       cursor: pointer;
     }
   }
+
+
   .error {
     color: red;
   }
@@ -1488,10 +1494,12 @@
     height: 100%;
     flex-direction: column;
     margin: 50px;
+
     h5 {
-      margin-bottom:20px;
+      margin-bottom: 20px;
     }
-    h3{
+
+    h3 {
       margin: 5px;
     }
   }

@@ -40,9 +40,9 @@
                 </h1>
               </div>
             </div>
-            <div v-if="!surveyDone" to="/survey">
-              성향 분석 바로 하러가기
-            </div>
+            <button v-if="!loading && !surveyDone" @click="goToSurvey">
+              성향분석하기
+            </button>
             <div>
               SPO는 투자 권유를 하지 않습니다. 모든 투자는 개인의 책임입니다.
             </div>
@@ -63,16 +63,16 @@ import { commonStore } from '~/util/store-accessor'
 @Component
 export default class Picklist extends Vue {
   /********************************************************************************
-   * Variables (Local, VUEX)
-   ********************************************************************************/
+     * Variables (Local, VUEX)
+     ********************************************************************************/
   private stockInfo: Array<ICommendPersonalStock> = []
   private loading = true
   private error = null as string | null
-  private surveyDone = true
+  private surveyDone = false
 
   /********************************************************************************
-   * Life Cycle
-   ********************************************************************************/
+     * Life Cycle
+     ********************************************************************************/
   created() {
     setTimeout(async () => {
       await this.getPicklist()
@@ -98,6 +98,10 @@ export default class Picklist extends Vue {
         }
       })
     }
+  }
+
+  private goToSurvey() {
+    this.$router.push('/survey')
   }
 }
 </script>
