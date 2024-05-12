@@ -13,7 +13,7 @@
         <Explore v-if="StringUtil.isNotEmpty(theme)" :theme="theme" />
       </div>
       <div class="rank-wrap">
-        <Rank />
+        <Rank :investment-rank="investmentRank" />
         <Board :spo-board="spoBoard" />
       </div>
     </div>
@@ -36,6 +36,8 @@ import Board from '~/components/home/Board.vue'
 import { ISpoBoard } from '~/types/board/board'
 import { SpoBoard } from '~/api/board'
 import Rank from '~/components/home/Rank.vue'
+import { InvestmentRank } from '~/api/virtual'
+import { IStockRank } from '~/types/virtual/virtual'
 
 @Component({
   layout: 'empty',
@@ -60,6 +62,8 @@ export default class home extends Vue {
   private StockInfo: IInterest[] = []
 
   private spoBoard = [] as Array<ISpoBoard>
+
+  private investmentRank = [] as Array<IStockRank>
 
   /********************************************************************************
    * Life Cycle
@@ -112,17 +116,18 @@ export default class home extends Vue {
       this.spoBoard = response
     })
   }
-  // private getDetails() {
-  //   getDetails().then((response:Array<IStockInfo>) => {
-  //     this.StockInfo = response
-  //   })
-  // }
+
+  private getInvestmentRank() {
+    InvestmentRank().then((response:Array<IStockRank>) => {
+      this.investmentRank = response
+    })
+  }
 
   private initCommend() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    Promise.all([this.getMarketIndex(), this.getPopularStock(), this.getTheme(), this.getShortInvestment(), this.getLongInvestment(), this.getInterest(), this.getSpoBoard()])
+    Promise.all([this.getMarketIndex(), this.getPopularStock(), this.getTheme(), this.getShortInvestment(), this.getLongInvestment(), this.getInterest(), this.getSpoBoard(), this.getInvestmentRank()])
       .finally(() => {
         this.$nextTick(() => {
           this.$nuxt.$loading.finish()
