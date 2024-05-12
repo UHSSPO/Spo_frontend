@@ -4,17 +4,27 @@
       <h3>가상투자 랭킹</h3>
     </div>
     <ul class="ranking-list-wrap">
-      <li class="ranking-list">
-        <div v-for="(item, idx) in investmentRank" :key="idx" class="ranking-list-item">
+      <li v-for="(item, idx) in investmentRank" :key="idx" class="ranking-list">
+        <div class="ranking-list-item">
           <h1 class="ranking-rank">
-            {{ item.userInvestmentSequence }}
+            {{ idx + 1 }}
           </h1>
           <div class="ranking-name">
             {{ item.nickName }}
           </div>
           <div class="ranking-details">
-            <p>{{ item.itemProfit }}</p>
-            <p>{{ item.itemFltRt }}</p>
+            <p v-if="item.profitLossSales === 0">
+              {{ item.profitLossSales | setNumberComma }}
+            </p>
+            <p v-else :class="{minus: item.profitLossSales < 0, plus: item.profitLossSales > 0}">
+              {{ item.profitLossSales | setNumberComma }}
+            </p>
+            <p v-if="item.userFltRt === 0">
+              {{ item.userFltRt }}
+            </p>
+            <p v-else :class="{minus: item.userFltRt < 0, plus: item.userFltRt > 0}">
+              {{ item.userFltRt }}
+            </p>
           </div>
         </div>
       </li>

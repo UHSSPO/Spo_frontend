@@ -37,8 +37,8 @@ export interface ISpoUserInvestment {
 
 export interface IStockRank{
   userInvestmentSequence: number // 유저 투자 정보 일련번호
-  itemProfit: number // 손익
-  itemFltRt: number // 수익률
+  profitLossSales: number // 손익
+  userFltRt: number // 수익률
   nickName: string // 유저 닉네임
 }
 
