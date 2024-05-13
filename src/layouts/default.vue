@@ -24,7 +24,7 @@
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title @click="movePage('')">
+            <v-list-item-title @click="movePage('picklist')">
               개인추천
             </v-list-item-title>
           </v-list-item>
@@ -122,7 +122,7 @@
             <a @click="movePage('survey')">성향분석</a>
           </li>
           <li>
-            <a href="#">개인추천</a>
+            <a @click="movePage('picklist')">개인추천</a>
           </li>
           <li>
             <a @click="onClickToVirtual(userInfo.userSequence)">가상투자</a>
