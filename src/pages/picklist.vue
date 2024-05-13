@@ -25,7 +25,7 @@
                 <div class="droplet" />
               </div>
               <h5>LOADING...</h5>
-              <h3>개인추천 페이지가 로딩중입니다.</h3>
+              <h3>개인추천 분석중입니다.</h3>
               <h3>잠시만 기다려주세요.</h3>
             </div>
             <div class="picklist-item">
@@ -43,7 +43,7 @@
             <button v-if="!loading && !surveyDone" @click="goToSurvey">
               성향분석하기
             </button>
-            <div>
+            <div class="mt-2">
               SPO는 투자 권유를 하지 않습니다. 모든 투자는 개인의 책임입니다.
             </div>
           </div>
