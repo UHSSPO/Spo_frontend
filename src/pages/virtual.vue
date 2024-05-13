@@ -182,7 +182,6 @@ export default class Virtual extends Vue {
    * Life Cycle
    ********************************************************************************/
   async created() {
-    console.log(this.pickList)
     const response: ISelectUserInvestmentStart = await startInvestmentYn()
     if (StringUtil.isNotEmpty(response)) {
       if (response.startInvestmentYn === 'Y') {
