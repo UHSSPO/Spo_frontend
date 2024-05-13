@@ -1331,7 +1331,7 @@
 
     .kapi {
       padding-right: 30px;
-      width: 120px;
+      width: calc(100%/8);
       span {
         padding-right: 3px;
       }
@@ -1370,10 +1370,13 @@
 /* 애니메이션 */
 .roller.original {
   animation: 100s linear 0s infinite normal forwards running rollingleft1;
+  width: 100%;
 }
 
 .roller.clone {
   animation: 100s linear 0s infinite normal none running rollingleft2;
+  margin-left: 100%;
+  width: 100%;
 }
 
 @keyframes rollingleft1 {

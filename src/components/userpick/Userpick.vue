@@ -1,23 +1,12 @@
 <template>
-  <!--      <template>-->
-  <!--        <v-carousel>-->
-  <!--          <v-carousel-item-->
-  <!--            v-for="(item,i) in items"-->
-  <!--            :key="i"-->
-  <!--            :src="item.src"-->
-  <!--            reverse-transition="fade-transition"-->
-  <!--            transition="fade-transition"-->
-  <!--          />-->
-  <!--        </v-carousel>-->
-  <!--      </template>-->
   <div class="roller-container">
     <div class="rolling-banner">
       <div class="wrap">
         <div class="roller">
           <ul>
-            <li v-for="(item, index) in marketIndex" :key="index" class="kapi">
+            <li v-for="(item, index) in pickList" :key="index" class="kapi" style="width: calc(100%/6)">
               <a href="#">
-                <strong class="name">{{ item.idxNm }}</strong>
+                <strong class="name">{{ item.itmsNm }}</strong>
                 <span class="status down">
                   <span class="num">{{ item.clpr | setDecimalNumberComma }}</span>
                   <span v-if="item.fltRt === 0" class="zero"><em>{{ item.fltRt }}</em></span>
@@ -34,43 +23,29 @@
 
 <script lang="ts">
 
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { Component, namespace, Prop, Vue } from 'nuxt-property-decorator'
 import { IMarketIndex } from '~/types/home/home'
 import { MarketIndex } from '~/api/stock'
-
+import { ICommendPersonalStock } from '~/types/user/user'
+import { Namespace } from '~/util/Namespace'
+const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
   components: {}
 })
-export default class IndexInfo extends Vue {
+export default class UserPick extends Vue {
   /********************************************************************************
    * Properties
    ********************************************************************************/
-  @Prop() private readonly marketIndex!: Array<IMarketIndex>
-
+  // @Prop() private readonly pickList!: Array<ICommendPersonalStock>
+  @common.State private pickList!: Array<ICommendPersonalStock>
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
+
   mounted() {
     this.privateRoller()
   }
-
-  private intervalId: number | null = null
-  private currentSlide = 0
-  private items = [
-    {
-      src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-    },
-    {
-      src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-    },
-    {
-      src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-    },
-    {
-      src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-    },
-  ]
 
   private privateRoller(): void {
     const roller: HTMLElement | null = document.querySelector('.roller')

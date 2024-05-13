@@ -40,6 +40,7 @@
                 </div>
               </div>
             </div>
+            <userpick v-if="StringUtil.isNotEmpty(pickList)" :user-pick="pickList" />
             <s-popup
               v-if="virtualPopup"
               close-btn
@@ -133,17 +134,20 @@ import { commonStore } from '~/util/store-accessor'
 import { getVirtualUser, startInvestmentYn, startVirtual, UserInvestmentInfo } from '~/api/virtual'
 import { IDataTableHeader } from '~/types/common'
 import STextField from '~/components/common/STextField.vue'
-import { ISearchStockInfo } from '~/types/home/home'
+import { IInterest, ISearchStockInfo } from '~/types/home/home'
 import { Stock } from '~/api/stock'
 import SToolTip from '~/components/common/SToolTip.vue'
 import SPopup from '~/components/common/SPopup.vue'
 import Rank from '~/components/home/Rank.vue'
 import Popup from '~/components/virtual/virtual.vue'
+import Interest from '~/components/home/Interest.vue'
+import UserPick from '~/components/userpick/Userpick.vue'
+import { ICommendPersonalStock } from '~/types/user/user'
 
 const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
-  components: { Rank, SToolTip, STextField, SDataTable, SPopup, Popup },
+  components: { Interest, Rank, SToolTip, STextField, SDataTable, SPopup, Popup, UserPick },
 })
 export default class Virtual extends Vue {
   /********************************************************************************
@@ -161,6 +165,7 @@ export default class Virtual extends Vue {
   private userSequence = 0
   @common.State private stockList!: Array<ISearchStockInfo>
   @common.State private token!: string
+  @common.State private pickList!: Array<ICommendPersonalStock>
 
   private headers = [
     { text: '종목명', value: 'itmsNm', align: 'center', width: 100, isSlot: false },
@@ -177,6 +182,7 @@ export default class Virtual extends Vue {
    * Life Cycle
    ********************************************************************************/
   async created() {
+    console.log(this.pickList)
     const response: ISelectUserInvestmentStart = await startInvestmentYn()
     if (StringUtil.isNotEmpty(response)) {
       if (response.startInvestmentYn === 'Y') {
@@ -212,7 +218,6 @@ export default class Virtual extends Vue {
     })
     this.virtualInfo = await UserInvestmentInfo(this.userInfoSequence)
     this.userInvestmentStock = await getVirtualUser(this.userSequence)
-    console.log(this.userInvestmentStock)
 
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
