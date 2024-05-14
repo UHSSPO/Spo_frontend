@@ -52,6 +52,11 @@
                 {{ item.fltRt }}
               </div>
             </template>
+            <template #itmsNm="{item}">
+              <div class="itms-name" @click="onClickToDetails(item.stockInfoSequence)">
+                {{ item.itmsNm }}
+              </div>
+            </template>
             <template #mrktTotAmt="{item}">
               {{ item.mrktTotAmt | setKoreanNumber }}
             </template>
@@ -77,6 +82,7 @@ import { LongInvestmentAll, ShortInvestmentAll, UpdateInterestStock } from '~/ap
 import { IDataTableHeader } from '~/types/common'
 import StringUtil from '~/util/StringUtil'
 import STextField from '~/components/common/STextField.vue'
+import { commonStore } from '~/util/store-accessor'
 
 @Component({
   layout: 'empty',
@@ -101,7 +107,7 @@ export default class Commend extends Vue {
   private stockData = [] as Array<IShortInvestment>
   private headers = [
     { text: '등급', value: 'rating', align: 'center', width: 100, isSlot: false },
-    { text: '종목명', value: 'itmsNm', align: 'center', width: 200, isSlot: false },
+    { text: '종목명', value: 'itmsNm', align: 'center', width: 200, isSlot: false, isSlot: true },
     { text: '전일종가', value: 'clpr', align: 'center', width: 120, isSlot: true },
     { text: '등락률', value: 'fltRt', align: 'center', width: 120, isSlot: true },
     { text: '시가총액', value: 'mrktTotAmt', align: 'center', width: 150, isSlot: true },
@@ -163,6 +169,15 @@ export default class Commend extends Vue {
     }
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
+    })
+  }
+
+  private onClickToDetails(stockInfoSequence: number) {
+    this.$router.push({
+      name: 'detail',
+      query: {
+        stockInfoSequence: stockInfoSequence.toString()
+      }
     })
   }
 }
