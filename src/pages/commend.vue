@@ -107,7 +107,7 @@ export default class Commend extends Vue {
   private stockData = [] as Array<IShortInvestment>
   private headers = [
     { text: '등급', value: 'rating', align: 'center', width: 100, isSlot: false },
-    { text: '종목명', value: 'itmsNm', align: 'center', width: 200, isSlot: false, isSlot: true },
+    { text: '종목명', value: 'itmsNm', align: 'center', width: 200, isSlot: true },
     { text: '전일종가', value: 'clpr', align: 'center', width: 120, isSlot: true },
     { text: '등락률', value: 'fltRt', align: 'center', width: 120, isSlot: true },
     { text: '시가총액', value: 'mrktTotAmt', align: 'center', width: 150, isSlot: true },
