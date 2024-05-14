@@ -62,7 +62,7 @@
             <div class="virtual-wrap-tit">
               <div class="virtual-title-wrap">
                 <h3>매수 종목</h3>
-                <s-tool-tip class="virtual-wrap-tit-tool" detail="고객님께서 매수하신 종목이에요." />
+                <s-tool-tip class="virtual-wrap-tit-tool" detail="데이터 갱신은 매수/매도 후 익일 15시30분 이후 5분마다 갱신돼요." />
               </div>
               <div class="virtual-search-wrap">
                 <div class="mr-2 table-field">
