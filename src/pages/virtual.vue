@@ -88,29 +88,25 @@
             </div>
             <s-data-table v-if="userInvestmentStock" :headers="headers" :items="userInvestmentStock" :is-search="false">
               <template #itmsNm="{item}">
-                {{ item.itmsNm }}
+                <div class="itms-name" @click="onClickToDetails(item.stockInfoSequence)">
+                  {{ item.itmsNm }}
+                </div>
               </template>
-              // 보유수량
               <template #quantity="{item}">
                 {{ item.quantity }}
               </template>
-              // 평가금액
               <template #itemValueAmount="{item}">
                 {{ item.itemValueAmount | setNumberComma }}
               </template>
-              // 매수금액
               <template #itemBuyAmount="{item}">
                 {{ item.itemBuyAmount | setNumberComma }}
               </template>
-              // 손익
               <template #itemProfit="{item}">
                 <span class="item-rate" :class="{minus: virtualInfo.userFltRt < 0, plus: virtualInfo.userFltRt > 0}">{{ item.itemProfit | setNumberComma }}</span>
               </template>
-              // 수익률
               <template #itemFltRt="{item}">
                 <span class="item-rate" :class="{minus: virtualInfo.userFltRt < 0, plus: virtualInfo.userFltRt > 0}">{{ item.itemFltRt }}</span>
               </template>
-              // 평균단가
               <template #averageAmount="{item}">
                 {{ item.averageAmount | setNumberComma }}
               </template>
@@ -169,9 +165,9 @@ export default class Virtual extends Vue {
   @common.State private token!: string
 
   private headers = [
-    { text: '종목명', value: 'itmsNm', align: 'center', width: 100, isSlot: false },
+    { text: '종목명', value: 'itmsNm', align: 'center', width: 100, isSlot: true },
     { text: '보유수량', value: 'quantity', align: 'center', width: 110, isSlot: false },
-    { text: '평가금액', value: 'itemValueAmount', align: 'center', width: 200, isSlot: false },
+    { text: '평가금액', value: 'itemValueAmount', align: 'center', width: 200, isSlot: true },
     { text: '매수금액', value: 'itemBuyAmount', align: 'center', width: 120, isSlot: true },
     { text: '손익', value: 'itemProfit', align: 'center', width: 120, isSlot: true },
     { text: '수익률', value: 'itemFltRt', align: 'center', width: 150, isSlot: true },
@@ -256,6 +252,15 @@ export default class Virtual extends Vue {
   private virtualOnclick(stockInfoSequence:number) {
     this.stockInfoSequence = stockInfoSequence
     this.virtualPopup = true
+  }
+
+  private onClickToDetails(stockInfoSequence: number) {
+    this.$router.push({
+      name: 'detail',
+      query: {
+        stockInfoSequence: stockInfoSequence.toString()
+      }
+    })
   }
 }
 
