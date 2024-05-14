@@ -1,11 +1,11 @@
 <template>
   <div class="roller-container">
-    <div class="rolling-banner">
+    <div class="rolling-banner virtual-roller">
       <div class="wrap">
         <div class="roller">
           <ul>
             <li v-for="(item, index) in pickList" :key="index" class="kapi" style="width: calc(100%/6)">
-              <a href="#">
+              <a @click="onClickToDetails(item.stockInfoSequence)">
                 <strong class="name">{{ item.itmsNm }}</strong>
                 <span class="status down">
                   <span class="num">{{ item.clpr | setDecimalNumberComma }}</span>
@@ -28,6 +28,7 @@ import { IMarketIndex } from '~/types/home/home'
 import { MarketIndex } from '~/api/stock'
 import { ICommendPersonalStock } from '~/types/user/user'
 import { Namespace } from '~/util/Namespace'
+import { commonStore } from '~/util/store-accessor'
 const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
@@ -71,6 +72,15 @@ export default class UserPick extends Vue {
 
     roller.classList.add('original')
     clone.classList.add('clone')
+  }
+
+  private onClickToDetails(stockInfoSequence: number) {
+    this.$router.push({
+      name: 'detail',
+      query: {
+        stockInfoSequence: stockInfoSequence.toString()
+      }
+    })
   }
 }
 

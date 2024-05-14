@@ -40,6 +40,12 @@
                 </div>
               </div>
             </div>
+
+            <div class="virtual-wrap-tit">
+              <div class="virtual-title-wrap">
+                <h3>개인추천 종목</h3>
+              </div>
+            </div>
             <userpick v-if="StringUtil.isNotEmpty(pickList)" :user-pick="pickList" />
             <s-popup
               v-if="virtualPopup"

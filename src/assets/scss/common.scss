@@ -504,7 +504,6 @@
       width: 100%;
       text-align: center;
       padding: 0;
-      border-bottom:  1px solid $line-color;;
       > .board-list {
         border-bottom: 1px solid $line-color;
         border-top: 1px solid $line-color;
@@ -1297,6 +1296,29 @@
   display: flex;
   height: 100%;
   justify-content: center;
+  .virtual-roller {
+    height: 100px !important;
+    background-color: #ffffff !important;
+    .wrap {
+      &::before,
+      &::after {
+        background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.75) 51%, rgba(243, 245, 247, 0) 100%) !important;
+      }
+
+      &::after {
+        background: linear-gradient(to right, rgba(243, 245, 247, 0) 0%, rgba(255, 255, 255, 0.75) 51%, rgb(255, 255, 255) 100%) !important;
+      }
+    }
+
+    .kapi {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: -1px 2px 10px 2px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      cursor: pointer;
+      margin: 0 20px;
+    }
+  }
   .rolling-banner {
     overflow: hidden;
     width: 100%;
