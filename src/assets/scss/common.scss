@@ -455,6 +455,23 @@
             p {
               margin: 0;
             }
+            .zero {
+              color: #121212;
+              font-weight: bold;
+            }
+
+            .minus {
+              color: #007AFF;
+              font-weight: bold;
+            }
+
+            .plus {
+              color: #ee6161;
+              font-weight: bold;
+            }
+            .plus:before {
+              content: '+'
+            }
           }
         }
       }
@@ -1021,6 +1038,21 @@
               font-weight: bold;
               color: #333;
               margin-right: 5px;
+              .item-rate{ .zero {
+                color: #121212;
+                font-weight: bold;
+              }
+
+                .minus {
+                  color: #007AFF;
+                  font-weight: bold;
+                }
+
+                .plus {
+                  color: #ee6161;
+                  font-weight: bold;
+                }
+              }
             }
           }
         }
@@ -1057,6 +1089,7 @@
     }
   }
 }
+
 
 .popup-wrap {
   width: 100%;
@@ -1677,4 +1710,8 @@
       transform: translateY(-20px);
     }
   }
+}
+
+.itms-name {
+  cursor: pointer;
 }

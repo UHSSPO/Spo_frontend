@@ -168,7 +168,7 @@
             <li>경기도 화성시 봉담읍 최루백로 72 이공관 802호</li>
           </ul>
         </div>
-        <span>제작 : 졸작 4조</span>
+        <span>제작 : 졸작 3조</span>
       </div>
     </div>
     <s-dialog

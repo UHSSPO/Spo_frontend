@@ -15,7 +15,7 @@
                   </div>
                   <div class="virtual-item">
                     <span class="item-label">수익률</span>
-                    <span class="item-label" :class="{minus: virtualInfo.userFltRt < 0, plus: virtualInfo.userFltRt > 0}"><em>{{ virtualInfo.userFltRt }}</em></span>
+                    <span class="item-rate" :class="{minus: virtualInfo.userFltRt < 0, plus: virtualInfo.userFltRt > 0}"><em>{{ virtualInfo.userFltRt }}</em></span>
                   </div>
                 </div>
                 <div class="virtual-item-wrap">
@@ -34,7 +34,7 @@
                   <div class="virtual-item">
                     <span class="item-label">매매 손익:</span>
                     <span class="item-label">
-                      {{ virtualInfo.profitLossSales | setNumberComma }}
+                      <span class="item-rate" :class="{minus: virtualInfo.userFltRt < 0, plus: virtualInfo.userFltRt > 0}">{{ virtualInfo.profitLossSales | setNumberComma }}</span>
                     </span>
                   </div>
                 </div>
@@ -89,31 +89,32 @@
             </div>
             <s-data-table v-if="userInvestmentStock" :headers="headers" :items="userInvestmentStock" :is-search="false">
               <template #itmsNm="{item}">
-                {{ item.itmsNm }}
+                <div class="itms-name" @click="onClickToDetails(item.stockInfoSequence)">
+                  {{ item.itmsNm }}
+                </div>
               </template>
-              // 보유수량
               <template #quantity="{item}">
                 {{ item.quantity }}
               </template>
-              // 평가금액
               <template #itemValueAmount="{item}">
-                {{ item.itemValueAmount }}
+                {{ item.itemValueAmount | setNumberComma }}
               </template>
-              // 매수금액
               <template #itemBuyAmount="{item}">
-                {{ item.itemBuyAmount }}
+                {{ item.itemBuyAmount | setNumberComma }}
               </template>
-              // 손익
               <template #itemProfit="{item}">
-                {{ item.itemProfit }}
+                <span class="item-rate" :class="{minus: virtualInfo.userFltRt < 0, plus: virtualInfo.userFltRt > 0}">{{ item.itemProfit | setNumberComma }}</span>
               </template>
-              // 수익률
               <template #itemFltRt="{item}">
-                {{ item.itemFltRt }}
+                <span class="item-rate" :class="{minus: virtualInfo.userFltRt < 0, plus: virtualInfo.userFltRt > 0}">{{ item.itemFltRt }}</span>
               </template>
-              // 평균단가
               <template #averageAmount="{item}">
-                {{ item.averageAmount }}
+                {{ item.averageAmount | setNumberComma }}
+              </template>
+              <template #매수매도="{ item }">
+                <s-button @click="virtualOnclick(item.stockInfoSequence)">
+                  매수/매도
+                </s-button>
               </template>
             </s-data-table>
           </div>
@@ -143,11 +144,12 @@ import Popup from '~/components/virtual/virtual.vue'
 import Interest from '~/components/home/Interest.vue'
 import UserPick from '~/components/userpick/Userpick.vue'
 import { ICommendPersonalStock } from '~/types/user/user'
+import SButton from '~/components/common/SButton.vue'
 
 const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
-  components: { Interest, Rank, SToolTip, STextField, SDataTable, SPopup, Popup, UserPick },
+  components: { SButton, Rank, SToolTip, STextField, SDataTable, SPopup, Popup, UserPick },
 })
 export default class Virtual extends Vue {
   /********************************************************************************
@@ -168,14 +170,14 @@ export default class Virtual extends Vue {
   @common.State private pickList!: Array<ICommendPersonalStock>
 
   private headers = [
-    { text: '종목명', value: 'itmsNm', align: 'center', width: 100, isSlot: false },
+    { text: '종목명', value: 'itmsNm', align: 'center', width: 100, isSlot: true },
     { text: '보유수량', value: 'quantity', align: 'center', width: 110, isSlot: false },
-    { text: '평가금액', value: 'itemValueAmount', align: 'center', width: 200, isSlot: false },
+    { text: '평가금액', value: 'itemValueAmount', align: 'center', width: 200, isSlot: true },
     { text: '매수금액', value: 'itemBuyAmount', align: 'center', width: 120, isSlot: true },
     { text: '손익', value: 'itemProfit', align: 'center', width: 120, isSlot: true },
     { text: '수익률', value: 'itemFltRt', align: 'center', width: 150, isSlot: true },
     { text: '평균단가', value: 'averageAmount', align: 'center', width: 110, isSlot: true },
-    { text: '매수 / 매도', value: '<h1>ddd</h1>', align: 'center', width: 130, isSlot: true }
+    { text: '매수 / 매도', value: '매수매도', align: 'center', width: 130, isSlot: true }
   ] as Array<IDataTableHeader>
 
   /********************************************************************************
@@ -254,6 +256,15 @@ export default class Virtual extends Vue {
   private virtualOnclick(stockInfoSequence:number) {
     this.stockInfoSequence = stockInfoSequence
     this.virtualPopup = true
+  }
+
+  private onClickToDetails(stockInfoSequence: number) {
+    this.$router.push({
+      name: 'detail',
+      query: {
+        stockInfoSequence: stockInfoSequence.toString()
+      }
+    })
   }
 }
 
