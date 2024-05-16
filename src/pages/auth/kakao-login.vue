@@ -1,6 +1,14 @@
 <template>
   <div id="container" class="line">
     <div class="content dynamic-layout">
+      <s-popup
+        v-if="consentPopup"
+        persistent
+        :title="'약관동의'"
+        @close="consentPopup = false"
+      >
+        <h1>ddd</h1>
+      </s-popup>
       <div class="sign-up">
         <div class="sign-up-header">
           <h1>카카오 계정으로 가입하기</h1>
@@ -57,8 +65,10 @@ import STextField from '../../components/common/STextField.vue'
 import SButton from '../../components/common/SButton.vue'
 import StringUtil from '../../util/StringUtil'
 import { commonStore } from '../../util/store-accessor'
+import Popup from '~/components/virtual/virtual.vue'
+import SPopup from '~/components/common/SPopup.vue'
 @Component({
-  components: { STextField, SButton },
+  components: { SPopup, Popup, STextField, SButton },
   layout: 'empty',
   name: 'kakao-login'
 })
@@ -79,6 +89,8 @@ export default class KakaoLogin extends Vue {
 
   private checkPwd = ''
 
+  private consentPopup = false
+
   /********************************************************************************
    * Life Cycle
    ********************************************************************************/
@@ -88,6 +100,7 @@ export default class KakaoLogin extends Vue {
       redirectUri: `${window.location.origin}/auth/kakao-login`,
       code: this.code
     }
+    this.consentPopup = true
 
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
@@ -155,6 +168,10 @@ export default class KakaoLogin extends Vue {
     } else {
       return false
     }
+  }
+
+  private closePopup() {
+    this.consentPopup = false
   }
 }
 </script>
