@@ -14,7 +14,7 @@
     @keydown.esc="onKeydown"
     @click:outside="onClose"
   >
-    <v-card flat :elevation="0" :class="[maxHeight ? 'max-height' : '']">
+    <v-card flat :elevation="0" :class="[maxHeight ? 'max-height' : ''] " class="consent-wrap">
       <v-card-title class="headline">
         <div v-if="fullscreen" class="pop-full">
           <s-button icon="mdi-back" @click="onClose" />
