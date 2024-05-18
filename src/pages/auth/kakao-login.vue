@@ -161,26 +161,29 @@
             <p>대금결제 및 재화 등의 공급에 관한 기록 : 5년 (전자상거래등에서의 소비자보호에 관한 법률)</p>
             <p>소비자의 불만 또는 분쟁처리에 관한 기록 : 3년 (전자상거래등에서의 소비자보호에 관한 법률)</p>
             <p>신용정보의 수집/처리 및 이용 등에 관한 기록 : 3년 (신용정보의 이용 및 보호에 관한 법률)</p>
-            <s-check-box
-              v-model="consentPrivacy"
-              :required="true"
-              label="동의함"
-            />
+            <div class="test-co" @click="test">
+              <s-check-box
+                v-model="consentPrivacy"
+                :required="true"
+                label="동의함"
+              />
+            </div>
           </div>
           <div class="consent-footer-wrap">
             <div class="consent-check-wrap">
-              <s-check-box
-                v-model="allConsent"
-                :required="true"
-                label="전체동의"
-                @click="onClickAllConsent"
-              />
+              <div class="all-consent" @click="onClickAllConsent">
+                <s-check-box
+                  v-model="allConsent"
+                  :required="true"
+                  label="전체동의"
+                />
+              </div>
             </div>
             <div class="consent-btn-wrap">
-              <s-button class="s-button" @click="onClickConsent()">
+              <s-button class="s-button" @click="onClickConsent">
                 확인
               </s-button>
-              <s-button class="c-button" @click="closeConsent()">
+              <s-button class="c-button" @click="closeConsent">
                 취소
               </s-button>
             </div>
@@ -267,9 +270,9 @@ export default class KakaoLogin extends Vue {
   } as ISignUp
 
   private checkPwd = ''
-  private allConsent = false
-  private consentTerms = false
-  private consentPrivacy = false
+  private allConsent = 'N'
+  private consentTerms = 'N'
+  private consentPrivacy = 'N'
   private consentPopup = true
 
   /********************************************************************************
@@ -296,6 +299,9 @@ export default class KakaoLogin extends Vue {
         }
       })
     }
+
+    console.log(this.consentPrivacy)
+    console.log(this.consentTerms)
     this.formData.email = response.email
     this.formData.nickName = response.nickName
     this.formData.signUpChannel = 'kakao'
@@ -352,16 +358,31 @@ export default class KakaoLogin extends Vue {
   }
 
   private onClickConsent() {
-    this.consentPopup = false
+    if (this.consentPrivacy === 'Y' && this.consentTerms === 'Y') {
+      this.consentPopup = false
+    } else {
+      commonStore.ADD_DIALOG({
+        id: 'ERROR',
+        title: '오류',
+        text: '전체 약관에 동의해야 가입할 수 있습니다.'
+      })
+    }
   }
 
   private onClickAllConsent() {
-    this.consentPrivacy = true
-    this.consentTerms = true
+    this.consentPrivacy = this.consentPrivacy !== 'Y' ? 'Y' : 'N'
+    this.consentTerms = this.consentTerms !== 'Y' ? 'Y' : 'N'
+
+    console.log(this.consentPrivacy)
+    console.log(this.consentTerms)
   }
 
   private closeConsent() {
     this.$router.push('/home')
+  }
+
+  private test() {
+    console.log(this.consentPrivacy)
   }
 }
 </script>
