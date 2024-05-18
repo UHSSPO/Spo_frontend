@@ -75,9 +75,15 @@
   .header_mobile_form {
     margin-top: auto;
   }
-
 }
 
+.mark {
+ display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  margin-right: 8px;
+}
 
 #header{
   z-index:200;

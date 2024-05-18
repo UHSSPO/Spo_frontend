@@ -43,8 +43,14 @@
             <button v-if="!loading && !surveyDone" @click="goToSurvey">
               성향분석하기
             </button>
-            <div class="mt-2">
-              SPO는 투자 권유를 하지 않습니다. 모든 투자는 개인의 책임입니다.
+            <div class="dis-flex">
+              <div class="mark">
+                ※
+              </div>
+              <div class="mt-2">
+                주식의 표준편차와 고가와 저가 차이를 토대로 고객님의 투자 성향과 매칭하여 나온 종목입니다. <br />
+                SPO는 투자 권유를 하지 않습니다. 모든 투자는 개인의 책임입니다.
+              </div>
             </div>
           </div>
         </div>
