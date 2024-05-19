@@ -1,6 +1,5 @@
 <template>
   <v-dialog
-    :class="{ 'consent-wrap': showConsentWrap }"
     :close-btn="closeBtn"
     :fullscreen="fullscreen"
     :hide-overlay="hideOverlay"
