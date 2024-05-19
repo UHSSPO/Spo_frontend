@@ -5,7 +5,7 @@
         v-if="consentPopup"
         persistent
         :title="'약관동의'"
-        class="consent-popup"
+        :show-consent-wrap="true"
         @close="consentPopup = false"
       >
         <div class="consent-con-wrap">
@@ -370,11 +370,11 @@ export default class KakaoLogin extends Vue {
   }
 
   private onClickAllConsent() {
-    this.consentPrivacy = this.consentPrivacy !== 'Y' ? 'Y' : 'N'
-    this.consentTerms = this.consentTerms !== 'Y' ? 'Y' : 'N'
+    this.consentPrivacy = this.allConsent === 'Y' ? 'Y' : 'N'
+    this.consentTerms = this.allConsent === 'Y' ? 'Y' : 'N'
 
-    console.log(this.consentPrivacy)
-    console.log(this.consentTerms)
+    console.log('이용약관' + this.consentPrivacy)
+    console.log('개인정보' + this.consentTerms)
   }
 
   private closeConsent() {
