@@ -2,7 +2,7 @@
   <div id="container" class="line">
     <div class="content dynamic-layout">
       <div class="rank-wrap">
-        <div class="commend-wrap w-100">
+        <div class="commend-wrap w-100 pa-0">
           <div class="board-wrap board-all">
             <div class="board-title-all">
               <h3>게시판</h3>
