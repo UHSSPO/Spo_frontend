@@ -40,7 +40,7 @@
                 </h1>
               </div>
             </div>
-            <button v-if="!loading && !surveyDone" @click="goToSurvey">
+            <button v-if="!loading" @click="goToSurvey">
               성향분석하기
             </button>
             <div class="dis-flex">
@@ -48,7 +48,7 @@
                 ※
               </div>
               <div class="mt-2">
-                주식의 표준편차와 고가와 저가 차이를 토대로 고객님의 투자 성향과 매칭하여 나온 종목입니다. <br />
+                주식의 표준편차와 고가와 저가 차이를 토대로 고객님의 투자 성향과 매칭하여 나온 종목입니다. <br>
                 SPO는 투자 권유를 하지 않습니다. 모든 투자는 개인의 책임입니다.
               </div>
             </div>
@@ -74,7 +74,7 @@ export default class Picklist extends Vue {
   private stockInfo: Array<ICommendPersonalStock> = []
   private loading = true
   private error = null as string | null
-  private surveyDone = false
+  private surveyDone = true
 
   /********************************************************************************
      * Life Cycle
