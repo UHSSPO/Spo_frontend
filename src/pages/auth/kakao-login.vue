@@ -122,6 +122,7 @@
               v-model="consentTerms"
               :required="true"
               label="동의함"
+              @change="onClickChangeConsent"
             />
           </div>
           <div class="privacy-policy">
@@ -161,21 +162,21 @@
             <p>대금결제 및 재화 등의 공급에 관한 기록 : 5년 (전자상거래등에서의 소비자보호에 관한 법률)</p>
             <p>소비자의 불만 또는 분쟁처리에 관한 기록 : 3년 (전자상거래등에서의 소비자보호에 관한 법률)</p>
             <p>신용정보의 수집/처리 및 이용 등에 관한 기록 : 3년 (신용정보의 이용 및 보호에 관한 법률)</p>
-            <div class="test-co" @click="test">
-              <s-check-box
-                v-model="consentPrivacy"
-                :required="true"
-                label="동의함"
-              />
-            </div>
+            <s-check-box
+              v-model="consentPrivacy"
+              :required="true"
+              label="동의함"
+              @change="onClickChangeConsent"
+            />
           </div>
           <div class="consent-footer-wrap">
             <div class="consent-check-wrap">
-              <div class="all-consent" @click="onClickAllConsent">
+              <div class="all-consent">
                 <s-check-box
                   v-model="allConsent"
                   :required="true"
                   label="전체동의"
+                  @change="onClickAllConsent"
                 />
               </div>
             </div>
@@ -299,9 +300,6 @@ export default class KakaoLogin extends Vue {
         }
       })
     }
-
-    console.log(this.consentPrivacy)
-    console.log(this.consentTerms)
     this.formData.email = response.email
     this.formData.nickName = response.nickName
     this.formData.signUpChannel = 'kakao'
@@ -372,17 +370,34 @@ export default class KakaoLogin extends Vue {
   private onClickAllConsent() {
     this.consentPrivacy = this.allConsent === 'Y' ? 'Y' : 'N'
     this.consentTerms = this.allConsent === 'Y' ? 'Y' : 'N'
+    const consentIcons = document.querySelectorAll('.consent-con-wrap i')
+    consentIcons.forEach((icon) => {
+      if (this.consentPrivacy === 'Y' && this.consentTerms === 'Y') {
+        icon.className = 'v-icon notranslate mdi mdi-checkbox-marked theme--light primary--text'
+        icon.setAttribute('aria-hidden', 'true')
+      } else {
+        icon.className = 'v-icon notranslate mdi mdi-checkbox-blank-outline theme--light'
+        icon.setAttribute('aria-hidden', 'true')
+      }
+    })
+  }
 
-    console.log('이용약관' + this.consentPrivacy)
-    console.log('개인정보' + this.consentTerms)
+  private onClickChangeConsent() {
+    this.consentPrivacy = this.consentPrivacy === 'Y' ? 'Y' : 'N'
+    this.consentTerms = this.consentTerms === 'Y' ? 'Y' : 'N'
+    const allConsentIcon = document.querySelector('.consent-footer-wrap i')
+
+    if (this.consentPrivacy === 'Y' && this.consentTerms === 'Y' && allConsentIcon) {
+      allConsentIcon.className = 'v-icon notranslate mdi mdi-checkbox-marked theme--light primary--text'
+      allConsentIcon.setAttribute('aria-hidden', 'true')
+    } else if (allConsentIcon) {
+      allConsentIcon.className = 'v-icon notranslate mdi mdi-checkbox-blank-outline theme--light'
+      allConsentIcon.setAttribute('aria-hidden', 'true')
+    }
   }
 
   private closeConsent() {
     this.$router.push('/home')
-  }
-
-  private test() {
-    console.log(this.consentPrivacy)
   }
 }
 </script>
