@@ -1194,7 +1194,7 @@
     .join-box {
       border: 1px solid $line-color;
       padding: 40px 10px;
-      width: 50%;
+      width: 80%;
       margin: 0 auto;
     }
     &.center {
@@ -1520,6 +1520,7 @@
   .header_menu_wrap {
     display: flex;
     margin: 0;
+    padding: 10px;
   }
 
   #header {
@@ -1542,6 +1543,10 @@
         display: block;
         padding: 0;
         .commend-wrap, .popularity-wrap, .interest-wrap, .explore-wrap, .board-wrap, .ranking-wrap{
+          .v-data-table__mobile-row {
+            width: 100% !important;
+            margin-bottom: 10px !important;
+          }
           .commend-main-title {
             i {
               font-size: 30px;
@@ -1564,6 +1569,7 @@
           }
           width: 100%;
           padding: 20px;
+          margin: 0;
           .board-list-third {
             width: 200px !important;
           }
@@ -1603,6 +1609,9 @@
               width: auto;
             }
           }
+        }
+        .board-all {
+          padding: 10px !important;
         }
         .result-wrap {
           padding: 30px;
