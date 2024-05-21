@@ -10,11 +10,12 @@
     :value="true"
     :retain-focus="localRetainFocus"
     no-click-animation
+    :show-consent-wrap="showConsentWrap"
     @close="onClose"
     @keydown.esc="onKeydown"
     @click:outside="onClose"
   >
-    <v-card flat :elevation="0" :class="[maxHeight ? 'max-height' : '']">
+    <v-card flat :elevation="0" :class="[showConsentWrap ? 'consent-wrap' : '', maxHeight ? 'max-height' : '']">
       <v-card-title class="headline">
         <div v-if="fullscreen" class="pop-full">
           <s-button icon="mdi-back" @click="onClose" />
@@ -79,6 +80,7 @@ export default class KPopup extends Vue {
   @Prop(Boolean) private readonly retainFocus?: boolean
   @Prop() private readonly width?: number
   @Prop({ default: '' }) private readonly transition?: string
+  @Prop(Boolean) private readonly showConsentWrap!: boolean // prop 추가
 
   @Emit('close')
   private onClose(): any {

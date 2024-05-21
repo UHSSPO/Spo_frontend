@@ -1093,6 +1093,7 @@
       }
     }
   }
+
 }
 
 
@@ -1139,7 +1140,45 @@
   }
 }
 
+.consent-wrap {
+  height: 90vh;
+  overflow-y: hidden;
+  .v-messages {
+    display: none;
+  }
+  .v-input__slot, .v-input {
+    margin: 0;
+  }
 
+  .pop-title:after {
+    content: '* 동의함을 눌러주세요';
+    color: #ff6961;
+    font-size: .8rem;
+  }
+  .v-card__text {
+    height: calc(100% - 71px - 8%);
+    .consent-con-wrap {
+      height: 100%;
+      .terms-and-conditions, .privacy-policy {
+        height: 50%;
+        overflow-y: scroll;
+        padding:  20px 30px;
+        border-bottom: 1px solid $line-color;
+
+        p {
+          line-height: 25px;
+          margin: 0;
+        }
+      }
+      .consent-footer-wrap {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 9.6%;
+      }
+    }
+  }
+}
 
 #container-depth{
   width:100%;
@@ -1742,4 +1781,9 @@
 
 .itms-name {
   cursor: pointer;
+}
+
+.c-button {
+  background-color: #ff6961 !important;
+  color: #fff !important;
 }
