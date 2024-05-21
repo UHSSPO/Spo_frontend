@@ -13,7 +13,6 @@
     :show-consent-wrap="showConsentWrap"
     @close="onClose"
     @keydown.esc="onKeydown"
-    @click:outside="onClose"
   >
     <v-card flat :elevation="0" :class="[showConsentWrap ? 'consent-wrap' : '', maxHeight ? 'max-height' : '']">
       <v-card-title class="headline">
