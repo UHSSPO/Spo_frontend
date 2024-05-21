@@ -191,7 +191,7 @@ export default class Popup extends Vue {
         id: 'SELL',
         text: '매도되었습니다!',
         callback: async () => {
-          await this.$router.push(`/virtual/virtual?userSequence=${userSequence}`)
+          await this.onClose()
         }
       })
     }
