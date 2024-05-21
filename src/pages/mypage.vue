@@ -51,6 +51,32 @@
                     <span id="email" class="item-value">{{ userInfo.email }}</span>
                   </div>
                 </div>
+                <s-popup
+                  v-if="userDeletePopup"
+                  persistent
+                  :title="'회원탈퇴'"
+                  close-btn
+                  @close="userDeletePopup = false"
+                >
+                  <p class="red--text flex-center ma-2 font-weight-bold">
+                    회원탈퇴를 하면 재가입 하셔야 서비스 이용이 가능합니다.
+                  </p>
+                  <s-text-field
+                    v-model="userPassword.password"
+                    label="비밀번호"
+                    placeholder="비밀번호를 입력해주세요!"
+                    :required="true"
+                    type="password"
+                  />
+                  <div class="mypage-btn-wrap flex-center">
+                    <s-button class="submit-button s-button ma-1" @click="onClickDelete">
+                      확인
+                    </s-button>
+                    <s-button class="submit-button c-button ma-1" @click="closePopup">
+                      취소
+                    </s-button>
+                  </div>
+                </s-popup>
                 <div class="profile-wrap profile-grad-wrap">
                   <div class="profile-item profile-btn-wrap">
                     <button class="nickname-button" @click="onClickNickname">
@@ -59,7 +85,7 @@
                     <button class="password-button" @click="onClickPassword">
                       비밀번호 변경하기
                     </button>
-                    <button class="withdraw-button">
+                    <button class="withdraw-button" @click="onClickDeletePopup">
                       회원탈퇴
                     </button>
                   </div>
@@ -170,23 +196,24 @@ import { Component, namespace, Vue } from 'nuxt-property-decorator'
 import {
   IChangeNickNameReqBody,
   IChangeNickNameRes,
-  IChangePasswordReqBody, IChangePasswordRes,
+  IChangePasswordReqBody, IChangePasswordRes, IDeleteUserReqBody, IDeleteUserRes,
   ISelectMyInfoRes
 } from '~/types/user/user'
 import { getMyInfo } from '~/api/user'
 import STextField from '~/components/common/STextField.vue'
 import SButton from '~/components/common/SButton.vue'
-import { changeNickname, changePassword } from '~/api/auth'
+import { changeNickname, changePassword, userDelete } from '~/api/auth'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
 import { Namespace } from '~/util/Namespace'
 import SDataTable from '~/components/common/SDataTable.vue'
 import { IDataTableHeader } from '~/types/common'
+import SPopup from '~/components/common/SPopup.vue'
 
 const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
-  components: { SDataTable, SButton, STextField },
+  components: { SPopup, SDataTable, SButton, STextField },
 })
 export default class myPage extends Vue {
   /********************************************************************************
@@ -205,6 +232,10 @@ export default class myPage extends Vue {
     changeNickName: ''
   } as IChangeNickNameReqBody
 
+  private userPassword = {
+    password: ''
+  } as IDeleteUserReqBody
+
   private checkPwd = ''
 
   private isPasswordCheck = false
@@ -219,6 +250,7 @@ export default class myPage extends Vue {
   ] as Array<IDataTableHeader>
 
   private userInvestType = this.userInfo.investPropensity
+  private userDeletePopup = false
 
   /********************************************************************************
    * Life Cycle
@@ -322,6 +354,46 @@ export default class myPage extends Vue {
     if (this.token) {
       this.$router.push('/survey')
     }
+  }
+
+  private onClickDeletePopup() {
+    this.userDeletePopup = true
+  }
+
+  private async onClickDelete() {
+    if (StringUtil.isEmpty(this.userPassword.password)) {
+      return false
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    const response: IDeleteUserRes = await userDelete(this.userPassword)
+    console.log(this.userPassword)
+    if (StringUtil.isNotEmpty(response)) {
+      if (response.deleteYn === 'Y') {
+        commonStore.ADD_DIALOG({
+          id: 'DELETE USER',
+          text: '회원 탈퇴가 완료됐습니다.',
+          callback: () => {
+            this.$nextTick(() => {
+              this.$nuxt.$loading.start()
+            })
+            commonStore.LOGOUT()
+            this.$nextTick(() => {
+              this.$nuxt.$loading.finish()
+            })
+            this.$router.push('/')
+          }
+        })
+      }
+    }
+    this.$nextTick(() => {
+      this.$nuxt.$loading.finish()
+    })
+  }
+
+  private closePopup() {
+    this.userDeletePopup = false
   }
 }
 
