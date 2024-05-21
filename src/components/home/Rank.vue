@@ -14,16 +14,16 @@
           </div>
           <div class="ranking-details">
             <p v-if="item.profitLossSales === 0">
-              {{ item.profitLossSales | setNumberComma }}
+              {{ item.profitLossSales | setNumberComma }}원
             </p>
             <p v-else :class="{minus: item.profitLossSales < 0, plus: item.profitLossSales > 0}">
-              {{ item.profitLossSales | setNumberComma }}
+              {{ item.profitLossSales | setNumberComma }}원
             </p>
             <p v-if="item.userFltRt === 0">
-              {{ item.userFltRt }}
+              {{ item.userFltRt }}%
             </p>
             <p v-else :class="{minus: item.userFltRt < 0, plus: item.userFltRt > 0}">
-              {{ item.userFltRt }}
+              {{ item.userFltRt }}%
             </p>
           </div>
         </div>
