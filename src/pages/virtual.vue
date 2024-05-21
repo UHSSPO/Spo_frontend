@@ -40,6 +40,13 @@
                 </div>
               </div>
             </div>
+
+            <div class="virtual-wrap-tit">
+              <div class="virtual-title-wrap">
+                <h3>개인추천 종목</h3>
+              </div>
+            </div>
+            <userpick v-if="StringUtil.isNotEmpty(pickList)" :user-pick="pickList" />
             <s-popup
               v-if="virtualPopup"
               close-btn
@@ -55,7 +62,7 @@
             <div class="virtual-wrap-tit">
               <div class="virtual-title-wrap">
                 <h3>매수 종목</h3>
-                <s-tool-tip class="virtual-wrap-tit-tool" detail="고객님께서 매수하신 종목이에요." />
+                <s-tool-tip class="virtual-wrap-tit-tool" detail="데이터 갱신은 매수/매도 후 익일 15시30분 이후 5분마다 갱신돼요." />
               </div>
               <div class="virtual-search-wrap">
                 <div class="mr-2 table-field">
@@ -134,18 +141,21 @@ import { commonStore } from '~/util/store-accessor'
 import { getVirtualUser, startInvestmentYn, startVirtual, UserInvestmentInfo } from '~/api/virtual'
 import { IDataTableHeader } from '~/types/common'
 import STextField from '~/components/common/STextField.vue'
-import { ISearchStockInfo } from '~/types/home/home'
+import { IInterest, ISearchStockInfo } from '~/types/home/home'
 import { Stock } from '~/api/stock'
 import SToolTip from '~/components/common/SToolTip.vue'
 import SPopup from '~/components/common/SPopup.vue'
 import Rank from '~/components/home/Rank.vue'
 import Popup from '~/components/virtual/virtual.vue'
+import Interest from '~/components/home/Interest.vue'
+import UserPick from '~/components/userpick/Userpick.vue'
+import { ICommendPersonalStock } from '~/types/user/user'
 import SButton from '~/components/common/SButton.vue'
 
 const common = namespace(Namespace.COMMON)
 @Component({
   layout: 'empty',
-  components: { SButton, Rank, SToolTip, STextField, SDataTable, SPopup, Popup },
+  components: { SButton, Rank, SToolTip, STextField, SDataTable, SPopup, Popup, UserPick },
 })
 export default class Virtual extends Vue {
   /********************************************************************************
@@ -163,6 +173,7 @@ export default class Virtual extends Vue {
   private userSequence = 0
   @common.State private stockList!: Array<ISearchStockInfo>
   @common.State private token!: string
+  @common.State private pickList!: Array<ICommendPersonalStock>
 
   private headers = [
     { text: '종목명', value: 'itmsNm', align: 'center', width: 100, isSlot: true },
@@ -214,7 +225,6 @@ export default class Virtual extends Vue {
     })
     this.virtualInfo = await UserInvestmentInfo(this.userInfoSequence)
     this.userInvestmentStock = await getVirtualUser(this.userSequence)
-    console.log(this.userInvestmentStock)
 
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()

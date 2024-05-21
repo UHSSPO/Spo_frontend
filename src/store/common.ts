@@ -5,7 +5,7 @@ import { Namespace } from '../util/Namespace'
 import { IUserDetail, IUserInfo } from '~/types/auth/auth'
 import StringUtil from '~/util/StringUtil'
 import { commonStore } from '~/util/store-accessor'
-import { IChangePasswordReqBody, ISelectMyInfoRes } from '~/types/user/user'
+import { IChangePasswordReqBody, ICommendPersonalStock, ISelectMyInfoRes } from '~/types/user/user'
 import { ISearchStockInfo } from '~/types/home/home'
 import { getMyInfo } from '~/api/user'
 
@@ -27,6 +27,7 @@ export default class CommonModule extends VuexModule implements ICommonState {
   public userInfo = {} as IUserDetail
   public userPassword = {} as IChangePasswordReqBody
   public stockList = [] as Array<ISearchStockInfo>
+  public pickList = [] as Array<ICommendPersonalStock>
 
   @Action
   public async UPDATE_USER() {
@@ -82,5 +83,10 @@ export default class CommonModule extends VuexModule implements ICommonState {
     } else {
       return true
     }
+  }
+
+  @Mutation
+  public ADD_PICK_LIST(picklist: Array<ICommendPersonalStock>) {
+    this.pickList = picklist
   }
 }

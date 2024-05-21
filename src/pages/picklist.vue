@@ -61,10 +61,11 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { getDetail, getPicklist } from '~/api/stock'
+import { getDetail, getPicklist, Stock } from '~/api/stock'
 import { IStockInfo } from '~/types/details/details'
 import { ICommendPersonalStock, ISelectMyInfoRes } from '~/types/user/user'
 import { commonStore } from '~/util/store-accessor'
+import { ISearchStockInfo } from '~/types/home/home'
 
 @Component
 export default class Picklist extends Vue {
@@ -89,6 +90,7 @@ export default class Picklist extends Vue {
     this.loading = true
     this.$nuxt.$loading.start()
     this.stockInfo = await getPicklist()
+    commonStore.ADD_PICK_LIST(this.stockInfo)
     this.$nuxt.$loading.finish()
     this.loading = false
   }
