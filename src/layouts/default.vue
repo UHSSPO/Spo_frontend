@@ -154,14 +154,34 @@
     </div>
     <!-- src/page -->
     <Nuxt />
+    <s-popup
+      v-if="terms"
+      close-btn
+      persistent
+      :title="'이용약관'"
+      @close="terms = false"
+    >
+      <Termspopup />
+    </s-popup>
+
+    <s-popup
+      v-if="privacy"
+      close-btn
+      persistent
+      :title="'개인정보처리방침'"
+      @close="privacy = false"
+    >
+      <Privacypopup />
+    </s-popup>
+
     <div id="footer">
       <div class="content">
         <a href="/" class="footer_logo">SPO</a>
         <div class="footer_info_wrap">
           <ul>
-            <li><a href="#">이용약관</a></li>
+            <li><a @click="onClickPopup('terms')">이용약관</a></li>
             <!--            <li><a href="#">서비스 운영정책</a></li>-->
-            <li><a href="#">개인정보처리방침</a></li>
+            <li><a @click="onClickPopup('privacy')">개인정보처리방침</a></li>
             <!--            <li><a href="#">투자 유의 안내</a></li>-->
           </ul>
           <ul>
@@ -193,6 +213,9 @@ import { IUserDetail } from '~/types/auth/auth'
 import { ISearchStockInfo } from '~/types/home/home'
 import { Stock } from '~/api/stock'
 import StringUtil from '~/util/StringUtil'
+import SPopup from '~/components/common/SPopup.vue'
+import Termspopup from '~/components/home/Termspopup.vue'
+import Privacypopup from '~/components/home/Privacypopup.vue'
 declare let Kakao: any
 
 const common = namespace(Namespace.COMMON)
@@ -200,6 +223,9 @@ const common = namespace(Namespace.COMMON)
 @Component({
   scrollToTop: true,
   components: {
+    Privacypopup,
+    Termspopup,
+    SPopup,
     STextField,
     SDialog,
   },
@@ -224,6 +250,8 @@ export default class extends Vue {
   private stock = [] as Array<ISearchStockInfo>
   private searchStockValue = [] as Array<ISearchStockInfo>
   private currentOrderIndex = 0
+  private terms = false
+  private privacy = false
 
   /********************************************************************************
    * Life Cycle
@@ -340,6 +368,14 @@ export default class extends Vue {
     commonStore.CHECK_LOGIN()
     if (this.token) {
       this.$router.push(`/virtual?userSequence=${userSequence}`)
+    }
+  }
+
+  private onClickPopup(name:string) {
+    if (name === 'terms') {
+      this.terms = true
+    } else if (name === 'privacy') {
+      this.privacy = true
     }
   }
 }
