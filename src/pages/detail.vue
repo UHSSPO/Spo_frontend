@@ -319,6 +319,7 @@ export default class detail extends Vue {
   }
 
   private setSummedData(array: any) {
+    const reversedArray = _.reverse([...array])
     return {
       datasets: [
         {
@@ -327,10 +328,10 @@ export default class detail extends Vue {
           borderWidth: 2,
           lineTension: 0,
           pointRadius: 0,
-          data: _.map(array, 'clpr') as any
+          data: _.map(reversedArray, 'clpr') as any
         }
       ],
-      labels: _.map(array, 'basDt') as any
+      labels: _.map(reversedArray, 'basDt') as any
     }
   }
 }
