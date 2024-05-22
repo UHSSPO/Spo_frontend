@@ -61,3 +61,11 @@ export interface ICommendPersonalStock {
   trqu: number,
   mrktTotAmt: number
 }
+
+export interface IDeleteUserReqBody {
+  password: string // 비밀번호
+}
+
+export interface IDeleteUserRes {
+  deleteYn: string // 탈퇴 여부
+}
