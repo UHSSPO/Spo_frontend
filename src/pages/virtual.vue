@@ -41,7 +41,7 @@
               </div>
             </div>
 
-            <div class="virtual-wrap-tit">
+            <div class="virtual-wrap-tit" v-if="StringUtil.isNotEmpty(pickList)">
               <div class="virtual-title-wrap">
                 <h3>개인추천 종목</h3>
               </div>
@@ -109,10 +109,10 @@
                 {{ item.itemBuyAmount | setNumberComma }}
               </template>
               <template #itemProfit="{item}">
-                <span class="item-rate" :class="{minus: virtualInfo.userFltRt < 0, plus: virtualInfo.userFltRt > 0}">{{ item.itemProfit | setNumberComma }}</span>
+                <span class="item-rate" :class="{minus: item.itemProfit < 0, plus: item.itemProfit > 0}">{{ item.itemProfit | setNumberComma }}</span>
               </template>
               <template #itemFltRt="{item}">
-                <span class="item-rate" :class="{minus: virtualInfo.userFltRt < 0, plus: virtualInfo.userFltRt > 0}">{{ item.itemFltRt }}</span>
+                <span class="item-rate" :class="{minus: item.itemFltRt < 0, plus: item.itemFltRt > 0}">{{ item.itemFltRt }}</span>
               </template>
               <template #averageAmount="{item}">
                 {{ item.averageAmount | setNumberComma }}

@@ -67,6 +67,7 @@
                     placeholder="비밀번호를 입력해주세요!"
                     :required="true"
                     type="password"
+                    class="mrl-5"
                   />
                   <div class="mypage-btn-wrap flex-center">
                     <s-button class="submit-button s-button ma-1" @click="onClickDelete">
@@ -165,6 +166,11 @@
             <div class="profile-section mypage-item">
               <h4>내 관심종목</h4>
               <s-data-table v-if="userInfo.interestStock" :headers="headers" :items="userInfo.interestStock" :is-search="false">
+                <template #itmsNm="{item}">
+                  <div class="itms-name" @click="onClickToDetails(item.stockInfoSequence)">
+                    {{ item.itmsNm }}
+                  </div>
+                </template>
                 <template #clpr="{item}">
                   {{ item.clpr | setNumberComma }}
                 </template>
@@ -242,7 +248,7 @@ export default class myPage extends Vue {
   private isNicknameCheck = false
 
   private headers = [
-    { text: '종목명', value: 'itmsNm', align: 'center', width: 200, isSlot: false },
+    { text: '종목명', value: 'itmsNm', align: 'center', width: 200, isSlot: true },
     { text: '전일종가', value: 'clpr', align: 'center', width: 120, isSlot: true },
     { text: '등락률', value: 'fltRt', align: 'center', width: 120, isSlot: true },
     { text: '거래량', value: 'trqu', align: 'center', width: 120, isSlot: true },
@@ -307,6 +313,18 @@ export default class myPage extends Vue {
     this.$nextTick(() => {
       this.$nuxt.$loading.finish()
     })
+  }
+
+  private onClickToDetails(stockInfoSequence: number) {
+    commonStore.CHECK_LOGIN()
+    if (this.token) {
+      this.$router.push({
+        name: 'detail',
+        query: {
+          stockInfoSequence: stockInfoSequence.toString()
+        }
+      })
+    }
   }
 
   private async onClickChangeNickname() {

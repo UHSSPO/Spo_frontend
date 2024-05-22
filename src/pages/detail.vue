@@ -39,28 +39,28 @@
               </div>
             </div>
             <div class="invest-wrap">
-              <div class="details-warp-invest">
-                <span v-if="stockInfo.pastLongRate">
-                  1년전 투자했을경우 수익률은
-                  <span v-if="stockInfo.pastLongRate === 0">
-                    {{ stockInfo.pastLongRate }}
-                  </span>
-                  <span v-else :class="{minus: stockInfo.pastLongRate < 0, plus: stockInfo.pastLongRate > 0}">
-                    {{ stockInfo.pastLongRate }}
-                  </span>
-                  입니다.
-                </span>
-                <span v-else-if="stockInfo.pastShortRate">
-                  15일 전 투자했을 경우 수익률은
-                  <span v-if="stockInfo.pastShortRate === 0">
-                    {{ stockInfo.pastShortRate }}
-                  </span>
-                  <span v-else :class="{minus: stockInfo.pastShortRate < 0, plus: stockInfo.pastShortRate > 0}">
-                    {{ stockInfo.pastShortRate }}
-                  </span>
-                  입니다.
-                </span>
-              </div>
+<!--              <div class="details-warp-invest">-->
+<!--                <span v-if="stockInfo.pastLongRate">-->
+<!--                  1년전 투자했을경우 수익률은-->
+<!--                  <span v-if="stockInfo.pastLongRate === 0">-->
+<!--                    {{ stockInfo.pastLongRate }}-->
+<!--                  </span>-->
+<!--                  <span v-else :class="{minus: stockInfo.pastLongRate < 0, plus: stockInfo.pastLongRate > 0}">-->
+<!--                    {{ stockInfo.pastLongRate }}-->
+<!--                  </span>-->
+<!--                  입니다.-->
+<!--                </span>-->
+<!--                <span v-else-if="stockInfo.pastShortRate">-->
+<!--                  15일 전 투자했을 경우 수익률은-->
+<!--                  <span v-if="stockInfo.pastShortRate === 0">-->
+<!--                    {{ stockInfo.pastShortRate }}-->
+<!--                  </span>-->
+<!--                  <span v-else :class="{minus: stockInfo.pastShortRate < 0, plus: stockInfo.pastShortRate > 0}">-->
+<!--                    {{ stockInfo.pastShortRate }}-->
+<!--                  </span>-->
+<!--                  입니다.-->
+<!--                </span>-->
+<!--              </div>-->
             </div>
             <div class="details-content">
               <div class="details-content-item">
@@ -86,35 +86,35 @@
                   </li>
                   <li class="detail-item">
                     <span class="detail-title">거래량</span>
-                    <span class="detail-value">{{ stockInfo.priceInfo?.trqu | setNumberComma }}</span>
+                    <span class="detail-value">{{ stockInfo.priceInfo?.trqu | setNumberComma }}건</span>
                   </li>
                   <li class="detail-item">
                     <span class="detail-title">거래대금</span>
-                    <span class="detail-value">{{ stockInfo.priceInfo?.trPrc | setNumberComma }}</span>
+                    <span class="detail-value">{{ stockInfo.priceInfo?.trPrc | setNumberComma }}원</span>
                   </li>
                   <li class="detail-item">
                     <span class="detail-title">시가총액</span>
-                    <span class="detail-value">{{ stockInfo.priceInfo?.mrktTotAmt | setNumberComma }}</span>
+                    <span class="detail-value">{{ stockInfo.priceInfo?.mrktTotAmt | setNumberComma }}원</span>
                   </li>
                   <li class="detail-item">
                     <span class="detail-title">매출성장률</span>
-                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.salesGrowthRate | setNumberComma }}</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.salesGrowthRate | setDecimalNumberComma }}%</span>
                   </li>
                   <li class="detail-item">
                     <span class="detail-title">PER</span>
-                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.per | setNumberComma }}</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.per | setNumberComma }}배</span>
                   </li>
                   <li class="detail-item">
                     <span class="detail-title">PBR</span>
-                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.pbr | setNumberComma }}</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.pbr | setNumberComma }}배</span>
                   </li>
                   <li class="detail-item">
-                    <span class="detail-title">순이익</span>
-                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.incomeBeforeTaxExpenseDiff | setNumberComma }}</span>
+                    <span class="detail-title">법인세 차감 전 <br />순이익 성장률</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.incomeBeforeTaxExpenseDiff | setDecimalNumberComma }}%</span>
                   </li>
                   <li class="detail-item">
                     <span class="detail-title">부채비율</span>
-                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.financialStatementDebtRatio | setNumberComma }}</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.financialStatementDebtRatio | setNumberComma }}%</span>
                   </li>
                   <li class="detail-item web-last">
                     <span class="detail-title">ROE</span>
@@ -126,11 +126,11 @@
                   </li>
                   <li class="detail-item moblie-last">
                     <span class="detail-title">시가총액 변화 비율</span>
-                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.changeMarketGap | setNumberComma }}</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.changeMarketGap | setDecimalNumberComma }}%</span>
                   </li>
                   <li class="detail-item moblie-last">
                     <span class="detail-title">시가총액 기준 거래대금 비율</span>
-                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.volumeRatio | setNumberComma }}</span>
+                    <span class="detail-value">{{ stockInfo.enterpriseCategories?.volumeRatio | setDecimalNumberComma }}%</span>
                   </li>
                 </ul>
               </div>

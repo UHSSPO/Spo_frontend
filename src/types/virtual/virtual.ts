@@ -33,6 +33,7 @@ export interface ISpoUserInvestment {
   profitLossSales: number // 매매손익
   valueAmount: number // 평가금액
   userFltRt: number // 수익률
+  itemProfit: number
 }
 
 export interface IStockRank{

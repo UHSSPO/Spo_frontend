@@ -1043,10 +1043,11 @@
               font-weight: bold;
               color: #333;
               margin-right: 5px;
-              .item-rate{ .zero {
-                color: #121212;
-                font-weight: bold;
-              }
+              .item-rate {
+                .zero {
+                  color: #121212;
+                  font-weight: bold;
+                }
 
                 .minus {
                   color: #007AFF;
@@ -1240,6 +1241,14 @@
 
 .default-popup p {
   margin-bottom: 5px !important;
+}
+
+.default-popup {
+  padding: 20px;
+}
+
+.mrl-5 {
+  margin: 0px 12px !important;
 }
 
 #footer{
