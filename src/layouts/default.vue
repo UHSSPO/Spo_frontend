@@ -185,7 +185,7 @@
             <!--            <li><a href="#">투자 유의 안내</a></li>-->
           </ul>
           <ul>
-            <li>경기도 화성시 봉담읍 최루백로 72 이공관 802호</li>
+            <li>경기도 화성시 봉담읍 최루백로 72 이공관 803호</li>
           </ul>
         </div>
         <span>제작 : 졸작 3조</span>
@@ -290,9 +290,13 @@ export default class extends Vue {
   }
 
   private movePage(page: string) {
-    commonStore.CHECK_LOGIN()
-    if (this.token) {
+    if (page === 'home') {
       this.$router.push(`/${page}`)
+    } else {
+      commonStore.CHECK_LOGIN()
+      if (this.token) {
+        this.$router.push(`/${page}`)
+      }
     }
   }
 
